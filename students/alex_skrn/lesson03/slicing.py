@@ -25,12 +25,9 @@ def reverse_elements(seq):
 
 
 def reorder_middle_last_first(seq):
-    """Return a copy of seq with changes.
-
-    Return a copy of seq with the middle third, then last third,
-    then the first third in the new order.
-    """
-    raise NotImplementedError
+    """Return a copy of seq with the first third moved to the back."""
+    cut_point = len(seq) // 3
+    return seq[cut_point:] + seq[:cut_point]
 
 
 # TESTING SECTION
@@ -81,7 +78,18 @@ def test_reverse_elements():
 
 def test_reorder_middle_last_first():
     """Test the reorder_middle_last_first function."""
-    raise NotImplementedError
+    a_string = "this is a string"
+    a_tuple = (1, 2, 3)
+    a_tuple_2 = (1, 2, 3, 4)
+    a_tuple_3 = (1, 2, 3, 4, 5)
+    a_tuple_4 = (1, 2, 3, 4, 5, 6)
+    assert reorder_middle_last_first(a_string) == "is a stringthis "
+    assert reorder_middle_last_first(a_tuple) == (2, 3, 1)
+    assert reorder_middle_last_first(a_tuple_2) == (2, 3, 4, 1)
+    assert reorder_middle_last_first(a_tuple_3) == (2, 3, 4, 5, 1)
+    assert reorder_middle_last_first(a_tuple_4) == (3, 4, 5, 6, 1, 2)
+
+    print('Passed test_reorder_middle_last_first')
 
 
 def run_tests():
