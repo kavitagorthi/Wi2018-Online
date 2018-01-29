@@ -34,3 +34,9 @@ assert fibonacci(10) == 34
 
 # Test the Lucas sequence n=10: 2, 1, 3, 4, 7, 11, 18, 29, 47, 76.
 assert lucas(10) == 76
+
+# Test the generic series in Fibonacci emulation mode (use default init values). N=10 should be same as fibonacci above.
+assert sum_series(10) == 34
+
+# Test the generic series in Lucas emulation mode (init1=2, init2=1). N=10 should be same as Lucas above.
+assert sum_series(10, init1=2, init2=1) == 76
