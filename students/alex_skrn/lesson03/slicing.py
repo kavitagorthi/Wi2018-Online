@@ -40,8 +40,6 @@ def test_exchange_first_last():
     assert exchange_first_last(a_string) == "ghis is a strint"
     assert exchange_first_last(a_tuple) == (32, 54, 13, 12, 5, 2)
 
-    print('Passed test_exchange_first_last')
-
 
 def test_remove_every_other():
     """Test the remove_every_other function."""
@@ -50,8 +48,6 @@ def test_remove_every_other():
 
     assert remove_every_other(a_string) == "ti sasrn"
     assert remove_every_other(a_tuple) == (2, 13, 5)
-
-    print('Passed test_remove_every_other')
 
 
 def test_remove_first_last_4_and_every_other():
@@ -62,8 +58,6 @@ def test_remove_first_last_4_and_every_other():
     assert remove_first_last_4_and_every_other(a_string) == " sas"
     assert remove_first_last_4_and_every_other(a_tuple) == (5, 17, 31)
 
-    print('Passed test_remove_first_last_4_and_every_other')
-
 
 def test_reverse_elements():
     """Test the reverse_elements function."""
@@ -72,8 +66,6 @@ def test_reverse_elements():
 
     assert reverse_elements(a_string) == 'gnirts a si siht'
     assert reverse_elements(a_tuple) == (32, 5, 12, 13, 54, 2)
-
-    print('Passed test_reverse_elements')
 
 
 def test_reorder_middle_last_first():
@@ -88,8 +80,6 @@ def test_reorder_middle_last_first():
     assert reorder_middle_last_first(a_tuple_2) == (2, 3, 4, 1)
     assert reorder_middle_last_first(a_tuple_3) == (2, 3, 4, 5, 1)
     assert reorder_middle_last_first(a_tuple_4) == (3, 4, 5, 6, 1, 2)
-
-    print('Passed test_reorder_middle_last_first')
 
 
 def run_tests():

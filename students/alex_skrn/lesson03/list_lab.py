@@ -4,7 +4,7 @@
 
 # Series 1
 
-FRUIT = ['Apples', 'Pears', 'Oranges', 'Peaches']
+fruit_list = ['Apples', 'Pears', 'Oranges', 'Peaches']
 
 
 def series_1(a_list):
@@ -22,39 +22,49 @@ def series_1(a_list):
     print(my_list)
 
     # Ask the user for a number...
-    prompt_num = 'Type a number from 1 to {} > '.format(len(my_list))
+    prompt_num = "Type a number from 1 to {} > ".format(len(my_list))
     response_num = int(input(prompt_num))
     # ... and display the number and the corresponding fruit.
     print(response_num, my_list[response_num - 1])
 
     # Add another fruit to the beginning of the list using “+” ...
-    my_list = ['Melons'] + my_list
+    my_list = ["Melons"] + my_list
     # ... and display the list.
+    print()
+    print("Added another fruit to the beginning of the list using '+'")
     print(my_list)
 
     # Add another fruit to the beginning of the list using insert() ...
     my_list.insert(0, 'Lemons')
     # ... and display the list.
+    print()
+    print("Added another fruit to the beginning of the list using insert()")
     print(my_list)
 
     # Display all the fruits that begin with “P”, using a for loop.
+    print()
+    print("Display all the fruits that begin with 'P', using a for loop")
     for name in my_list:
         if name.lower().startswith('p'):
             print(name, end=' ')
+    print()
     print()
 
 
 # Series 2
 
-def find_del_fruit(seq):
+def find_del_fruit(seq, msg):
     """Ask the user for a fruit to delete, find it and delete it."""
     # Display the list.
+    print(msg)
     print(seq)
+    print()
 
     # Remove the last fruit from the list.
     my_list = seq[:-1]
 
     # Display the list.
+    print("Removed the last fruit from the list")
     print(my_list)
     print()
 
@@ -67,6 +77,7 @@ def find_del_fruit(seq):
     for item in my_list[:]:
         if item != chosen_fruit_to_del:
             new_fruit.append(item)
+    print("The current list")
     print(new_fruit)
     print()
 
@@ -84,6 +95,7 @@ def do_you_like(seq):
             response = input(prompt)
         if response == 'yes':
             new_seq.append(item)
+    print("The current list")
     print(new_seq)
     print()
 
@@ -109,8 +121,8 @@ def reverse_each_fruit(seq):
 
 
 if __name__ == '__main__':
-    series_1(FRUIT)
-    find_del_fruit(FRUIT)
-    find_del_fruit(FRUIT * 2)
-    do_you_like(FRUIT)
-    reverse_each_fruit(FRUIT)
+    series_1(fruit_list)
+    find_del_fruit(fruit_list, "Display the initial list")
+    find_del_fruit(fruit_list * 2, "Display the doubled initial list ")
+    do_you_like(fruit_list)
+    reverse_each_fruit(fruit_list)
