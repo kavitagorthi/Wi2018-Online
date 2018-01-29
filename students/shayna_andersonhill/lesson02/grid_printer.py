@@ -18,9 +18,6 @@ print(plus, (minus+space)*4, plus, (minus+space)*4, plus)
 
 #Create function to print grid customized by input value n
 
-def horizontals(n, columns=2):
-    print(plus, (minus+space)*(n-1)+minus, plus, (minus+space)*(n-1)+minus, plus)
-
 def verticals(n):
     for i in range(n):
         print(line, space*((n*2)-1), line, space*((n*2)-1), line)
@@ -32,6 +29,14 @@ def print_standard_grid(n, size = 2):
         for i in range(1,2):
             verticals(n)
     horizontals(n)
+
+print('Part 2:')
+def print_standard_grid(n, size = 2):
+    for i in range(1,3):
+        print(plus, (minus+space)*(n-1)+minus, plus, (minus+space)*(n-1)+minus, plus) 
+        for i in range(1,2):
+            verticals(n)
+    print(plus, (minus+space)*(n-1)+minus, plus, (minus+space)*(n-1)+minus, plus)
 
 units = int(input('How many units?'))
 print_standard_grid(units)
@@ -46,8 +51,8 @@ def column(columns, units):
         print(plus, (minus+space)*(units-1)+minus, end=' ')
     print(plus)
 
-def row(rows, units, columns):
-    for row in range(units): 
+def row(units, columns):
+    for i in range(units): 
         for i in range(columns):
             print(line, space*((units*2)-1), end=' ')
         print(line)
@@ -55,7 +60,7 @@ def row(rows, units, columns):
 def print_custom_grid(units, rows, columns):
     for i in range(rows): 
         column(columns, units)
-        row(rows, units, columns)
+        row(units, columns)
     column(columns, units)
 
 print_custom_grid(units,rows,columns)
