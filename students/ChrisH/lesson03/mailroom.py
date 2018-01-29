@@ -5,27 +5,44 @@
 #  Uses only functions and data types learned about so far.
 # -----------------------------------------------------------
 
-donor_data = [('Al Donor1', [10, 20, 30, 40, 50]),
-              ('Bert Donor2', [10]),
-              ('Connie Donor3', [10, 10, 10]),
-              ('Dennis Donor4', [10, 20, 20]),
-              ('Egbert Donor5', [10, 20, 10, 4000]),
+# Global data structure
+donor_data = [('Al Donor1', [10.00, 20.00, 30.00, 40.00, 50.00]),
+              ('Bert Donor2', [10.00]),
+              ('Connie Donor3', [10.00, 10.00, 10.01]),
+              ('Dennis Donor4', [10.00, 20.00, 20.00]),
+              ('Egbert Donor5', [10.39, 20.21, 10.59, 4000.40]),
               ]
 
+
 def donor_names():
+    """
+    Iterates donor data structure to produce a list of donor names.
+    :return: list of donor names
+    """
     name_list = []
     for donor in donor_data:
         name_list.append(donor[0])
     return name_list
 
+
 def menu():
+    """
+    Prints the main user menu, retrieves user selection.
+    :return: int according to user's selection
+    """
     print("\nPlease choose one of the following options:")
     print("1) Send a Thank You")
     print("2) Create a Report")
     print("3) Quit")
     return int(input("> "))
 
+
 def send_thank_you():
+    """
+    Prompts for donor name, if not present, adds user to data. Prompts for donation
+    and adds it to donor's data. Prints a 'Thank You' email populated with the donor's data.
+    :return: None
+    """
     d_list = donor_names()
     donor_thanks = ''
     while True:
@@ -44,14 +61,20 @@ def send_thank_you():
             print(f"\nDear {name}, \n\nThank you for your donation of ${amount}.\n\nWarmest regards,\nLocal Charity")
 
 
-if __name__ == "__main__":
+def print_report():
+    print("Donor Name                | Total Given | Num Gifts | Average Gift")
+    print("------------------------------------------------------------------")
+    for donor in donor_data:
+        print(f"{donor[0]:26} $ {sum(donor[1]):>10.2f}   {len(donor[1]):>9}  ${sum(donor[1])/len(donor[1]):>12.2f}")
 
+
+if __name__ == "__main__":
     while(True):
         choice = menu()
         if choice == 1:
             send_thank_you()
         elif choice == 2:
-            print('rpt')
+            print_report()
         elif choice == 3:
             quit(0)
 
