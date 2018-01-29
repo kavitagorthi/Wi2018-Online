@@ -5,7 +5,8 @@ def fibonacci(n):
     elif n == 2:
         return 1
     else:
-        return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
 
 def lucas(n):
     """Return the nth Lucas number."""
@@ -14,15 +15,22 @@ def lucas(n):
     elif n == 2:
         return 1
     else:
-        return lucas(n-1) + lucas(n-2)
+        return lucas(n - 1) + lucas(n - 2)
 
-def sum_series(n,init1=0,init2=1):
+
+def sum_series(n, init1=0, init2=1):
     """Return the nth value in a generalized sum series defined by init1 (n=1) and init2 (n=2)."""
     if n == 1:
         return init1
     elif n == 2:
         return init2
     else:
-        return sum_series(n-1,init1,init2) + sum_series(n-2,init1,init2)
+        return sum_series(n - 1, init1, init2) + sum_series(n - 2, init1, init2)
 
-print(sum_series(8))
+
+# ---TEST BLOCK---
+# Test the Fibonacci sequence n=10: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.
+assert fibonacci(10) == 34
+
+# Test the Lucas sequence n=10: 2, 1, 3, 4, 7, 11, 18, 29, 47, 76.
+assert lucas(10) == 76
