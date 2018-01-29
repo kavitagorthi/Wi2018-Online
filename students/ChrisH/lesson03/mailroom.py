@@ -44,7 +44,6 @@ def send_thank_you():
     :return: None
     """
     d_list = donor_names()
-    donor_thanks = ''
     while True:
         name = input("Enter a Full Name ('list' to show list of donors): ")
         if name == 'list':
@@ -62,6 +61,10 @@ def send_thank_you():
 
 
 def print_report():
+    """
+    Prints a formatted report on the donors with name, amount given, number of gifts, and average gift.
+    :return: None
+    """
     print("Donor Name                | Total Given | Num Gifts | Average Gift")
     print("------------------------------------------------------------------")
     for donor in donor_data:
@@ -69,7 +72,7 @@ def print_report():
 
 
 if __name__ == "__main__":
-    while(True):
+    while True:
         choice = menu()
         if choice == 1:
             send_thank_you()
