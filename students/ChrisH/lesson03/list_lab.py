@@ -12,13 +12,13 @@ response = input("Please type the name of another fruit > ")
 basket.append(response)
 print(basket)
 while True:
-	response = int(input("Please type a number to display the corresponding fruit (0 to quit) > "))
-	if response == 0:
-		break
-	elif 0 < response <= len(basket):
-		print(f"Index {response}: {basket[response - 1]}")
-	else:
-		print(f"No fruit at index {response}.")
+    response = int(input("Please type a number to display the corresponding fruit (0 to quit) > "))
+    if response == 0:
+        break
+    elif 0 < response <= len(basket):
+        print(f"Index {response}: {basket[response - 1]}")
+    else:
+        print(f"No fruit at index {response}.")
 
 basket = ['Tangerine'] + basket
 print(basket)
@@ -34,14 +34,14 @@ print('\n*** Series 2')
 print(basket)
 basket.pop()
 while True:
-	print(basket)
-	response = input("Enter a fruit from the list to delete (q to quit) > ")
-	if response == 'q':
-		break
-	elif response in basket:
-		basket.remove(response)
-	else:
-		print("Did not find {:s}.".format(response))
+    print(basket)
+    response = input("Enter a fruit from the list to delete (q to quit) > ")
+    if response == 'q':
+        break
+    elif response in basket:
+        basket.remove(response)
+    else:
+        print("Did not find {:s}.".format(response))
 
 basket *= 2
 print('Doubled the list.')
