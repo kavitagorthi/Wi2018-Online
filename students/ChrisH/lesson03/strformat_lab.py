@@ -31,5 +31,9 @@ def formatter(in_tuple):
 print(formatter((2,3,5,7,9)))
 print(formatter((2,3,5)))
 
-
+# Task Four
+data = ( 4, 30, 2017, 2, 27)
+# Output should be: '02 27 2017 04 30'
+print("{:02d} {:02d} {:d} {:02d} {:02d}".format(data[3], data[4], data[2], data[0], data[1]))
+print("{3:02d} {4:02d} {2:d} {0:02d} {1:02d}".format(*data))
 
