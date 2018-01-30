@@ -14,9 +14,14 @@ def task_one_style_formatter(a_tuple):
 # Task 2
 def task_one_style_formatter2(a_tuple):
     """Alternative implementation to Task 1."""
-    s = "file_{:03d} :   {:.2f}, {:.2e}, {:.3g}"
-    item1, item2, item3, item4 = a_tuple
-    return s.format(item1, item2, item3, item4)
+    # s = "file_{:03d} :   {:.2f}, {:.2e}, {:.3g}"
+    # item1, item2, item3, item4 = a_tuple
+    # return s.format(item1, item2, item3, item4)
+    file_num = "{:03d}".format(a_tuple[0])
+    a_float = "{:.2f}".format(a_tuple[1])
+    sci_not1 = "{:.2e}".format(a_tuple[2])
+    sci_not2 = "{:.3g}".format(a_tuple[3])
+    return f"file_{file_num} :   {a_float}, {sci_not1}, {sci_not2}"
 
 
 # Task 3
@@ -42,11 +47,12 @@ def f_formatter1(a_list):
     """Return a str formatted in the prescribed way."""
     # Eg., ['oranges', 1.3, 'lemons', 1.1] -->
     # The weight of an orange is 1.3 and the weight of a lemon is 1.1
-    fruit1, fruit2 = a_list[0], a_list[2]
-    weight1, weight2 = a_list[1], a_list[3]
+    fruit1, weight1 = a_list[0], a_list[1]
+    fruit2, weight2 = a_list[2], a_list[3]
 
     f_string = (f"The weight of an {fruit1[:-1]} is {weight1} "
-                f"and the weight of a {fruit2[:-1]} is {weight2}")
+                f"and the weight of a {fruit2[:-1]} is {weight2}"
+                )
 
     return f_string
 
@@ -55,13 +61,14 @@ def f_formatter2(a_list):
     """Return a str formatted in the prescribed way."""
     # Eg., ['oranges', 1.3, 'lemons', 1.1] -->
     # The weight of an ORANGE is 1.56 and the weight of a LEMON is 1.32
-    fruit1, fruit2 = a_list[0], a_list[2]
-    weight1, weight2 = a_list[1], a_list[3]
+    fruit1, weight1 = a_list[0], a_list[1]
+    fruit2, weight2 = a_list[2], a_list[3]
 
     f_string = (f"The weight of an {fruit1[:-1].upper()} "
                 f"is {weight1 * 1.2} "
                 f"and the weight of a {fruit2[:-1].upper()} "
-                f"is {weight2 * 1.2}")
+                f"is {weight2 * 1.2}"
+                )
 
     return f_string
 
@@ -69,12 +76,13 @@ def f_formatter2(a_list):
 # Task 6
 def display_col():
     """Display data in columns as required."""
-    title_line = ("Name", "Age (mln yrs)", "Cost")
+    title_line = ("Name", "Age", "Cost")
     title_form = "{:<15}{:^10}{:^15}"
 
-    data = (("Skull", "25", "$75125.99"),
-            ("Hip", "2", "$195"),
-            ("Spine", "139.5", "$200099.5"))
+    data = (("Ford", "25", "$75125.99"),
+            ("Hudson", "2", "$195"),
+            ("Flint", "139.5", "$200099.5")
+            )
     data_form = "{:<15}{:>10}{:>15}"
 
     print(title_form.format(*title_line))

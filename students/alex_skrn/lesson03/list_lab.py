@@ -4,7 +4,7 @@
 
 # Series 1
 
-fruit_list = ['Apples', 'Pears', 'Oranges', 'Peaches']
+fruit_list = ["Apples", "Pears", "Oranges", "Peaches"]
 
 
 def series_1(a_list):
@@ -88,12 +88,12 @@ def do_you_like(seq):
     """Delete fruit the user don't like."""
     new_seq = []
     for item in seq:
-        prompt = 'Do you like {}? yes/no > '.format(item.lower())
+        prompt = "Do you like {}? yes/no > ".format(item.lower())
         response = input(prompt)
-        while not (response == 'yes' or response == 'no'):
-            print('Not a valid answer. Try again.')
+        while not (response == "yes" or response == "no"):
+            print("Not a valid answer. Try again.")
             response = input(prompt)
-        if response == 'yes':
+        if response == "yes":
             new_seq.append(item)
     print("The current list")
     print(new_seq)
@@ -115,12 +115,12 @@ def reverse_each_fruit(seq):
     seq = seq[:-1]
 
     # Display the original list and the copy.
-    print('Original list with last item deleted: ', seq)
-    print('Reversed copy, last item not deleted: ', reversed_seq)
+    print("Original list with last item deleted: ", seq)
+    print("Reversed copy, last item not deleted: ", reversed_seq)
     print()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     series_1(fruit_list)
     find_del_fruit(fruit_list, "Display the initial list")
     find_del_fruit(fruit_list * 2, "Display the doubled initial list ")
