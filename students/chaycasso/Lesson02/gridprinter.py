@@ -60,5 +60,11 @@ def GridSpace3(columns = 2, gridsize = 3):
     blankminus = blank + minus
     print((pipe + blank * (gridsize * 2 + 1)) * columns + pipe)
 
-GridLine3(3,4)
-GridSpace3(3,4)
+def grid3(columns = 2, gridsize = 3):
+    for j in range(1, columns + 1)
+        GridLine3(columns, gridsize)
+        for i in range(1, gridsize + 1)):
+            GridSpace3(columns, gridsize)
+    GridLine3(columns, gridsize)
+
+grid3(3,4)
