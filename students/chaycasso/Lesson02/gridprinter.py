@@ -7,12 +7,13 @@ def grid1():
     minus = "-"
     blank = " "
     pipe = "|"
-    print(plus + minus * 4 + plus + minus * 4 + plus)
-    for i in range(1,5):
-        print(pipe + blank * 4 + pipe + blank * 4 + pipe)
-    print(plus + minus * 4 + plus + minus * 4 + plus)
+    blankminus = blank + minus
+    print(plus + blankminus * 4 + blank + plus + blankminus * 4 + blank + plus)
     for i in range(1, 5):
-        print(pipe + blank * 4 + pipe + blank * 4 + pipe)
-    print(plus + minus * 4 + plus + minus * 4 + plus)
+        print(pipe + blank * 9 + pipe + blank * 9 + pipe)
+    print(plus + blankminus * 4 + blank + plus + blankminus * 4 + blank + plus)
+    for i in range(1, 5):
+        print(pipe + blank * 9 + pipe + blank * 9 + pipe)
+    print(plus + blankminus * 4 + blank + plus + blankminus * 4 + blank + plus)
 
 grid1()
