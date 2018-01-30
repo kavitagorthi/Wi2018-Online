@@ -41,4 +41,20 @@ def grid2(gridsize=3):
         GridSpace2(gridsize)
     GridLine2(gridsize)
 
-grid2(11)
+def GridLine3(columns = 2, gridsize = 3):
+    plus = "+"
+    minus = "-"
+    blank = " "
+    pipe = "|"
+    blankminus = blank + minus
+    print((plus + blankminus * int((gridsize - 1) / 2) + blank) * columns + plus)
+
+GridLine3()
+
+def GridSpace3(columns = 2, gridsize = 3):
+    plus = "+"
+    minus = "-"
+    blank = " "
+    pipe = "|"
+    blankminus = blank + minus
+    print(pipe + blank * gridsize + pipe + blank * gridsize + pipe)
