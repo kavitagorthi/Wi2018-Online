@@ -22,7 +22,7 @@ def GridLine2(gridsize=3):
     blank = " "
     pipe = "|"
     blankminus = blank + minus
-    print(plus + blankminus * ((gridsize - 1) / 2) + blank + plus + blankminus * ((gridsize - 1) / 2) + blank + plus)
+    print(plus + blankminus * int((gridsize - 1) / 2) + blank + plus + blankminus * int((gridsize - 1) / 2) + blank + plus)
 
 def GridSpace2(gridsize=3):
     plus = "+"
@@ -34,11 +34,11 @@ def GridSpace2(gridsize=3):
 
 def grid2(gridsize=3):
     GridLine2(gridsize)
-    for i in range(1, (gridsize + 1) / 2):
+    for i in range(1, int((gridsize + 1) / 2)):
         GridSpace2(gridsize)
     GridLine2(gridsize)
-    for i in range(1, (gridsize + 1) / 2):
+    for i in range(1, int((gridsize + 1) / 2)):
         GridSpace2(gridsize)
     GridLine2(gridsize)
-    
-grid2(3)
+
+grid2(11)
