@@ -41,15 +41,16 @@ def grid2(gridsize=3):
         GridSpace2(gridsize)
     GridLine2(gridsize)
 
+# The use of gridsize is different between Part 2 and Part 3 because it changes in the given examples for Part 2 and
+# Part 3.
+
 def GridLine3(columns = 2, gridsize = 3):
     plus = "+"
     minus = "-"
     blank = " "
     pipe = "|"
     blankminus = blank + minus
-    print((plus + blankminus * int((gridsize - 1) / 2) + blank) * columns + plus)
-
-GridLine3()
+    print((plus + blankminus * gridsize + blank) * columns + plus)
 
 def GridSpace3(columns = 2, gridsize = 3):
     plus = "+"
@@ -57,4 +58,7 @@ def GridSpace3(columns = 2, gridsize = 3):
     blank = " "
     pipe = "|"
     blankminus = blank + minus
-    print(pipe + blank * gridsize + pipe + blank * gridsize + pipe)
+    print((pipe + blank * gridsize * 2) * columns + pipe)
+
+GridLine3(3,4)
+GridSpace3(3,4)
