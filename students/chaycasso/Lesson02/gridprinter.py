@@ -58,7 +58,7 @@ def GridSpace3(columns = 2, gridsize = 3):
     blank = " "
     pipe = "|"
     blankminus = blank + minus
-    print((pipe + blank * gridsize * 2) * columns + pipe)
+    print((pipe + blank * (gridsize * 2 + 1)) * columns + pipe)
 
 GridLine3(3,4)
 GridSpace3(3,4)
