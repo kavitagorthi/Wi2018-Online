@@ -19,6 +19,7 @@ def task_3(t):
     str = 'Task 3::: the {:d} numbers are: '
     for i in range(len(t)):
         str += '{} '
+    #  format takes 2 inputs.  the lenght of the tuple and the tuple items
     print(str.format(len(t), *t))
 
 
