@@ -1,0 +1,313 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "slicing.py",
+			"settings":
+			{
+				"buffer_size": 657,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"install Pac",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Install Package Control"
+			]
+		],
+		"width": 434.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson03/slicing.py",
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson02/fizz_buzz.py",
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson02/grid_printer.py",
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson02/series.py",
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson02/fib_lucas.py",
+		"/Users/charbo/Documents/WU/Py1/Wi2018-Online/students/marc_charbo/lesson01/break_me.py",
+		"/Users/charbo/Documents/Assurance/CodeProjects/LookerApi/looker_api_call.py",
+		"/Users/charbo/Documents/Assurance/CodeProjects/Dna/projectdna/agent_ranking.py",
+		"/Users/charbo/Documents/Assurance/CodeProjects/machine_learning_dev/machine_learning/data-science/algorithms/pingScore.py",
+		"/Users/charbo/Documents/Assurance/CodeProjects/machine_learning_dev/machine_learning/data-science/inputs/pingMAbuck4_new_test2.txt",
+		"/Users/charbo/Desktop/Questions",
+		"/Users/charbo/looker_sdk/lookerapi.json",
+		"/Users/charbo/Documents/Assurance/Pyspark shell",
+		"/Users/charbo/Documents/Assurance/SpamAnalysis/spam calls",
+		"/Users/charbo/Documents/aws project",
+		"/Users/charbo/Google Drive/Work/Assurance/Digital Marketing",
+		"/Users/charbo/GitProjects/BuildLambda/sklearn-build-lambda/venv/py/function.py",
+		"/Users/charbo/GitProjects/BuildLambda/sklearn-build-lambda/venv/function.py",
+		"/Users/charbo/GitProjects/DataDojo/Key Takeaways",
+		"/Users/charbo/GitProjects/DataDojo/bootcamp/Unsupervised Learning and  K-Means Clustering/K_Means_Titanic_Data.R",
+		"/Users/charbo/GitProjects/DataDojo/bootcamp/Predictive Analytics, Classification, and Decision Trees/Decision_Tree_Iris_Data.R",
+		"/Users/charbo/Google Drive/Work/Assurance/Projects/db_details",
+		"/Users/charbo/Documents/Assurance/CodeProjects/fraud/fraud_rules",
+		"/Users/charbo/Documents/WU/CPP/Class3/Assignment1/Example_unit_tests_assignment1/ParseTest.cpp",
+		"/Users/charbo/Documents/WU/CPP/Class3/Assignment1/Example_unit_tests_assignment1/VectorGraphicTest.cpp",
+		"/Users/charbo/Downloads/tables_dupe_pks",
+		"/Users/charbo/PycharmProjects/AssuranceAnalysis/Models.py",
+		"/Users/charbo/Downloads/Queue.h",
+		"/Users/charbo/Documents/Assurance/DownstreamTables",
+		"/Users/charbo/Documents/Pers/House/Doc List",
+		"/Users/charbo/Documents/WU/CPP/Class2/TemplateAssignment/TemplateCpp/MyCollection.cpp",
+		"/Users/charbo/Desktop/show tables",
+		"/Users/charbo/GitProjects/cpsc4300py/sqlexec.py",
+		"/Users/charbo/GitProjects/cpsc4300py/eval_plan.py",
+		"/Users/charbo/Downloads/pa.linux.i686/assignments/PA5J/SymtabExample.java",
+		"/Users/charbo/Downloads/pa.linux.i686/assignments/PA5J/SymbolTable.java",
+		"/Users/charbo/Documents/WU/CPP/Class2/MarcCharbonneau03/README.md",
+		"/Users/charbo/Documents/WU/CPP/Class2/HW1_MarcCharbonneau/Circle.h",
+		"/Users/charbo/Documents/WU/CPP/Class2/Stack.h",
+		"/Users/charbo/Documents/WU/CPP/Class2/STLVector/main.cpp",
+		"/Users/charbo/Desktop/proj3",
+		"/Users/charbo/Desktop/proj3.pdf",
+		"/Users/charbo/Documents/SU/DB2/sqlite/sqlite/src/parse.y",
+		"/Users/charbo/Documents/WU/CPP/Class2/TemplateAssignment copy/CMakeLists.txt",
+		"/Users/charbo/Documents/WU/CPP/Class2/TemplateAssignment/TemplateCpp/.gitignore",
+		"/Users/charbo/GitProjects/cpsc4300py/heap_storage.py",
+		"/Users/charbo/Documents/WU/CPP/Class1/code/airport/Main.cpp",
+		"/Users/charbo/Documents/WU/CPP/Class2/STLVector/.gitignore",
+		"/Users/charbo/Desktop/untitled",
+		"/Users/charbo/Documents/SU/DB2/SqlProjectM6/CMakeLists.txt",
+		"/Users/charbo/Documents/SU/DB2/SQLExec",
+		"/Users/charbo/Documents/SU/DB2/SqlProjectM4/Makefile",
+		"/Users/charbo/Documents/WU/CPP/Classe1/code/airport/README",
+		"/Users/charbo/GitProjects/sql4300/CMakeLists.txt",
+		"/Users/charbo/Documents/WU/CPP/Classe1/code/hw7/TestHw7Q1.cpp",
+		"/Users/charbo/Documents/WU/CPP/Classe1/code/hw7/DynamicArray.h",
+		"/Users/charbo/GitProjects/cpsc4300py/storage_engine.py",
+		"/Users/charbo/Documents/WU/CPP/Classe1/Week7OnlineMeetingCode/String.cpp",
+		"/Users/charbo/GitProjects/sql-parser/example/example.cpp",
+		"/Users/charbo/Documents/WU/CPP/Classe1/code/hw4/Write.cpp",
+		"/Users/charbo/Documents/WU/CPP/Classe1/code/hw5_MarcCharbonneau/CharQueue1.cpp",
+		"/Users/charbo/PycharmProjects/KMeansClustering/backup",
+		"/Users/charbo/ClionProjects/qsort/main.cpp",
+		"/Users/charbo/PycharmProjects/Assurance/backup",
+		"/Users/charbo/GitProjects/Distributed-sys-proj/airport.h",
+		"/Users/charbo/GitProjects/DistSys/Distributed-sys-proj/place_client.c",
+		"/Users/charbo/Documents/SU/AI/HW2/HW1_q2_MarcCharbonneau",
+		"/Users/charbo/Documents/SU/Dist System/hw1_server",
+		"/Users/charbo/Documents/SU/Dist System/hw1_client",
+		"/Users/charbo/GitProjects/TwitterStreamDownloader/data/stream_apple.json",
+		"/Users/charbo/Documents/testspark.py",
+		"/Users/charbo/Scripts/localsparksubmit.sh",
+		"/Users/charbo/Scripts/jupyspark.sh",
+		"/Users/charbo/Documents/SU/AI/HW1/test",
+		"/Users/charbo/Documents/SU/AI/HW1/ds2.xls",
+		"/Users/charbo/Downloads/ds3.xls",
+		"/Users/charbo/Documents/SU/ParallelComputing/hw5_code/hw5/similar.cpp",
+		"/Users/charbo/Documents/SU/DB/L2/lab2.sql",
+		"/Users/charbo/Documents/SU/ParallelComputing/hw4_code/hw4/ConLinkList.h",
+		"/Users/charbo/Documents/SU/ParallelComputing/hw5_code/hw5Para/similarV3.txt",
+		"/Users/charbo/ClionProjects/tspParal/tsp.cpp",
+		"/Users/charbo/Documents/SU/ParallelComputing/hw5_code/hw5Para/similarV1.txt",
+		"/Users/charbo/Documents/SU/ParallelComputing/backup/Quicksort_Final",
+		"/Users/charbo/Desktop/grades.cpp",
+		"/Users/charbo/Documents/SU/backup/hw2/life.cpp",
+		"/Users/charbo/Documents/SU/ParallelComputing/lifeFinal.txt",
+		"/Users/charbo/Documents/SU/backup/hw2/grades.cpp",
+		"/Users/charbo/Documents/SU/ParallelComputing/initialHW2",
+		"/Users/charbo/Documents/SU/ParallelComputing/HW2/HW2/life.txt",
+		"/Users/charbo/Documents/SU/ParallelComputing/life.txt"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "slicing.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 657,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								212,
+								212
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "lesson03.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
