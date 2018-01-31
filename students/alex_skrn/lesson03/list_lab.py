@@ -30,25 +30,21 @@ def series_1(a_list):
     # Add another fruit to the beginning of the list using “+” ...
     my_list = ["Melons"] + my_list
     # ... and display the list.
-    print()
-    print("Added another fruit to the beginning of the list using '+'")
+    print("\nAdded another fruit to the beginning of the list using '+'")
     print(my_list)
 
     # Add another fruit to the beginning of the list using insert() ...
     my_list.insert(0, 'Lemons')
     # ... and display the list.
-    print()
-    print("Added another fruit to the beginning of the list using insert()")
+    print("\nAdded another fruit to the beginning of the list using insert()")
     print(my_list)
 
     # Display all the fruits that begin with “P”, using a for loop.
-    print()
-    print("Display all the fruits that begin with 'P', using a for loop")
+    print("\nDisplay all the fruits that begin with 'P', using a for loop")
     for name in my_list:
         if name.lower().startswith('p'):
             print(name, end=' ')
-    print()
-    print()
+    print("\n\n")
 
 
 # Series 2

@@ -14,9 +14,6 @@ def task_one_style_formatter(a_tuple):
 # Task 2
 def task_one_style_formatter2(a_tuple):
     """Alternative implementation to Task 1."""
-    # s = "file_{:03d} :   {:.2f}, {:.2e}, {:.3g}"
-    # item1, item2, item3, item4 = a_tuple
-    # return s.format(item1, item2, item3, item4)
     file_num = "{:03d}".format(a_tuple[0])
     a_float = "{:.2f}".format(a_tuple[1])
     sci_not1 = "{:.2e}".format(a_tuple[2])
@@ -36,7 +33,6 @@ def task_three_style_formatter(a_tuple):
 def change_positions(a_tuple):
     """Change positions in a 5 element tuple."""
     # Eg., (4, 30, 2017, 2, 27) --> '02 27 2017 04 30'
-    # Re-arrange the numbers
     reorder_tuple = a_tuple[3:] + a_tuple[2:3] + a_tuple[0:2]
 
     return "{:02} {:02} {} {:02} {:02}".format(*reorder_tuple)
@@ -97,19 +93,19 @@ def display_col2(a_tuple):
 
 # TESTING SECTION
 def test_task_one_style_formatter():
-    """."""
+    """Test the named function."""
     string = "file_002 :   123.46, 1.00e+04, 1.23e+04"
     assert task_one_style_formatter((2, 123.4567, 10000, 12345.67)) == string
 
 
 def test_task_one_style_formatter2():
-    """."""
+    """Test the named function."""
     string = "file_002 :   123.46, 1.00e+04, 1.23e+04"
     assert task_one_style_formatter2((2, 123.4567, 10000, 12345.67)) == string
 
 
 def test_task_three_style_formatter():
-    """."""
+    """Test the named function."""
     res1 = "the 3 numbers are: 2, 3, 5"
     res2 = "the 5 numbers are: 2, 3, 5, 7, 9"
     assert task_three_style_formatter((2, 3, 5)) == res1
@@ -117,18 +113,18 @@ def test_task_three_style_formatter():
 
 
 def test_change_positions():
-    """."""
+    """Test the named function."""
     assert change_positions((4, 30, 2017, 2, 27)) == "02 27 2017 04 30"
 
 
 def test_f_formatter1():
-    """."""
+    """Test the named function."""
     output = "The weight of an orange is 1.3 and the weight of a lemon is 1.1"
     assert f_formatter1(["oranges", 1.3, "lemons", 1.1]) == output
 
 
 def test_f_formatter2():
-    """."""
+    """Test the named function."""
     res = "The weight of an ORANGE is 1.56 and the weight of a LEMON is 1.32"
     assert f_formatter2(["oranges", 1.3, "lemons", 1.1]) == res
 

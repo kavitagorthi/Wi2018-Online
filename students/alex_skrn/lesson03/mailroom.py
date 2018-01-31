@@ -9,68 +9,77 @@ donors_sums = [[75.0, 50.5, 60.4], [148.75, 155.0], [15.0, 20.25, 12.25],
 
 
 # Sending a Thank You.
-def print_send_thank_you_menu():
-    """Print the send-thank-you menu on screen."""
-    msg = ("\nThis is the Send-Thank-You Menu\n"
-           "\nType <list> to see donor names, or\n"
-           "Type an existing donor name, or\n"
-           "Type a new donor name to add to the list, or\n"
-           "Type <quit> to go to the main manu.\n"
-           )
-    print(msg)
+def existing_donor_interaction():
+    """Ask for old donor name, donation amount, print a thank-you email."""
+    prompt_name = "Type full name of the old donor or 0 to abort > "
+    old_donor_name = input(prompt_name)
+    if old_donor_name == "0":
+        return
+    while old_donor_name not in donors:
+        old_donor_name = input(prompt_name)
+        if old_donor_name == "0":
+            return
+
+    prompt_amount = "Enter the donation amount or 0 to abort > "
+    donation_amount = input(prompt_amount)
+    if donation_amount == "0":
+        return
+
+    # Add the donation amount to the list.
+    donor_index = donors.index(old_donor_name)
+    donors_sums[donor_index].append(float(donation_amount))
+
+    print_email(old_donor_name, float(donation_amount))
+
+
+def new_donor_interaction():
+    """Ask for new donor name, donation amount, print a thank-you email."""
+    prompt_name = "Type full name of the new donor or 0 to abort > "
+    new_donor_name = input(prompt_name)
+    if new_donor_name == "0":
+        return
+
+    prompt_amount = "Enter the donation amount or 0 to abort > "
+    donation_amount = input(prompt_amount)
+    if donation_amount == "0":
+        return
+
+    # Add the donor and the donation amount to the list.
+    donors.append(new_donor_name)
+    donors_sums.append([float(donation_amount)])
+
+    print_email(new_donor_name, float(donation_amount))
 
 
 def print_donor_names():
     """Print existing donor names on screen."""
     print()
     for name in donors[:-1]:
-        print("{}".format(name), end=', ')
+        print(name, end=', ')
     print(donors[-1])
     print()
 
 
-def get_last_donation(donor_name):
-    """Return the last donation amount for donor_name."""
-    donor_index = donors.index(donor_name)
-    donation_amount = donors_sums[donor_index][-1]
-    return donation_amount
-
-
-def ask_donation_amount(donor_name):
-    """Ask for and add a new donation for the donor named donor_name."""
-    prompt_sum = input("Type the donation amount or 0 to abort > ")
-    if prompt_sum == "0":
-        return False
-    donor_index = donors.index(donor_name)
-    donors_sums[donor_index].append(float(prompt_sum))
-    return True
-
-
-def add_new_donor(donor_name):
-    """Add a new donor to the list and a slot for donation amounts."""
-    donors.append(donor_name)
-    donors_sums.append([])
-
-
-def remove_new_donor():
-    """Remove last donor from the list if user aborted the add operation."""
-    del donors[-1]
-
-
-def print_email(donor_name):
-    """Print a thank-you email addressed to name on screen."""
-    print()
-    # Get the last donation amount for donor_name.
-    don_amount = get_last_donation(donor_name)
-
-    # Compose and print the email text on screen.
+def print_email(name, amount):
+    """Print a thank-you email on screen."""
     email_text = ("\nDear {},\n"
                   "\nI would like to thank you for your donation of ${:,}.\n"
                   "\nWe appreciate your support.\n"
                   "\nSincerely,\n"
                   "The Organization\n"
                   )
-    print(email_text.format(donor_name, don_amount))
+    print(email_text.format(name, amount))
+
+
+def print_send_thank_you_menu():
+    """Print the send-thank-you menu on screen."""
+    msg = ("\nThis is the Send-Thank-You Menu\n"
+           "\n1 - See the list of donors\n"
+           "2 - Add a new donor and a donation amount\n"
+           "3 - Choose an existing donor\n"
+           "4 - Quit\n"
+           )
+    print(msg)
 
 
 def send_thank_you_interaction():
@@ -78,25 +87,19 @@ def send_thank_you_interaction():
     while True:
         print_send_thank_you_menu()
         prompt = input("Type your choice > ")
-        if prompt == "quit":
-            return
-        elif prompt == 'list':
+        if prompt == "1":
             print_donor_names()
-            # send_thank_you_interaction()
-        elif prompt not in donors:
-            add_new_donor(prompt)
-            if ask_donation_amount(prompt):
-                print_email(prompt)
-            else:
-                remove_new_donor()
-        elif prompt in donors:
-            ask_donation_amount(prompt)
-            print_email(prompt)
+        elif prompt == "2":
+            new_donor_interaction()
+        elif prompt == "3":
+            existing_donor_interaction()
+        elif prompt == "4":
+            break
 
 
 # Creating a Report.
 def get_total_given(donor_name):
-    """Return total amount of donations for the given donor donor_name."""
+    """Return total amount of donations for the given donor."""
     donor_index = donors.index(donor_name)
     return sum(donors_sums[donor_index])
 
@@ -109,7 +112,7 @@ def get_donations(donor_name):
 
 def sort_donors_by_total():
     """Return a list of donor names sorted by total donations, max to min."""
-    # Create a list in the form [['Donor Name', total_donated], []].
+    # Create a list in the form [['Donor Name', total_donated], etc.].
     donors_totals = []
     for name in donors:
         donors_totals.append([name, get_total_given(name)])
@@ -152,9 +155,9 @@ def create_report_main():
 def print_main_menu():
     """Print the menu on screen."""
     main_menu = ("\nThis the Main Menu\n"
-                 "\n1 for Send a Thank You\n"
-                 "2 for Create a Report\n"
-                 "3 for Quit\n"
+                 "\n1 - Send a Thank You\n"
+                 "2 - Create a Report\n"
+                 "3 - Quit\n"
                  )
     print(main_menu)
 
