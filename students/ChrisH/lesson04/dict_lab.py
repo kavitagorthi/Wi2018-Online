@@ -4,10 +4,10 @@
 #  demonstrates basic Python dictionaries
 # -----------------------------------------------------------
 
-def dictionaries():
 
+def dictionaries():
     # Dictionaries 1
-    data = {'name':'Chris', 'city':'Seattle', 'cake':'Chocolate'}
+    data = {'name': 'Chris', 'city': 'Seattle', 'cake': 'Chocolate'}
     print("Dictionary:", data)
     print("Deleting cake.")
     del data['cake']
@@ -28,7 +28,6 @@ def dictionaries():
 
 
 def sets():
-
     # Sets 1
     s2 = set(range(0, 21, 2))
     s3 = set(range(0, 21, 3))
@@ -36,10 +35,19 @@ def sets():
     print("Set s2:", s2)
     print("Set s3:", s3)
     print("Set s4:", s4)
-    print("Is s3 a subset of s2?", s3.issubset(s2))
-    print("Is s4 a subset of s2?", s4.issubset(s2))
-    
+    print("Is s3 a subset of s2?", s3.issubset(s2))  # equiv. s3 <= s2
+    print("Is s4 a subset of s2?", s4.issubset(s2))  # equiv. s4 <= s2
+
+    # Sets 2
+    sp = set('Python')
+    sp.add('i')
+    print("Set Python:", sp)
+    sm = frozenset('marathon')
+    print("Frozenset marathon:", sm)
+    print("Union:", sp | sm)  # equiv. sp.union(sm)
+    print("Intersection:", sp & sm)  # equiv. sp.intersection(sm
+
 
 if __name__ == "__main__":
-    # dictionaries()
+    dictionaries()
     sets()
