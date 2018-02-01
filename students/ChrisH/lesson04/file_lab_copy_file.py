@@ -60,5 +60,7 @@ if __name__ == "__main__":
     assert check_file('sk.jpg', 'w') == True
 
     # File copy tests.
-    print("Bytes written: {:d}".format(bin_copyfile('./shark.jpg', './shark_out.jpg')))
-    
+    files = [ ('./shark.jpg', './shark_out.jpg'), ('./hobbes_markov.txt', './hobbes_markov_out.txt')]
+    for file in files:
+        print("Copy file '{}' to '{}'".format(*file))
+        print("Bytes written: {:d}".format(bin_copyfile(*file)))
