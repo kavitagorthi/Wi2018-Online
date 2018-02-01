@@ -20,8 +20,26 @@ def dictionaries():
     print("Is cake a key?", bool(data.get('cake', 0)))
     print("Is Mango a value?", 'Mango' in data.values())
 
+    # Dictionaries 2
+    new_data = {}
+    for k in data:
+        new_data[k] = (data[k].lower()).count('t')
+    print("New dictionary, same keys, value is count of 't's in the old dictionary value:\n", new_data)
 
 
+def sets():
+
+    # Sets 1
+    s2 = set(range(0, 21, 2))
+    s3 = set(range(0, 21, 3))
+    s4 = set(range(0, 21, 4))
+    print("Set s2:", s2)
+    print("Set s3:", s3)
+    print("Set s4:", s4)
+    print("Is s3 a subset of s2?", s3.issubset(s2))
+    print("Is s4 a subset of s2?", s4.issubset(s2))
+    
 
 if __name__ == "__main__":
-    dictionaries()
+    # dictionaries()
+    sets()
