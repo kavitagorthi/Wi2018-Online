@@ -6,11 +6,11 @@
 # -----------------------------------------------------------
 
 # Global data structure
-donor_data = [('Al Donor1', [10.00, 20.00, 30.00, 40.00, 50.00]),
-              ('Bert Donor2', [10.00]),
-              ('Connie Donor3', [10.00, 10.00, 10.01]),
-              ('Dennis Donor4', [10.00, 20.00, 20.00]),
-              ('Egbert Donor5', [10.39, 20.21, 10.59, 4000.40]),
+donor_data = [{'first_name':'Al', 'last_name': 'Donor1','donations': [10.00, 20.00, 30.00, 40.00, 50.00]},
+              {'first_name':'Bert', 'last_name': 'Donor2','donations': [10.00]},
+              {'first_name':'Connie', 'last_name': 'Donor3','donations': [10.00, 10.00, 10.01]},
+              {'first_name':'Dennis', 'last_name': 'Donor4','donations': [10.00, 20.00, 20.00]},
+              {'first_name':'Egbert', 'last_name': 'Donor5','donations': [10.39, 20.21, 10.59, 4000.40]},
               ]
 
 
@@ -21,7 +21,7 @@ def donor_names():
     """
     name_list = []
     for donor in donor_data:
-        name_list.append(donor[0])
+        name_list.append(donor['first_name'] + ' ' + donor['last_name'])
     return name_list
 
 
@@ -74,7 +74,7 @@ def nul():
     pass
 
 if __name__ == "__main__":
-    menu_items = {1: send_thank_you, 2: print_report, 3: quit}
+    menu_functions = {1: send_thank_you, 2: print_report, 3: quit}
     while True:
         menu_functions.get(menu(), nul)()       # could also use 'lambda: None' instead of nul
 
