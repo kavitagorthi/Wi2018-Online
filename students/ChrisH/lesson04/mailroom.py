@@ -13,6 +13,13 @@ donor_data = [{'first_name':'Al', 'last_name': 'Donor1','donations': [10.00, 20.
               {'first_name':'Egbert', 'last_name': 'Donor5','donations': [10.39, 20.21, 10.59, 4000.40]},
               ]
 
+def donor_fullname(donor):
+    """
+    Given a dictionary entry for a donor, concatenates first and last name into a full name string.
+    :param donor: A donor dictionary object from donor_data
+    :return: string with donor's full name
+    """
+    return donor['first_name'] + ' ' + donor['last_name']
 
 def donor_names():
     """
@@ -21,7 +28,7 @@ def donor_names():
     """
     name_list = []
     for donor in donor_data:
-        name_list.append(donor['first_name'] + ' ' + donor['last_name'])
+        name_list.append(donor_fullname(donor))
     return name_list
 
 
@@ -56,7 +63,7 @@ def send_thank_you():
 
     amount = input("Enter a donation amount for {} : ".format(name))
     for donor in donor_data:
-        if name == donor['first_name'] + ' ' + donor['last_name']:
+        if name == donor_fullname(donor):
             donor['donations'].append(float(amount))
             print(f"\nDear {name}, \n\nThank you for your donation of ${amount}.\n\nWarmest regards,\nLocal Charity")
 
@@ -66,10 +73,19 @@ def print_report():
     Prints a formatted report on the donors with name, amount given, number of gifts, and average gift.
     :return: None
     """
-    print("Donor Name                | Total Given | Num Gifts | Average Gift")
-    print("------------------------------------------------------------------")
+    # Adjust first column width to accommodate the length of the longest name
+    name_max = 26
+    for name in donor_names():
+        if len(name) > name_max:
+            name_max = len(name) + 1
+
+    rpt_title = "Donor Name" + ' ' * (name_max - 10) + "| Total Given | Num Gifts | Average Gift"
+    print(rpt_title)
+    print("-" * len(rpt_title))
     for donor in donor_data:
-        print(f"{donor[0]:26} $ {sum(donor[1]):>10.2f}   {len(donor[1]):>9}  ${sum(donor[1])/len(donor[1]):>12.2f}")
+        name = donor_fullname(donor)
+        dons = donor['donations']
+        print(f"{name:{name_max}} $ {sum(dons):>10.2f}   {len(dons):>9}  ${sum(dons)/len(dons):>12.2f}")
 
 def nul():
     pass
