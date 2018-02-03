@@ -6,12 +6,13 @@
 # -----------------------------------------------------------
 
 # Global data structure
-donor_data = [{'first_name':'Al', 'last_name': 'Donor1','donations': [10.00, 20.00, 30.00, 40.00, 50.00]},
-              {'first_name':'Bert', 'last_name': 'Donor2','donations': [10.00]},
-              {'first_name':'Connie', 'last_name': 'Donor3','donations': [10.00, 10.00, 10.01]},
-              {'first_name':'Dennis', 'last_name': 'Donor4','donations': [10.00, 20.00, 20.00]},
-              {'first_name':'Egbert', 'last_name': 'Donor5','donations': [10.39, 20.21, 10.59, 4000.40]},
+donor_data = [{'first_name': 'Al', 'last_name': 'Donor1', 'donations': [10.00, 20.00, 30.00, 40.00, 50.00]},
+              {'first_name': 'Bert', 'last_name': 'Donor2', 'donations': [10.00]},
+              {'first_name': 'Connie', 'last_name': 'Donor3', 'donations': [10.00, 10.00, 10.01]},
+              {'first_name': 'Dennis', 'last_name': 'Donor4', 'donations': [10.00, 20.00, 20.00]},
+              {'first_name': 'Egbert', 'last_name': 'Donor5', 'donations': [10.39, 20.21, 10.59, 4000.40]},
               ]
+
 
 def donor_fullname(donor):
     """
@@ -20,6 +21,7 @@ def donor_fullname(donor):
     :return: string with donor's full name
     """
     return donor['first_name'] + ' ' + donor['last_name']
+
 
 def donor_names():
     """
@@ -32,16 +34,40 @@ def donor_names():
     return name_list
 
 
-def menu():
+def menu(menu_functions):
     """
-    Prints the main user menu, retrieves user selection.
-    :return: int according to user's selection
+    Prints the main user menu & retrieves user selection.
+    :param: a menu dictionary, key as numbered list.
+            Dict key 0 should be a null function (or text for bad choice)
+            Dict value is a list with the following entries:
+                [0] = Text for user prompt
+                [1] = Function that should be run for that choice
+    :return: the function corresponding to the user's selection
     """
     print("\nPlease choose one of the following options:")
-    print("1) Send a Thank You")
-    print("2) Create a Report")
-    print("3) Quit")
-    return int(input("> "))
+    for n in range(1, len(menu_functions)):                     # Start at item 1, item 0 should be null function
+        print(f"{n}) {menu_functions[n][0]}")                   # Prints the menu user text
+    menu_data = menu_functions.get(int(input("> ")), menu_functions[0])   # if bad option, returns item 0
+    return menu_data[1]                                         # Returns the function from that menu choice's list
+
+
+def generate_letter(donor):
+    format_string = """
+Dear {first_name} {last_name},
+
+    Thank you for your donation of ${last_donation:.2f}.
+
+            Warmest Regards,
+                Local Charity
+"""
+    amount = donor['donations'][-1]
+    print(format_string.format(last_donation=float(amount), **donor))
+
+
+def send_letters_all():
+    for donor in donor_data:
+        print('Generating letter for {first_name} {last_name}'.format(**donor))
+    return None
 
 
 def send_thank_you():
@@ -65,7 +91,8 @@ def send_thank_you():
     for donor in donor_data:
         if name == donor_fullname(donor):
             donor['donations'].append(float(amount))
-            print(f"\nDear {name}, \n\nThank you for your donation of ${amount}.\n\nWarmest regards,\nLocal Charity")
+            generate_letter(donor)
+
 
 
 def print_report():
@@ -91,7 +118,11 @@ def nul():
     pass
 
 if __name__ == "__main__":
-    menu_functions = {1: send_thank_you, 2: print_report, 3: quit}
+    menu_functions = {0: ['nul', nul],
+                      1: ['Send a Thank You', send_thank_you],
+                      2: ['Print a report', print_report],
+                      3: ['Send letters to everyone', send_letters_all],
+                      4: ['Quit', quit],
+                      }
     while True:
-        menu_functions.get(menu(), nul)()       # could also use 'lambda: None' instead of nul
-
+        menu(menu_functions)()       # could also use 'lambda: None' instead of nul
