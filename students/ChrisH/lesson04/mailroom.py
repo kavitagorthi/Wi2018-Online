@@ -49,14 +49,15 @@ def send_thank_you():
         if name == 'list':
             print(("{}\n" * len(d_list)).format(*d_list))
             continue
-        if name not in d_list:
-            donor_data.append((name, []))
+        if name not in d_list:          # Defines first name as text up to the first space given
+            name_sp = name.split(" ")
+            donor_data.append({'first_name': name_sp[0], 'last_name': ' '.join(name_sp[1:]), 'donations':[]})
         break
 
     amount = input("Enter a donation amount for {} : ".format(name))
     for donor in donor_data:
-        if name in donor[0]:
-            donor[1].append(float(amount))
+        if name == donor['first_name'] + ' ' + donor['last_name']:
+            donor['donations'].append(float(amount))
             print(f"\nDear {name}, \n\nThank you for your donation of ${amount}.\n\nWarmest regards,\nLocal Charity")
 
 
