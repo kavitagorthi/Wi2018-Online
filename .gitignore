@@ -104,6 +104,9 @@ ENV/
 # mkdocs documentation
 /site
 
+# Videos
+videos/
+
 # mypy
 .mypy_cache/
 
