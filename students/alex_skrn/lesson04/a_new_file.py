@@ -38,7 +38,7 @@ def load_file(source_path):
 
 
 def get_dict(a_list):
-    """Return a dict for trigram-style text generation. Return a list."""
+    """Return a dict for trigram-style text generation."""
     d = {}
     for index, _ in enumerate(a_list):
         try:
@@ -54,14 +54,14 @@ def get_dict(a_list):
 
 
 def get_seed(a_dict):
-    """Choose the first 2 words for the text."""
-    for key in a_dict:
-        try:
-            if key[0].isupper():  # Must be an upper case word
-                seed = key
-                break
-        except IndexError:
-            pass
+    """Choose _randomly_ the first 2 words for the text."""
+    while True:
+        key = random.choice(list(a_dict.keys()
+                                 )
+                            )
+        if key[0].isupper():  # Need an upper case first word
+            seed = key
+            break
     return seed
 
 
@@ -78,16 +78,16 @@ def generate_text(source_dict, size):
     for _ in range(size):
         key = ' '.join([output[-2], output[-1]])
         try:
-            value = source_dict[key]
-            # print(key, value)
-            if len(value) > 1:
-                value = random.choice(value)
-                output.append(value)
-            else:
-                output.extend(value)
+            value = source_dict[key]  # The value here is a list
         except KeyError:
             print("KeyEroor: Dead end occured on the pair {}".format(key))
             break
+        # If for our key there are several values, choose one randomly
+        if len(value) > 1:
+            value = random.choice(value)  # The value here is a list
+            output.append(value)  # The value here is a string
+        else:
+            output.extend(value)  # The value here is a list
 
     return output
 
@@ -114,6 +114,7 @@ def get_destination_path(filename):
     destination_dir = filedialog.askdirectory()
     destination_path = "{}/{}".format(destination_dir, filename)
     return destination_path
+
 
 # Write the output text to a file.
 def write_file(text, destination):
