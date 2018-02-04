@@ -15,8 +15,8 @@ fruits.append(input("Enter a new fruit > "))
 print(fruits)
 
 # print the index and the corresponding fruit at the user supplied index
-fruit_index = int(input("Enter a number between 1 and 5 > ")) - 1
-print(fruit_index, fruits[fruit_index])
+fruit_index = int(input("Enter a number between 1 and 5 > "))
+print(fruit_index, fruits[fruit_index - 1])
 
 # Add another fruit to the beginning of the list and print it
 fruits = ["Cherry"] + fruits
@@ -52,25 +52,41 @@ fruits2.remove(fruit_to_remove)
 print(fruits2)
 
 # Series 3
+
+# copy the list from series 1
 fruits3 = fruits[:]
 
-print(fruits3)
+# initialize container for removal fruits
+fruits_to_remove = []
 
-response = ""
-
+# iterate through each fruit and ask the user if they like it. If no, store it for later removal.
 for fruit in fruits3:
-	response = input("Do you like {}? ".format(fruit))
-
+	response = input("Do you like {}? ".format(fruit).lower())
 	while(response not in ("yes", "no")):
 		response = input("Do you like {}? Please make sure your answer is 'yes' or 'no'. ".format(fruit.lower()))
-
 	if response == "no":
-		fruits3.remove(fruit)
+		fruits_to_remove.append(fruit)
 
+# remove the fruits that the user didn't like
+for fruit in fruits_to_remove:
+	fruits3.remove(fruit)
+
+# print the remaining fruits (the fruits that the user does like)
 print(fruits3)
 
 # series 4
 
+# make a copy of the list and reverse the letters in each fruit in the copy
+fruits_copy = fruits[:]
+for i, fruit in enumerate(fruits_copy):
+	fruits_copy[i] = fruit[::-1]
+
+# delete the last item from the original list
+fruits.pop()
+
+# display the original list and the copy
+print(fruits)
+print(fruits_copy)
 
 
 
