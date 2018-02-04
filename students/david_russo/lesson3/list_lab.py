@@ -32,5 +32,47 @@ for fruit in fruits:
 
 # Series 2
 
+# make a copy of the fruits list
+fruits2 = fruits[:]
+
+# display the list
+print(fruits2)
+
+# remove the last fruit from the list 
+del fruits2[-1]
+
+# display the list
+print(fruits2)
+
+# Promp the user for a fruit to delete, find it, and delete it
+fruit_to_remove = input("Enter a fruit to delete > ")
+fruits2.remove(fruit_to_remove)
+
+# print the list
+print(fruits2)
+
+# Series 3
+fruits3 = fruits[:]
+
+print(fruits3)
+
+response = ""
+
+for fruit in fruits3:
+	response = input("Do you like {}? ".format(fruit))
+
+	while(response not in ("yes", "no")):
+		response = input("Do you like {}? Please make sure your answer is 'yes' or 'no'. ".format(fruit.lower()))
+
+	if response == "no":
+		fruits3.remove(fruit)
+
+print(fruits3)
+
+# series 4
+
+
+
+
 
 
