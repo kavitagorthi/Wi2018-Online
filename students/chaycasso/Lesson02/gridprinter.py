@@ -7,6 +7,7 @@ BLANK = " "
 PIPE = "|"
 BLANK_MINUS = BLANK + MINUS
 
+
 def grid1():
     """Draw a simple 2x2 grid composed of 5x5 squares."""
 
@@ -43,17 +44,17 @@ def grid2(grid_size=3):
 # The use of grid_size is different between Part 2 and Part 3 because it changes in the given examples for Part 2 and
 # Part 3.
 
-def grid_line3(columns = 2, grid_size = 3):
+def grid_line3(columns=2, grid_size=3):
     """Draw a line for a grid of columns x columns size, each square a grid_size length."""
     print((PLUS + BLANK_MINUS * grid_size + BLANK) * columns + PLUS)
 
 
-def grid_space3(columns = 2, grid_size = 3):
+def grid_space3(columns=2, grid_size=3):
     """Draw the inner spaces for a grid of columns x columns size, each square a grid_size length."""
     print((PIPE + BLANK * (grid_size * 2 + 1)) * columns + PIPE)
 
 
-def grid3(columns = 2, grid_size = 3):
+def grid3(columns=2, grid_size=3):
     """Draw a grid of columns x columns size, each square a grid_size length."""
     for j in range(1, columns + 1):
         grid_line3(columns, grid_size)
