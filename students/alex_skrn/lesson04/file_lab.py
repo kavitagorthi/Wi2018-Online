@@ -46,6 +46,7 @@ def copy_file_user_interaction():
     msg = "Copied {} to {}"
     print(msg.format(source_path, target_path))
 
+
 if __name__ == "__main__":
     # print_curr_dir_files()
     copy_file_user_interaction()
