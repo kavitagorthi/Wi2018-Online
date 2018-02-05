@@ -73,18 +73,22 @@ print("\nSeries 3")
 print("--------")
 # Again, using the list from series 1:
 fruit_list3 = fruit_list[:]
-# print(fruit_list3)
+print(fruit_list3)
 # Ask the user for input displaying a line like “Do you like apples?” for each fruit in the list (making the fruit
 # all lowercase).
 # For each “no”, delete that fruit from the list.
 # For any answer that is not “yes” or “no”, prompt the user to answer with one of those two values (a while loop is
 # good here)
-answer=""
+fruit=""
+
 for fruit in fruit_list3:
+    answer = ""
     while answer not in ["yes","no"]:
-        answer = input("Do you like {}?".format(fruit.lower())).lower()
+        answer = input("Do you like {}? ".format(fruit.lower())).lower()
         if answer not in ["yes","no"]: print("Please answer yes or no.")
-    if answer == "no": fruit_list3.remove(fruit)
+    if answer == "no":
+        print("Removing {}.".format(fruit))
+        fruit_list3.remove(fruit)
 # Display the list.
 print("Resultant list is:", fruit_list3)
 
