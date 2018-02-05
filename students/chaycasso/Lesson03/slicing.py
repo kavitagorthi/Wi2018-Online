@@ -3,7 +3,6 @@
 
 #Write some functions that take a sequence as an argument, and return a copy of that sequence:
 
-
 a_string = "this is a string"
 a_tuple = (2, 54, 13, 12, 5, 32)
 
@@ -15,6 +14,7 @@ def exchange_first_last(seq):
 
 assert exchange_first_last(a_string) == "ghis is a strint"
 assert exchange_first_last(a_tuple) == (32, 54, 13, 12, 5, 2)
+
 
 def every_other_item(seq):
     """with every other item removed."""
@@ -50,9 +50,10 @@ def middle_last_first(seq):
     """with the middle third, then last third, then the first third in the new order."""
     if len(seq) % 3 == 0:
         third = int(len(seq) / 3)
-        return seq[third:-1*third] + seq[:third] + seq[-1*third:]
+        return seq[third:-1*third] + seq[-1*third:] + seq[:third]
     else: return "Not divisible by 3."
 
+
 assert middle_last_first(a_string) == "Not divisible by 3."
-assert middle_last_first(a_tuple) == (13, 12, 2, 54, 5, 32)
-assert middle_last_first(a_longer_tuple) == (5, 32, 65, 22, 2, 54, 13, 12, 81, 9, 43, 4)
+assert middle_last_first(a_tuple) == (13, 12, 5, 32, 2, 54)
+assert middle_last_first(a_longer_tuple) == (5, 32, 65, 22, 81, 9, 43, 4, 2, 54, 13, 12)
