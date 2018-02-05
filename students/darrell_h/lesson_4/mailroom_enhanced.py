@@ -46,6 +46,16 @@ def sub_menu():
     options_dict = {'l': list_donors, 'q': quit}
     options_prompt = 'l - list donors\n'\
                      'q - return to main menu\n'
+    menu_selection(options_prompt, options_dict)
+
+
+def send_letters():
+    # options_dict = {'s': send_to_screen, 'f': send_to_file}
+    # oooorrrr
+    # options_dict = {'s': send_letters(screen), 'f': send_letters(file)}
+    # menu_prompt
+    # send to the
+    pass
 
 
 def send_thank_you():
@@ -96,14 +106,16 @@ def menu_selection(prompt, dispatch_dict):
 
 
 main_response_dict = {'1': send_thank_you,
-                      '3': sub_menu,
+                      's': sub_menu,
                       '2': create_report,
+                      '3': send_letters,
                       'q': quit}
 
 menu_prompt = '\nMAIN MENU\n'\
               '1 - send thank you\n'\
               '2 - create report\n'\
-              '3 - sub menu\n'\
+              '3 - send letters to everyone\n'\
+              's - sub menu\n'\
               'q - quit\n'
 
 
