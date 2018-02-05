@@ -51,7 +51,8 @@ def middle_last_first(seq):
     if len(seq) % 3 == 0:
         third = int(len(seq) / 3)
         return seq[third:-1*third] + seq[:third] + seq[-1*third:]
-#    return seq[2:-2] + seq[:2] + seq[-2:]
+    else: return "Not divisible by 3."
 
-
-assert middle_last_first(a_tuple) == (12, 13, 32, 5, 54, 2)
+assert middle_last_first(a_string) == "Not divisible by 3."
+assert middle_last_first(a_tuple) == (13, 12, 2, 54, 5, 32)
+assert middle_last_first(a_longer_tuple) == (5, 32, 65, 22, 2, 54, 13, 12, 81, 9, 43, 4)
