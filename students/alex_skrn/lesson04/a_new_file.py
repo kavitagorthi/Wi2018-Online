@@ -1,12 +1,12 @@
 """Assignment: Kata Fourteen: Tom Swift Under Milk Wood."""
 
+import os
 import random
 import tkinter as tk
 from tkinter import filedialog
 
 
-# load the file containing the book.
-
+# INPUT FILE MANAGEMENT
 def get_filepath():
     """Return the path to the source file obtained from the user."""
     # Get the name of the source file from the user.
@@ -31,12 +31,41 @@ def load_file(source_path):
             else:
                 line = line.strip()
                 line = line.split()
-            # line.append("\n")
             book.extend(line)
 
     return book
 
 
+# OUTPUT MANAGEMENT
+def write_file(text, destination):
+    """Write the output text to a file."""
+    with open(destination, 'w') as toF:
+        if isinstance(text, str):
+            toF.write(text)
+        else:
+            toF.write(str(text))
+
+    # Display the message on screen.
+    print("Wrote results to {}\n".format(destination))
+
+
+def print_onscreen(text):
+    """Print the generated text on screen."""
+    print(text)
+
+
+def formatter(a_list):
+    """Return a string containing the formatted text."""
+    result = ""
+    for token in a_list:
+        if token == "\n\n":
+            result += token
+        else:
+            result += (token + " ")
+    return result
+
+
+# MAIN PROCESSING
 def get_dict(a_list):
     """Return a dict for trigram-style text generation."""
     d = {}
@@ -54,7 +83,7 @@ def get_dict(a_list):
 
 
 def get_seed(a_dict):
-    """Choose _randomly_ the first 2 words for the text."""
+    """Choose _randomly_ the first 2 words for my text."""
     while True:
         seed = random.choice(list(a_dict.keys()))
         # Need an upper case first word and no \n\n in the second position.
@@ -63,8 +92,8 @@ def get_seed(a_dict):
     return seed
 
 
-def get_new_value(a_dict, key):
-    """Return a str -- a new value for the text, or False if no value."""
+def get_next_value(a_dict, key):
+    """Return a str -- a new value for the text, or False if key is invalid."""
     try:
         value = a_dict[key]  # The value here is a list
     except KeyError:
@@ -79,130 +108,71 @@ def get_new_value(a_dict, key):
     return value
 
 
-# Construct the output text.
 def generate_text(source_dict, size):
     """Return a list with the generateed text of the given size."""
-    output = []
+    result = []
 
     # Choose the first 2 words for the text
     seed = get_seed(source_dict)
-    output.extend(seed.split())
+    result.extend(seed.split())
 
-    # Make sure my list has 2 elements at this point
-    assert len(output) == 2
+    # Make sure my list has 2 elements at the starting point
+    assert len(result) == 2
 
     # Collect all the other words for the final text.
-    # print_flag = False
-    while len(output) < size:
-        key = ' '.join([output[-2], output[-1]])
-        value = get_new_value(source_dict, key)
-        # Handle the case where the dict has no such key
+    while len(result) < size:
+        key = ' '.join([result[-2], result[-1]])
+        value = get_next_value(source_dict, key)
+        # Handle the case where the dict has no such key; so the value is False
         if not value:
-            # print_flag = True
-            counter = len(output)
-            # Go back along the output list to find a suitable key
+            counter = len(result)
+            # Step backwards throu the result list to find a diff path
             while counter > 1:
-                key = ' '.join([output[counter-3], output[counter-2]])
-                value = get_new_value(source_dict, key)
-                # print(key)
-                # Find a key capable of producing an alternative value
-                if value != output[counter-1]:
-                    # print("Alt value: ", value)
-                    # Start the output list anew from that point
-                    output = output[:counter-1]
+                key = ' '.join([result[counter-3], result[counter-2]])
+                value = get_next_value(source_dict, key)
+                # Test if a previous key can offer an alternative value
+                if value != result[counter-1]:
+                    # Start the result list anew from that point
+                    result = result[:counter-1]
                     break
                 counter -= 1
-            # print(output)
-            # raise ValueError("get_new_value returned False!!!")
-        # print(value, type(value))
-        # print("Appended value:", value)
-        output.append(value)
+        result.append(value)
 
-    # print("Len of output before return", len(output))
-    # if print_flag:
-    #     print("\nLen of output :", len(output))
-        # print(output)
-    return output
-
-
-def formatter(a_list):
-    """Return a string containing the formatted text."""
-    result = ""
-    for token in a_list:
-        if token == "\n\n":
-            result += token
-        else:
-            result += (token + " ")
     return result
-
-
-# Print on screen /
-def print_onscreen(text):
-    """Print the generated text on screen."""
-    print(text)
-
-
-def get_destination_path(filename):
-    """Get the destination directory from the user."""
-    destination_dir = filedialog.askdirectory()
-    destination_path = "{}/{}".format(destination_dir, filename)
-    return destination_path
-
-
-# Write the output text to a file.
-def write_file(text, destination):
-    """Write the output text to a file."""
-    # Write the text to the file.
-    with open(destination, 'w') as toF:
-        if isinstance(text, str):
-            toF.write(text)
-        else:
-            toF.write(str(text))
-
-    # Display the message on screen.
-    msg = "Wrote your masterpiece to the file {}\n"
-    print(msg.format(destination))
 
 
 def process_main():
     """Process all operations to generate some trigram-style text."""
+    # Get the input book file from the user
     path = get_filepath()
     book = load_file(path)
     source_dict = get_dict(book)
-    # destination_d = get_destination_path("resulting_dict.txt")
-    # write_file(source_dict, destination_d)
     text_L = generate_text(source_dict, 200)  # Get text as a list
-    # destination_L = get_destination_path("book_as_list.txt")
-    # write_file(book, destination_L)
     text_S = formatter(text_L)  # Convert the list into a string
-    # write_file(text_L, "output_as_list.txt")
-    destination = get_destination_path("masterpiece.txt")
+    # Use the same folder for the output file
+    destination_dir = os.path.split(path)[0]
+    destination = "{}/{}".format(destination_dir, "masterpiece.txt")
     write_file(text_S, destination)
     print_onscreen(text_S)
 
 
 def test_generate_text():
-    """Find KeyValue errors on multiple runs of generate_text()."""
+    """Run the generate_text() function multiple times for errors."""
     path = "C:/Users/Alexey/Desktop/sherlock.txt"
     book = load_file(path)
     source_dict = get_dict(book)
-    n_value_count = 0
-    list_value_count = 0
     loop_count = 0
-    # l_lengths = []
-    for _ in range(1000):
+    count_lengths = []
+    runs = 100
+    size = 1000
+    for _ in range(runs):
+        res = generate_text(source_dict, size)
+        count_lengths.append(len(res))
         loop_count += 1
-        val = generate_text(source_dict, 100)
-        # l_lengths.append(len(val))
-        if val is None:
-            n_value_count += 1
-        elif isinstance(val, list):
-            list_value_count += 1
-    print("Nones = ", n_value_count, "Lists = ", list_value_count)
-    print("Num of loops = ", loop_count)
-    # print(l_lengths)
+    print("Num of runs = ", loop_count)
+    assert sum(count_lengths) / runs == size, "Mean must be equal to size"
 
 
 if __name__ == "__main__":
-    process_main()
-    # test_generate_text()
+    # process_main()
+    test_generate_text()
