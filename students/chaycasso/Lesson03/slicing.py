@@ -44,3 +44,14 @@ def reversed(seq):
 
 assert reversed(a_string) == "gnirts a si siht"
 assert reversed(a_tuple) == (32, 5, 12, 13, 54, 2)
+
+
+def middle_last_first(seq):
+    """with the middle third, then last third, then the first third in the new order."""
+    if len(seq) % 3 == 0:
+        third = int(len(seq) / 3)
+        return seq[third:-1*third] + seq[:third] + seq[-1*third:]
+#    return seq[2:-2] + seq[:2] + seq[-2:]
+
+
+assert middle_last_first(a_tuple) == (12, 13, 32, 5, 54, 2)
