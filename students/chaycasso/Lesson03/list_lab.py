@@ -81,7 +81,12 @@ print(fruit_list3)
 # good here)
 fruit=""
 
-for fruit in fruit_list3:
+# Need to make a copy of fruit_list3 here, because removing members of a list in the middle of iterating a for
+# statement based on that list causes the list to increment by 1.
+
+fruit_list3_static = fruit_list3[:]
+
+for fruit in fruit_list3_static:
     answer = ""
     while answer not in ["yes","no"]:
         answer = input("Do you like {}? ".format(fruit.lower())).lower()
@@ -92,7 +97,6 @@ for fruit in fruit_list3:
 # Display the list.
 print("Resultant list is:", fruit_list3)
 
-# Series 4
 print("\nSeries 4")
 print("--------")
 # Once more, using the list from series 1:
