@@ -40,7 +40,6 @@ print("All fruits beginning with P:")
 for fruit in fruit_list:
     if fruit[:1] == "P": print(fruit)
 
-
 # Series 2
 # Using the list created in series 1 above:
 
@@ -79,14 +78,10 @@ print(fruit_list3)
 # For each “no”, delete that fruit from the list.
 # For any answer that is not “yes” or “no”, prompt the user to answer with one of those two values (a while loop is
 # good here)
-fruit=""
+fruit = ""
 
-# Need to make a copy of fruit_list3 here, because removing members of a list in the middle of iterating a for
-# statement based on that list causes the list to increment by 1.
-
-fruit_list3_static = fruit_list3[:]
-
-for fruit in fruit_list3_static:
+# Need to make a copy of fruit_list3 here.
+for fruit in fruit_list3[:]:
     answer = ""
     while answer not in ["yes","no"]:
         answer = input("Do you like {}? ".format(fruit.lower())).lower()
@@ -100,6 +95,14 @@ print("Resultant list is:", fruit_list3)
 print("\nSeries 4")
 print("--------")
 # Once more, using the list from series 1:
+fruit_list4 = fruit_list[:]
+# print(fruit_list4)
 
 # Make a copy of the list and reverse the letters in each fruit in the copy.
+for i in range(len(fruit_list4)):
+    fruit_list4[i]=fruit_list4[i][::-1]
+
 # Delete the last item of the original list. Display the original list and the copy.
+del fruit_list[-1:]
+print("Original list: ", fruit_list)
+print("Copy list: ", fruit_list4)
