@@ -36,3 +36,11 @@ def every_other_inner(seq):
 assert every_other_inner(a_string) == " sas"
 assert every_other_inner(a_longer_tuple) == (5, 65)
 
+
+def reversed(seq):
+    """with the elements reversed (just with slicing)."""
+    return seq[::-1]
+
+
+assert reversed(a_string) == "gnirts a si siht"
+assert reversed(a_tuple) == (32, 5, 12, 13, 54, 2)
