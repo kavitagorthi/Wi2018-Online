@@ -71,30 +71,9 @@ def print_email(name, amount):
     print(email_text.format(name, amount))
 
 
-def print_send_thank_you_menu():
-    """Print the send-thank-you menu on screen."""
-    msg = ("\nThis is the Send-Thank-You Menu\n"
-           "\n1 - See the list of donors\n"
-           "2 - Add a new donor and a donation amount\n"
-           "3 - Choose an existing donor\n"
-           "4 - Quit\n"
-           )
-    print(msg)
-
-
 def send_thank_you_interaction():
-    """Send a thank you letter."""
-    while True:
-        print_send_thank_you_menu()
-        prompt = input("Type your choice > ")
-        if prompt == "1":
-            print_donor_names()
-        elif prompt == "2":
-            new_donor_interaction()
-        elif prompt == "3":
-            existing_donor_interaction()
-        elif prompt == "4":
-            break
+    """."""
+    menu_selection(send_thanks_prompt, send_thanks_dispatch)
 
 
 # Creating a Report.
@@ -149,29 +128,45 @@ def create_report_main():
     print()
 
 
-# Main menu.
-def print_main_menu():
-    """Print the menu on screen."""
-    main_menu = ("\nThis the Main Menu\n"
-                 "\n1 - Send a Thank You\n"
-                 "2 - Create a Report\n"
-                 "3 - Quit\n"
-                 )
-    print(main_menu)
+def quit():
+    """."""
+    return "exit menu"
 
 
-def main_menu_interaction():
-    """Control the main flow of the user interaction."""
+def menu_selection(prompt, dispatch_dict):
+    """."""
     while True:
-        print_main_menu()
-        prompt = input("Please choose an option > ")
-        if prompt == "1":
-            send_thank_you_interaction()
-        elif prompt == "2":
-            create_report_main()
-        elif prompt == "3":
-            break
+        response = input(prompt)
+        try:
+            if dispatch_dict[response]() == "exit menu":
+                break
+        except KeyError:
+            print("\nInvalid choice. Try again")
+            pass
 
 
 if __name__ == "__main__":
-    main_menu_interaction()
+    # main_menu_interaction()
+    send_thanks_dispatch = {"1": print_donor_names,
+                            "2": new_donor_interaction,
+                            "3": existing_donor_interaction,
+                            "4": quit
+                            }
+    send_thanks_prompt = ("\nSend-Thank-You Sub-Menu\n"
+                          "\n1 - See the list of donors\n"
+                          "2 - Add a new donor and a donation amount\n"
+                          "3 - Choose an existing donor\n"
+                          "4 - Quit\n"
+                          ">> "
+                          )
+    main_dispatch = {"1": send_thank_you_interaction,
+                     "2": create_report_main,
+                     "3": quit
+                     }
+    main_prompt = ("\nMain Menu\n"
+                   "\n1 - Send a Thank You\n"
+                   "2 - Create a Report\n"
+                   "3 - Quit\n"
+                   ">> "
+                   )
+    menu_selection(main_prompt, main_dispatch)
