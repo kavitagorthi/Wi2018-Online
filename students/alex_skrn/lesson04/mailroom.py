@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-"""Mailroom - Part 1."""
+"""Mailroom - Part 2 - Dicts, Files."""
 
-donors = ["Wassily Kandinsky", "Marc Chagall", "Kazimir Malevich",
-          "El Lissitzky", "Aristarkh Lentulov"]
-donors_sums = [[75.0, 50.5, 60.4], [148.75, 155.0], [15.0, 20.25, 12.25],
-               [34.20, 30.0, 35.5], [4.5, 5.0]]
+donors = {'Aristarkh Lentulov': [4.5, 5.0],
+          'El Lissitzky': [34.2, 30.0, 35.5],
+          'Kazimir Malevich': [15.0, 20.25, 12.25],
+          'Marc Chagall': [148.75, 155.0],
+          'Wassily Kandinsky': [75.0, 50.5, 60.4]
+          }
 
 
 # Sending a Thank You.
@@ -25,10 +27,8 @@ def existing_donor_interaction():
     if donation_amount == "0":
         return
 
-    # Add the donation amount to the list.
-    donor_index = donors.index(old_donor_name)
-    donors_sums[donor_index].append(float(donation_amount))
-
+    # Add the donation amount to the dict.
+    donors[old_donor_name].append(float(donation_amount))
     print_email(old_donor_name, float(donation_amount))
 
 
@@ -44,9 +44,8 @@ def new_donor_interaction():
     if donation_amount == "0":
         return
 
-    # Add the donor and the donation amount to the list.
-    donors.append(new_donor_name)
-    donors_sums.append([float(donation_amount)])
+    # Add the donor and the donation amount to the dict.
+    donors[new_donor_name] = [float(donation_amount)]
 
     print_email(new_donor_name, float(donation_amount))
 
@@ -54,9 +53,10 @@ def new_donor_interaction():
 def print_donor_names():
     """Print existing donor names on screen."""
     print()
-    for name in donors[:-1]:
+    donors_L = list(donors.keys())
+    for name in donors_L[:-1]:
         print(name, end=', ')
-    print(donors[-1])
+    print(donors_L[-1])
     print()
 
 
@@ -100,14 +100,12 @@ def send_thank_you_interaction():
 # Creating a Report.
 def get_total_given(donor_name):
     """Return total amount of donations for the given donor."""
-    donor_index = donors.index(donor_name)
-    return sum(donors_sums[donor_index])
+    return sum(donors[donor_name])
 
 
 def get_donations(donor_name):
     """Return a list of the specified donor's donations."""
-    donor_index = donors.index(donor_name)
-    return donors_sums[donor_index]
+    return donors[donor_name]
 
 
 def sort_donors_by_total():
