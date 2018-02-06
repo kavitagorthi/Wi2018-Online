@@ -22,6 +22,11 @@ def exchange_first_last(seq):
     '''Swap the first and last values of the series and return value'''
     return seq[-1:] + seq[1:-1] + seq[:1]
 
+def test_exchange_first_last():
+    '''Tests for exchange first and last'''
+    assert exchange_first_last((a_string)) == "ghis is a strint"
+    assert exchange_first_last((a_tuple)) == (32, 54, 13, 12, 5, 2)
+
 def remove_every_other(seq):
     '''Remove every other item (step by 2) in the series and return the new series'''
     return seq[0:-1:2]
@@ -42,6 +47,7 @@ def middle_third(seq):
 
 # -- Presentation (Input/Output) --#
 if __name__ == '__main__':
+    test_exchange_first_last()
     print(exchange_first_last(a_string))
     print(exchange_first_last(a_tuple))
 
