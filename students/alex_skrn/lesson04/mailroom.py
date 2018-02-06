@@ -60,15 +60,23 @@ def print_donor_names():
     print()
 
 
-def print_email(name, amount):
-    """Print a thank-you email on screen."""
-    email_text = ("\nDear {},\n"
-                  "\nI would like to thank you for your donation of ${:,}.\n"
+def get_email(name, amount):
+    """Return a str containing a thank-you email."""
+    d = dict(key1=name, key2=amount)
+    # Can't figure out how to combine {:,} and {key2} below.
+    # Used a dict here 'cos the assignment asked for it.
+    email_text = ("\nDear {key1},\n"
+                  "\nI would like to thank you for your donation of ${key2}.\n"
                   "\nWe appreciate your support.\n"
                   "\nSincerely,\n"
                   "The Organization\n"
                   )
-    print(email_text.format(name, amount))
+    return email_text.format(**d)
+
+
+def print_email(name, amount):
+    """Print a thank-you email on screen."""
+    print(get_email(name, amount))
 
 
 def send_thank_you_interaction():
