@@ -1,16 +1,32 @@
 #!/usr/bin/env python3
 
 """Mailroom - Part 2 - Dicts, Files."""
+import os
+import tkinter as tk
+from tkinter import filedialog
 
 donors = {'Aristarkh Lentulov': [4.5, 5.0],
           'El Lissitzky': [34.2, 30.0, 35.5],
           'Kazimir Malevich': [15.0, 20.25, 12.25],
           'Marc Chagall': [148.75, 155.0],
-          'Wassily Kandinsky': [75.0, 50.5, 60.4]
+          'Wassily Kandinsky': [75.0, 50.5, 60.4],
           }
 
 
 # Sending a Thank You.
+def add_donation(name, amount):
+    """Add a donation for a named donor."""
+    if name in donors:
+        donors[name].append(float(amount))
+    else:
+        donors[name] = [float(amount)]
+
+
+def get_last_donation(name):
+    """Return a float -- the last donation of the given donor."""
+    return donors[name][-1]
+
+
 def existing_donor_interaction():
     """Ask for old donor name, donation amount, print a thank-you email."""
     prompt_name = "Type full name of the old donor or 0 to abort > "
@@ -28,8 +44,9 @@ def existing_donor_interaction():
         return
 
     # Add the donation amount to the dict.
-    donors[old_donor_name].append(float(donation_amount))
-    print_email(old_donor_name, float(donation_amount))
+    add_donation(old_donor_name, donation_amount)
+
+    print_email(old_donor_name, get_last_donation(old_donor_name))
 
 
 def new_donor_interaction():
@@ -45,9 +62,9 @@ def new_donor_interaction():
         return
 
     # Add the donor and the donation amount to the dict.
-    donors[new_donor_name] = [float(donation_amount)]
+    add_donation(new_donor_name, donation_amount)
 
-    print_email(new_donor_name, float(donation_amount))
+    print_email(new_donor_name, get_last_donation(new_donor_name))
 
 
 def print_donor_names():
@@ -79,8 +96,44 @@ def print_email(name, amount):
     print(get_email(name, amount))
 
 
+def write_file(destination, name, text):
+    """Write text to destination/name.txt."""
+    path = "{}/{}.txt".format(destination, name)
+    with open(path, "w") as toF:
+        toF.write(text)
+
+
+def write_cwd():
+    """Write all emails to the current working directory."""
+    cwd = os.getcwd()
+    for name in donors:
+        text = get_email(name, get_last_donation(name))
+        write_file(cwd, name, text)
+
+    print("\nAll letters saved in {}\n".format(cwd))
+
+
+def write_select_dir():
+    """Write all emails to a dir selected by the user."""
+    root = tk.Tk()
+    root.withdraw()
+
+    # Get the target directory from the user.
+    target_dir = filedialog.askdirectory()
+    for name in donors:
+        text = get_email(name, get_last_donation(name))
+        write_file(target_dir, name, text)
+
+    print("\nAll letters saved in {}\n".format(target_dir))
+
+
+def send_all_menu():
+    """Initiate the send-all-letters sub-sub-menu."""
+    menu_selection(write_file_prompt, write_file_dispatch)
+
+
 def send_thank_you_interaction():
-    """."""
+    """Initiate the send-thank-you sub-menu."""
     menu_selection(send_thanks_prompt, send_thanks_dispatch)
 
 
@@ -136,13 +189,14 @@ def create_report_main():
     print()
 
 
+# Managing menues.
 def quit():
-    """."""
+    """Provide an exit option for menus."""
     return "exit menu"
 
 
 def menu_selection(prompt, dispatch_dict):
-    """."""
+    """Provide a template for using dispatch dicts to switch through menus."""
     while True:
         response = input(prompt)
         try:
@@ -154,11 +208,20 @@ def menu_selection(prompt, dispatch_dict):
 
 
 if __name__ == "__main__":
-    # main_menu_interaction()
+    write_file_prompt = ("\nSend to everyone sub-menu\n"
+                         "\n1 - Write to current working directory\n"
+                         "2 - Choose a directory to write\n"
+                         "3 - Quit\n"
+                         ">> "
+                         )
+    write_file_dispatch = {"1": write_cwd,
+                           "2": write_select_dir,
+                           "3": quit,
+                           }
     send_thanks_dispatch = {"1": print_donor_names,
                             "2": new_donor_interaction,
                             "3": existing_donor_interaction,
-                            "4": quit
+                            "4": quit,
                             }
     send_thanks_prompt = ("\nSend-Thank-You Sub-Menu\n"
                           "\n1 - See the list of donors\n"
@@ -169,12 +232,14 @@ if __name__ == "__main__":
                           )
     main_dispatch = {"1": send_thank_you_interaction,
                      "2": create_report_main,
-                     "3": quit
+                     "3": send_all_menu,
+                     "4": quit,
                      }
     main_prompt = ("\nMain Menu\n"
                    "\n1 - Send a Thank You\n"
                    "2 - Create a Report\n"
-                   "3 - Quit\n"
+                   "3 - Send letters to everyone\n"
+                   "4 - Quit\n"
                    ">> "
                    )
     menu_selection(main_prompt, main_dispatch)
