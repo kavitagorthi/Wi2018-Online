@@ -1,7 +1,8 @@
 #!/usr/bin/env python
+from sys import exit
 
-donors = [["Walter White", "Ray Donovan", "John Snow", "Walter White", "Ray Donovan", "John Snow"],
-          [10000, 2500, 10, 15000, 6500, 5]]
+donors = [["Walter White", "Ray Donovan", "John Snow", "Walter White", "Ray Donovan", "John Snow", "Walter White", "Ray Donovan", "John Snow", "Walter White", "Ray Donovan", "John Snow", "Walter White", "Ray Donovan", "John Snow"],
+          [10000, 2500, 10, 15000, 6500, 5, 20000, 10500, 3, 25000, 15000, 2, 30000, 19500, 1]]
 
 # define a function to prompt the user for their desired action
 def prompt_user():
@@ -29,18 +30,40 @@ def send_a_thank_you():
     donors[0].append(donor)
     donors[1].append(donation_amount)
     
-    print("Dear {:s}, Thank you for your generous donation of ${:.2f}. Best, The Donation Foundation. ".format(donors[0][-1], donors[1][-1]))
+    print("Dear {:s}, Thank you for your generous donation of ${:.2f}.".format(donors[0][-1], donors[1][-1]),
+          "Best, The Donation Foundation.")
     
-    prompt_user()
+    handle_response(prompt_user())
    
 
 # define a function to create a donation report
 def create_a_report():
-    print("You selected create a report.")
+    unique_donors = list(set(donors[0]))
+    print("You selected create a report." )
+    # print the header of the report 
+    header_tuple = ("Donor Name", "Total Given", "Num Gifts", "Average Gift Size")
+    print("{:20s} | {:10s} | {:10s} | {:15s}".format(*header_tuple))
+    print("-" * 70)
+    # create a tuple of name, total donation amount, numbers of gifts, and average gift size for each donor
+    for donor in unique_donors:
+        indices = [i for i, x in enumerate(donors[0]) if x == donor]
+        donor_name = donor
+        num_donations = int(len(indices))
+        sum_donations = 0
+        for index in indices:
+            sum_donations += donors[1][index]
+        mean_gift_size = sum_donations/num_donations
+        donor_tuple = (donor_name, sum_donations, num_donations, mean_gift_size)
+        print("{:20s} ${:10.2f}   {:10d}   ${:15.2f}".format(*donor_tuple))
+
+    handle_response(prompt_user())
+        
+
 
 # define a function to quit the program
 def quit_program():
-    print("You selected quit.")
+    print("You selected quit. The program is quitting. ")
+    exit(0)
 
 def handle_response(user_input):
     if user_input == "Send a Thank You":
