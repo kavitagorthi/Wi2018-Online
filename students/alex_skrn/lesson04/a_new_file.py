@@ -1,6 +1,6 @@
 """Assignment: Kata Fourteen: Tom Swift Under Milk Wood."""
 
-import os
+# import os
 import random
 import tkinter as tk
 from tkinter import filedialog
@@ -37,18 +37,6 @@ def load_file(source_path):
 
 
 # OUTPUT MANAGEMENT
-def write_file(text, destination):
-    """Write the output text to a file."""
-    with open(destination, 'w') as toF:
-        if isinstance(text, str):
-            toF.write(text)
-        else:
-            toF.write(str(text))
-
-    # Display the message on screen.
-    print("Wrote results to {}\n".format(destination))
-
-
 def print_onscreen(text):
     """Print the generated text on screen."""
     print(text)
@@ -149,10 +137,6 @@ def process_main():
     source_dict = get_dict(book)
     text_L = generate_text(source_dict, 200)  # Get text as a list
     text_S = formatter(text_L)  # Convert the list into a string
-    # Use the same folder for the output file
-    destination_dir = os.path.split(path)[0]
-    destination = "{}/{}".format(destination_dir, "masterpiece.txt")
-    write_file(text_S, destination)
     print_onscreen(text_S)
 
 
@@ -174,5 +158,5 @@ def test_generate_text():
 
 
 if __name__ == "__main__":
-    # process_main()
-    test_generate_text()
+    process_main()
+    # test_generate_text()
