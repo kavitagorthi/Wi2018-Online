@@ -1,9 +1,7 @@
 
 # Global vairables
 plus = '+ '
-
 dash = '- '
-
 bar = '| '
 
 
@@ -15,11 +13,14 @@ def printGrid(size):
 
     # I messed around with the formatting so much, that once I found
     # something that worked, I left good enough alone
-    print('{}{}'.format((plus + dash * space), (plus + dash * space),), end='+')
+    print('{}{}'.format(
+        (plus + dash * space),
+        (plus + dash * space),
+    ), end='+')
     print()
 
     for l in range(space):
-        print('{}'.format(bar +'  ' * space) * 3)
+        print('{}'.format(bar + '  ' * space) * 3)
 
     print('{}{}'.format((plus + dash * space), (plus + dash * space),), end='+')
     print()
@@ -27,7 +28,10 @@ def printGrid(size):
     for l in range(space):
         print('{}'.format(bar + '  ' * space) * 3)
 
-    print('{}{}'.format((plus + dash * space), (plus + dash * space) , ), end='+')
+    print('{}{}'.format(
+        (plus + dash * space),
+        (plus + dash * space),
+    ), end='+')
 
 
 def printGridRowCol(size, row=0, col=0):
@@ -67,5 +71,4 @@ def main():
 
 
 if __name__ == "__main__":
-    import ipdb; ipdb.set_trace()
     main()
