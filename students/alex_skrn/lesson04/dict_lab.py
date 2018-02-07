@@ -12,8 +12,7 @@ d = {"name": "Chris",
 def run_dict1():
     """Execute Dict 1 series of actions."""
     print("\nDictionaries 1\n".upper())
-    print("Create a dictionary and Display it:")
-    print(d)
+    print(f"Create a dictionary and Display it:\n{d}")
     print("\nDelete the entry for 'cake' and display the dictionary:")
     del d["cake"]
     print(d)
@@ -37,7 +36,7 @@ def run_dict1():
 
 
 def run_dict2():
-    """Execute Dict 1 series of actions."""
+    """Execute Dict 2 series of actions."""
     print("\nDictionaries 2\n".upper())
     print("Using the dictionary from item 1: "
           "Make a dictionary using the same keys but "
@@ -62,8 +61,7 @@ def run_set1():
     for s in s2, s3, s4:
         print(s)
 
-    print("\nDisplay if s3 is a subset of s2 (False):")
-    print(s3.issubset(s2))
+    print(f"\nDisplay if s3 is a subset of s2 (False):\n{s3.issubset(s2)}")
     print("\nand if s4 is a subset of s2 (True):")
     print(s4.issubset(s2))
 
@@ -74,12 +72,10 @@ def run_set2():
     print("Create a set with the letters in 'Python' and add 'i' to the set.")
     s = set(list("Python"))
     s.add("i")
-    print("The resulting set:")
-    print(s)
+    print(f"The resulting set:\n{s}")
     print("\nCreate a frozenset with the letters in 'marathon'.")
     sf = frozenset(list("marathon"))
-    print("The resulting set:")
-    print(sf)
+    print(f"The resulting set:\n{sf}")
     print("\ndisplay the union and intersection of the two sets:")
     print(s.union(sf))
     print(s.intersection(sf))
