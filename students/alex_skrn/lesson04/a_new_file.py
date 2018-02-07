@@ -1,6 +1,5 @@
 """Assignment: Kata Fourteen: Tom Swift Under Milk Wood."""
 
-# import os
 import random
 import tkinter as tk
 from tkinter import filedialog
@@ -80,24 +79,29 @@ def get_seed(a_dict):
     return seed
 
 
+def get_alt_value(a_dict, key, bad):
+    """Return a random value (if any) but not the bad value."""
+    if len(set(a_dict[key])) == 1:
+        return False
+    else:
+        values = a_dict[key]
+        values.remove(bad)
+        return random.choice(values)
+
+
 def get_next_value(a_dict, key):
-    """Return a str -- a new value for the text, or False if key is invalid."""
+    """Return a random value (if any) or False if no such key."""
     try:
         value = a_dict[key]  # The value here is a list
     except KeyError:
         # print("KeyEroor: Dead end occured on the pair {}".format(key))
         return False
 
-    # If for our key there are several values, choose one randomly
-    if len(value) > 1:
-        value = random.choice(value)
-    else:
-        value = value[0]
-    return value
+    return random.choice(value)
 
 
 def generate_text(source_dict, size):
-    """Return a list with the generateed text of the given size."""
+    """Return a list with the generated text of the given size."""
     result = []
 
     # Choose the first 2 words for the text
@@ -109,21 +113,28 @@ def generate_text(source_dict, size):
 
     # Collect all the other words for the final text.
     while len(result) < size:
+        # Take the last two items of the list and use them as a key
         key = ' '.join([result[-2], result[-1]])
         value = get_next_value(source_dict, key)
         # Handle the case where the dict has no such key; so the value is False
         if not value:
             counter = len(result)
-            # Step backwards throu the result list to find a diff path
-            while counter > 1:
+            # Step backwards throu the result list to find a diff key/value
+            while counter > 2:
                 key = ' '.join([result[counter-3], result[counter-2]])
-                value = get_next_value(source_dict, key)
-                # Test if a previous key can offer an alternative value
-                if value != result[counter-1]:
+                value = get_alt_value(source_dict, key, result[counter-1])
+                # If an alternative value is found
+                if value:
                     # Start the result list anew from that point
+                    # i.e. discord the items that led to a dead end
                     result = result[:counter-1]
                     break
                 counter -= 1
+        # The backtracking was not sucessful
+        if not value:
+            print("Target length cannot be reached")
+            return False
+
         result.append(value)
 
     return result
@@ -157,6 +168,13 @@ def test_generate_text():
     assert sum(count_lengths) / runs == size, "Mean must be equal to size"
 
 
+def test_generate_text2():
+    """See how it behaves when the target size output cannot be reached."""
+    source_d = {"A b": ["c", "d"]}
+    generate_text(source_d, 10)  # Impossible case
+
+
 if __name__ == "__main__":
     process_main()
     # test_generate_text()
+    # test_generate_text2()
