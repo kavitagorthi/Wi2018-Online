@@ -27,7 +27,7 @@ def load_file(source_path):
             if line == "\n" or line == "\r\n":
                 line = line.strip()  # Get rid of "\r" or "\n" if any
                 line = line.split()
-                line.append("\n\n")  # Use a double paragraph instead
+                line.append("\n\n")  # Use a double newline instead
             # Punctuation goes with the words to which it relates
             else:
                 line = line.strip()
