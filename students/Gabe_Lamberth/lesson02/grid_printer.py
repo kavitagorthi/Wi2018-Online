@@ -1,11 +1,10 @@
-def plus(): 
-    return('+ ')
 
-def dash():
-    return('- ') 
+#Global vairables
+plus ='+ '
 
-def bar():
-    return '| '
+dash = '- ' 
+
+bar = '| '
 
 def printGrid(size):        
     # Print arbitrary grid size like image in assignment part 2
@@ -15,20 +14,25 @@ def printGrid(size):
     
     #I messed around with the formatting so much, that once I found
     # something that worked, I left good enough alone
-    print('{}{}'.format((plus()+ dash()*space),(plus()+dash()*space),), end='+')
+    print('{}{}'.format((plus + dash *space),(plus + dash *space),), end='+')
     print()
-    for l in range(space): print('{}'.format(bar()+'  '*space)*3)    
-    print('{}{}'.format((plus()+dash()*space),(plus()+dash()*space),), end='+')
+    for l in range(space): 
+        print('{}'.format(bar +'  '*space)*3)
+        
+    print('{}{}'.format((plus + dash*space),(plus + dash*space),), end='+')
     print()
-    for l in range(space): print('{}'.format(bar()+'  '*space)*3)
-    print('{}{}'.format((plus()+ dash()*space),(plus()+dash()*space),), end='+')
+    
+    for l in range(space): 
+        print('{}'.format(bar + '  '*space)*3)
+        
+    print('{}{}'.format((plus + dash * space),(plus + dash*space),), end='+')
              
 def printGridRowCol(size, row=0, col=0): 
     # Instead of throwing all function calls in the for loop, 
     # I instead tested and assigned it to a variable for 
     # readablility    
-    x = (plus() + dash() * size) * col + plus()
-    y =(bar() * col) + bar()
+    x = (plus + dash * size) * col + plus
+    y =(bar * col) + bar
     for i in range(row): 
         print(x)      
         for i in range(size):
