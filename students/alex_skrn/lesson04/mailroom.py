@@ -2,6 +2,7 @@
 
 """Mailroom - Part 2 - Dicts, Files."""
 import os
+import datetime
 import tkinter as tk
 from tkinter import filedialog
 
@@ -13,7 +14,7 @@ donors = {'Aristarkh Lentulov': [4.5, 5.0],
           }
 
 
-# Sending a Thank You.
+# DONOR-RELATED FUNCTIONS
 def add_donation(name, amount):
     """Add a donation for a named donor."""
     if name in donors:
@@ -27,6 +28,87 @@ def get_last_donation(name):
     return donors[name][-1]
 
 
+def get_total_given(name):
+    """Return total amount of donations for the given donor."""
+    return sum(donors[name])
+
+
+def get_donations(name):
+    """Return a list of the specified donor's donations."""
+    return donors[name]
+
+
+def sort_donors_by_total():
+    """Return a list of donor names sorted by total donations, max to min."""
+    # Create a list in the form [['Donor Name', total_donated], etc.].
+    donors_totals = []
+    for name in donors:
+        donors_totals.append([name, get_total_given(name)])
+
+    # Sort the above list by the total_donated.
+    donors_totals.sort(key=lambda x: x[1])
+    donors_totals = donors_totals[::-1]
+
+    # Get rid of the total_donated in the list.
+    sorted_donor_names = []
+    for item in donors_totals:
+        sorted_donor_names.append(item[0])
+
+    # Return a list containing the names of donors only.
+    return sorted_donor_names
+
+
+def print_donor_names():
+    """Print existing donor names on screen."""
+    print()
+    donors_L = list(donors.keys())
+    for name in donors_L[:-1]:
+        print(name, end=', ')
+    print(donors_L[-1])
+    print()
+
+
+def get_email(name, amount):
+    """Return a str containing a thank-you email."""
+    d = dict(key1=name, key2=amount)
+    # Can't figure out how to combine {:,} and {key2} below.
+    # Used a dict here 'cos the assignment asked for it.
+    email_text = ("\nDear {key1},\n"
+                  "\nI would like to thank you for your donation of ${key2}.\n"
+                  "\nWe appreciate your support.\n"
+                  "\nSincerely,\n"
+                  "The Organization\n"
+                  )
+    return email_text.format(**d)
+
+
+def print_email(name, amount):
+    """Print a thank-you email on screen."""
+    print(get_email(name, amount))
+
+
+def create_report():
+    """Create a report."""
+    title_line_form = "{:<26}{:^3}{:>13}{:^3}{:>13}{:^3}{:>13}"
+    title_line_text = ('Donor Name', '|', 'Total Given', '|',
+                       'Num Gifts', '|', 'Average Gift'
+                       )
+    print()
+    print(title_line_form.format(*title_line_text))
+    print('- ' * 38)
+    form_line = "{:<26}{:>3}{:>13}{:>3}{:>13}{:>3}{:>13}"
+    for name in sort_donors_by_total():
+        total = get_total_given(name)
+        num_gifts = len(get_donations(name))
+        mean = round((total / num_gifts), 2)
+        print(form_line.format(str(name), '$', str(total), ' ',
+                               str(num_gifts), '$', str(mean)
+                               )
+              )
+    print()
+
+
+# PRINT ON SREEN A THANK YOU LETTER TO SOMEONE WHO JUST MADE A DONATION
 def existing_donor_interaction():
     """Ask for old donor name, donation amount, print a thank-you email."""
     prompt_name = "Type full name of the old donor or 0 to abort > "
@@ -67,38 +149,13 @@ def new_donor_interaction():
     print_email(new_donor_name, get_last_donation(new_donor_name))
 
 
-def print_donor_names():
-    """Print existing donor names on screen."""
-    print()
-    donors_L = list(donors.keys())
-    for name in donors_L[:-1]:
-        print(name, end=', ')
-    print(donors_L[-1])
-    print()
-
-
-def get_email(name, amount):
-    """Return a str containing a thank-you email."""
-    d = dict(key1=name, key2=amount)
-    # Can't figure out how to combine {:,} and {key2} below.
-    # Used a dict here 'cos the assignment asked for it.
-    email_text = ("\nDear {key1},\n"
-                  "\nI would like to thank you for your donation of ${key2}.\n"
-                  "\nWe appreciate your support.\n"
-                  "\nSincerely,\n"
-                  "The Organization\n"
-                  )
-    return email_text.format(**d)
-
-
-def print_email(name, amount):
-    """Print a thank-you email on screen."""
-    print(get_email(name, amount))
-
-
+#   WRITE ALL LETTERS TO FILES
 def write_file(destination, name, text):
     """Write text to destination/name.txt."""
-    path = "{}/{}.txt".format(destination, name)
+    date = str(datetime.date.today())
+    # path = "{}/{}-{}.txt".format(destination, date, name)
+    filename = "{}-{}.txt".format(date, name)
+    path = os.path.join(destination, filename)
     with open(path, "w") as toF:
         toF.write(text)
 
@@ -127,6 +184,12 @@ def write_select_dir():
     print("\nAll letters saved in {}\n".format(target_dir))
 
 
+# MANAGING MENUS
+def quit():
+    """Provide an exit option for menus."""
+    return "exit menu"
+
+
 def send_all_menu():
     """Initiate the send-all-letters sub-sub-menu."""
     menu_selection(write_file_prompt, write_file_dispatch)
@@ -135,64 +198,6 @@ def send_all_menu():
 def send_thank_you_interaction():
     """Initiate the send-thank-you sub-menu."""
     menu_selection(send_thanks_prompt, send_thanks_dispatch)
-
-
-# Creating a Report.
-def get_total_given(donor_name):
-    """Return total amount of donations for the given donor."""
-    return sum(donors[donor_name])
-
-
-def get_donations(donor_name):
-    """Return a list of the specified donor's donations."""
-    return donors[donor_name]
-
-
-def sort_donors_by_total():
-    """Return a list of donor names sorted by total donations, max to min."""
-    # Create a list in the form [['Donor Name', total_donated], etc.].
-    donors_totals = []
-    for name in donors:
-        donors_totals.append([name, get_total_given(name)])
-
-    # Sort the above list by the total_donated.
-    donors_totals.sort(key=lambda x: x[1])
-    donors_totals = donors_totals[::-1]
-
-    # Get rid of the total_donated in the list.
-    sorted_donor_names = []
-    for item in donors_totals:
-        sorted_donor_names.append(item[0])
-
-    # Return a list containing the names of donors only.
-    return sorted_donor_names
-
-
-def create_report_main():
-    """Create a report."""
-    title_line_form = "{:<26}{:^3}{:>13}{:^3}{:>13}{:^3}{:>13}"
-    title_line_text = ('Donor Name', '|', 'Total Given', '|',
-                       'Num Gifts', '|', 'Average Gift'
-                       )
-    print()
-    print(title_line_form.format(*title_line_text))
-    print('- ' * 38)
-    form_line = "{:<26}{:>3}{:>13}{:>3}{:>13}{:>3}{:>13}"
-    for name in sort_donors_by_total():
-        total = get_total_given(name)
-        num_gifts = len(get_donations(name))
-        mean = round((total / num_gifts), 2)
-        print(form_line.format(str(name), '$', str(total), ' ',
-                               str(num_gifts), '$', str(mean)
-                               )
-              )
-    print()
-
-
-# Managing menues.
-def quit():
-    """Provide an exit option for menus."""
-    return "exit menu"
 
 
 def menu_selection(prompt, dispatch_dict):
@@ -208,6 +213,7 @@ def menu_selection(prompt, dispatch_dict):
 
 
 if __name__ == "__main__":
+    #  Write to files
     write_file_prompt = ("\nSend to everyone sub-menu\n"
                          "\n1 - Write to current working directory\n"
                          "2 - Choose a directory to write\n"
@@ -218,6 +224,7 @@ if __name__ == "__main__":
                            "2": write_select_dir,
                            "3": quit,
                            }
+    # Print on screen
     send_thanks_dispatch = {"1": print_donor_names,
                             "2": new_donor_interaction,
                             "3": existing_donor_interaction,
@@ -230,8 +237,9 @@ if __name__ == "__main__":
                           "4 - Quit\n"
                           ">> "
                           )
+    # Main menu
     main_dispatch = {"1": send_thank_you_interaction,
-                     "2": create_report_main,
+                     "2": create_report,
                      "3": send_all_menu,
                      "4": quit,
                      }
