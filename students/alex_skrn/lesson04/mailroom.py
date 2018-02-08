@@ -40,21 +40,12 @@ def get_donations(name):
 
 def sort_donors_by_total():
     """Return a list of donor names sorted by total donations, max to min."""
-    # Create a list in the form [['Donor Name', total_donated], etc.].
-    donors_totals = []
-    for name in donors:
-        donors_totals.append([name, get_total_given(name)])
-
-    # Sort the above list by the total_donated.
-    donors_totals.sort(key=lambda x: x[1])
-    donors_totals = donors_totals[::-1]
-
-    # Get rid of the total_donated in the list.
+    donors_L = list(donors.items())
+    donors_sorted = sorted(donors_L, key=lambda x: sum(x[1]), reverse=True)
     sorted_donor_names = []
-    for item in donors_totals:
+    for item in donors_sorted:
         sorted_donor_names.append(item[0])
 
-    # Return a list containing the names of donors only.
     return sorted_donor_names
 
 
@@ -149,7 +140,7 @@ def new_donor_interaction():
     print_email(new_donor_name, get_last_donation(new_donor_name))
 
 
-#   WRITE ALL LETTERS TO FILES
+#  WRITE ALL LETTERS TO FILES
 def write_file(destination, name, text):
     """Write text to destination/name.txt."""
     date = str(datetime.date.today())
