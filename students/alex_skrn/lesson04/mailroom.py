@@ -63,7 +63,7 @@ def get_email(name, amount):
     """Return a str containing a thank-you email."""
     d = dict(key1=name, key2=amount)
     # Can't figure out how to combine {:,} and {key2} below.
-    # Used a dict here 'cos the assignment asked for it.
+    # Used a dict here 'cos the assignment seems to ask for it.
     email_text = ("\nDear {key1},\n"
                   "\nI would like to thank you for your donation of ${key2}.\n"
                   "\nWe appreciate your support.\n"
