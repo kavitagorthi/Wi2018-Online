@@ -44,6 +44,7 @@ def trigrams(content):
 
         # print(trigrams_dict)
 
+
 def random_lookup(word_pair):
     """Build a new block of text from the trigram dictionary."""
     word_pair = tuple(word_pair)
@@ -57,19 +58,6 @@ def random_lookup(word_pair):
     for item in range(len(next_text)):
         text += next_text[item][0]
     print(text)
-
-
-    #
-    # while wordpair in trigrams:
-    #     new_text.append(choice(trigrams[wordpair]))
-    #     wordpair = (wordpair[-1], new_text[-1][-1])
-    # for i in range(len(new_text)):
-    #     blocktext += new_text[i][0] + ' '
-    # print(blocktext)
-
-
-
-
 
 
 if __name__ == '__main__':
