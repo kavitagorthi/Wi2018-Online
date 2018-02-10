@@ -12,8 +12,19 @@ donor_table = [["William Gates, III", 401321.52], ["William Gates, III", 201342.
 answer = ""
 
 
-def thank_you():
-    pass
+def thank_you(donor_table):
+    answer = ""
+    while answer != "quit":
+        full_name = input("Please enter a full name.")
+        if full_name.lower() == "list":
+            print("Donor list:")
+            donor_table_sort = donor_table.sort()
+            current_name = ""
+            for row in donor_table_sort:
+                if current_name != row[0]:
+                    current_name = row[0]
+                    print(current_name)
+
 
 
 def create_report():
@@ -21,11 +32,11 @@ def create_report():
 
 
 # Main menu
-while answer != 3:
+while answer != "3":
     print("1. Send a Thank You")
     print("2. Create a Report")
     print("3. Quit")
     answer = input("Please select an option. >")
-    if answer == 1: thank_you()
-    if answer == 2: create_report()
-    if answer == 3: print("Have a nice day.")
+    if answer == "1": donor_table = thank_you(donor_table)
+    if answer == "2": create_report()
+    if answer == "3": print("Have a nice day.")
