@@ -32,7 +32,7 @@ def formatter(in_tuple):
     form_string = f"the {length} numbers are: "
     for i in range(length):
         form_string = "".join([form_string, "{:d}, "])
-    form_string = form_string[:-2]  #Truncating the last comma-space in the string.
+    form_string = form_string[:-2]  # Truncating the last comma-space in the string.
     return form_string.format(*in_tuple)
 
 
@@ -73,8 +73,24 @@ print(resultant_string5)
 # Task Six
 # Write some Python code to print a table of several rows, each with a name, an age and a cost. Make sure some of the
 # costs are in the hundreds and thousands to test your alignment specifiers.
+initial_table = ([["Port", "25", "20.00"],["Stout","100","120.50"],
+                  ["Bordeaux", "43", "1250.25"],["Pinot Noir", "61", "512.80"]])
+table_width_x, table_width_y, table_width_z = [0, 0, 0]
+
+# Running through all data points to see what the maximum width needs to be for a given column.
+for row in initial_table:
+    if table_width_x < len(row[0]): table_width_x = len(row[0])
+    if table_width_y < len(row[1]): table_width_y = len(row[1])
+    if table_width_z < len(row[2]): table_width_z = len(row[2])
+
+for row in initial_table:
+    print("{:>{width}} | {:^{width2}} | ${:<{width3}}".format(row[0], row[1], row[2],
+                                                             width=table_width_x, width2=table_width_y,
+                                                             width3=table_width_z))
 
 # And for an extra task, given a tuple with 10 consecutive numbers, can you work how to quickly print the tuple in
 # columns that are 5 charaters wide? It’s easily done on one short line!
 
-initial_tuple = (1, 10, 100, 1000, 10000, 2, 20, 200, 2000, 20000)
+tuple = (1, 10, 100, 1000, 10000, 2, 20, 200, 2000, 20000)
+# I can't figure this one out because I don't know how to unpack the tuple here. Best guess is:
+# print("{:>5}"*10.format(tuple)
