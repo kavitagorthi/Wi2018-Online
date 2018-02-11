@@ -42,12 +42,14 @@ def thank_you(donor_table):
 def create_report(donor_table):
     donor_table.sort()
     print("{:<20} | {:<10} | {:<10} | {:<10}".format("Donor Name", "Total Given", "Num Gifts", "Average Gift"))
+    print("----------------------------------------------------------------------------")
     current_name = donor_table[0][0]
     donor_total = 0
     num_donor = 0
+    print(current_name)
     for row in donor_table:
         if current_name != row[0]:
-            print("{:<20} | {:<10.2} | {:<10} | {:<10.2}".format(current_name, donor_total, num_donor,
+            print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(current_name, donor_total, num_donor,
                                                              donor_total / num_donor))
             current_name = row[0]
             donor_total = row[1]
