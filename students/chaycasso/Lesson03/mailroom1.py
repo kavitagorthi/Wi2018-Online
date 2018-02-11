@@ -46,7 +46,6 @@ def create_report(donor_table):
     current_name = donor_table[0][0]
     donor_total = 0
     num_donor = 0
-    print(current_name)
     for row in donor_table:
         if current_name != row[0]:
             print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(current_name, donor_total, num_donor,
@@ -57,7 +56,10 @@ def create_report(donor_table):
         else:
             donor_total += row[1]
             num_donor += 1
-
+    else:
+        print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(current_name, donor_total, num_donor,
+                                                                  donor_total / num_donor))
+        print()
     return
 
 
