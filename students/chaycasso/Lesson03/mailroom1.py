@@ -13,18 +13,30 @@ answer = ""
 
 
 def thank_you(donor_table):
-    answer = ""
-    while answer != "quit":
-        full_name = input("Please enter a full name.")
+    full_name = ""
+    while full_name.lower() != "quit":
+        full_name = input("Please enter a full name. >")
+        if full_name.lower() == "quit": return(donor_table)
         if full_name.lower() == "list":
-            print("Donor list:")
-            donor_table_sort = donor_table.sort()
+            donor_table.sort()
             current_name = ""
-            for row in donor_table_sort:
+            print("Donor list:")
+            for row in donor_table:
                 if current_name != row[0]:
                     current_name = row[0]
                     print(current_name)
-
+        else:
+            donation_value_str = input("Please enter a donation amount. >")
+            if donation_value_str.lower() == "quit": return(donor_table)
+            donation_value = int(donation_value_str)
+            donor_table.append([full_name, donation_value])
+            print("Dear {}:".format(full_name))
+            print()
+            print("Thank you for your generous donation to Save the Kids. We hope to hear from you soon.")
+            print()
+            print("Save the Kids")
+            print("save@kids.org")
+            return(donor_table)
 
 
 def create_report():
