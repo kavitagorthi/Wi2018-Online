@@ -39,16 +39,33 @@ def thank_you(donor_table):
             return(donor_table)
 
 
-def create_report():
-    pass
+def create_report(donor_table):
+    donor_table.sort()
+    print("{:<20} | {:<10} | {:<10} | {:<10}".format("Donor Name", "Total Given", "Num Gifts", "Average Gift"))
+    current_name = donor_table[0][0]
+    donor_total = 0
+    num_donor = 0
+    for row in donor_table:
+        if current_name != row[0]:
+            print("{:<20} | {:<10.2} | {:<10} | {:<10.2}".format(current_name, donor_total, num_donor,
+                                                             donor_total / num_donor))
+            current_name = row[0]
+            donor_total = row[1]
+            num_donor = 1
+        else:
+            donor_total += row[1]
+            num_donor += 1
+
+    return
 
 
 # Main menu
-while answer != "3":
-    print("1. Send a Thank You")
-    print("2. Create a Report")
-    print("3. Quit")
-    answer = input("Please select an option. >")
-    if answer == "1": donor_table = thank_you(donor_table)
-    if answer == "2": create_report()
-    if answer == "3": print("Have a nice day.")
+if __name__ == "__main__":
+    while answer != "3":
+        print("1. Send a Thank You")
+        print("2. Create a Report")
+        print("3. Quit")
+        answer = input("Please select an option. >")
+        if answer == "1": donor_table = thank_you(donor_table)
+        if answer == "2": create_report(donor_table)
+        if answer == "3": print("Have a nice day.")
