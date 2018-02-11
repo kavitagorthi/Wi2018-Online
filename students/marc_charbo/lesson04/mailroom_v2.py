@@ -60,7 +60,7 @@ def send_thank_you():
         send_email(selection,amount)
 
 def prompt_user():
-    """ function which displays manin menu and prompts user to enter selection"""
+    """ function which displays main menu and prompts user to enter selection"""
     print ('Please select one of three options: ')
     print ('1- Send a Thank You')
     print ('2- Create a Report')
@@ -79,14 +79,15 @@ def run():
         try:
             if dispatch_dict[prompt_user()]() == 'quit':
                 break
-        except:
+        except KeyError as e:
+            print('{e} select not available please chose between menu options\n'.format(e))
             continue
 
 def main():
     try:
         run()
-    except:
-        print ('error with task running program')
+    except Exception as e:
+        print ('error with task running program\n {}'.format(e))
 
 if __name__ == "__main__":
     main()
