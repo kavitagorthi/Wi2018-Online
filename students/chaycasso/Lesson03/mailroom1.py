@@ -28,14 +28,16 @@ def thank_you(donor_table):
         else:
             donation_value_str = input("Please enter a donation amount. >")
             if donation_value_str.lower() == "quit": return(donor_table)
-            donation_value = int(donation_value_str)
+            donation_value = float(donation_value_str)
             donor_table.append([full_name, donation_value])
+            print()
             print("Dear {}:".format(full_name))
             print()
             print("Thank you for your generous donation to Save the Kids. We hope to hear from you soon.")
-            print()
+            print("-------------")
             print("Save the Kids")
             print("save@kids.org")
+            print()
             return(donor_table)
 
 
