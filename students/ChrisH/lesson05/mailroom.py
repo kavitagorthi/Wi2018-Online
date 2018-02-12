@@ -15,7 +15,7 @@ Donor = namedtuple('Donor', 'first,last')
 
 # Global data structure
 donor_data = \
-    {Donor('Al','Donor1'): [10.00, 20.00, 30.00, 40.00, 50.00],
+    {Donor('Al', 'Donor1'): [10.00, 20.00, 30.00, 40.00, 50.00],
      Donor('Bert', 'Donor2'): [10.00],
      Donor('Connie', 'Donor3'): [10.00, 10.00, 10.01],
      Donor('Dennis', 'Donor4'): [10.00, 20.00, 20.00],
