@@ -70,7 +70,7 @@ def thank_you():
     # Write a thank you for the donor
     print(letter(donor))
     # print('{}, Thank you for your donation in the amount of ${:.2f}'.format(full_name, donation))
-    send_letter_file(donor)
+    send_letter_file()
 
 
 def create_report():
@@ -99,7 +99,6 @@ def letter(donor):
 
 def send_letter_file():
     """Write a thank you letter and save to file."""
-    # file_name = donor + '.txt'
 
     for k, v in donors.items():
         file_name = k + '.txt'
