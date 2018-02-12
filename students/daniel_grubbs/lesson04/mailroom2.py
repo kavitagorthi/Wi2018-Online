@@ -5,6 +5,8 @@
 #
 # Changelog:
 # - Added in the use of dictionaries
+# - Switched to using switch-case
+import sys
 
 
 donors = {
@@ -34,8 +36,9 @@ def get_donor(name):
             return None
 
 
-def thank_you(donors):
-    """Function for Thank you."""
+def thank_you():
+    """Function for Thank you. Prompts for a donors name."""
+
     while True:
         full_name = input(
             "Please enter a donor's name or type 'list' for list of donors ('menu' to return to menu): ").strip()
@@ -94,7 +97,7 @@ def letter(donor):
         donor, donors[donor][-1])
 
 
-def send_letter_file(donor):
+def send_letter_file():
     """Write a thank you letter and save to file."""
     # file_name = donor + '.txt'
 
@@ -107,37 +110,42 @@ def send_letter_file(donor):
     print('Completed creating letters to send out to donors.')
 
 
+def quit():
+    """This function quits the donation management system."""
+    return sys.exit('Exiting the system. Please wait...')
+
+
 def print_header():
+    """Prints the menu items to choose from and returns the selection."""
+
     print('------------------------------------------')
     print('       Donation Management System')
-    print('                 v0.1.2')
+    print('                 v0.1.3\n')
+    print('       1: Send A Thank You')
+    print('       2: Create A Report')
+    print('       3: Send Letters To Everyone')
+    print('       4: Quit\n')
     print('------------------------------------------\n')
+
+    selection = int(input('Please select a menu item: '))
+
+    return selection
+
+
+switcher = {
+    1: thank_you,
+    2: create_report,
+    3: send_letter_file,
+    4: quit}
 
 
 def main():
     """Main mneu of the program."""
-    print_header()
 
     while True:
-        menu_items = ['Send a Thank You', 'Create a Report', 'Send letters to everyone', 'Quit']
-        for n, item in enumerate(menu_items, 1):
-            print(n, item)
-        print()
-        selection = input('Please select a menu item: ')
-
-        if selection == '1':
-            thank_you(donors)
-        elif selection == '2':
-            create_report()
-        elif selection == '3':
-            send_letter_file(donors)
-        elif selection == '4':
-            break
-        else:
-            print('The item you have chosen is not in the list. Try again.')
+            switcher[print_header()]()
 
 
-menu_dict = {1: send_thank_you, 2: create_report, 3: send_letter_file, 4: quit}
 
 if __name__ == '__main__':
     main()
