@@ -99,6 +99,17 @@ def format_charity_structure():
         print('{:20}{:>15}{:>10}{:>10}'.format(key, sum_values, len(donor_list), ave_values))
 
 
+def create_individual_letters():
+    try:
+        for key in DONOR_HISTORY_DICT:
+            objFileName = key+".txt"
+            objMyFile = open(objFileName, "w")
+            objMyFile.write(key)
+            objMyFile.close()
+            print("\n" + objFileName + " file saved.")
+    except:
+        print("\n" + "File error!")
+
 # -- Presentation (Input/Output) --#
 if __name__ == '__main__':
     '''Prompt the user to choose from a menu of 3 actions: Send a Thank You, Create a Report or quit'''
