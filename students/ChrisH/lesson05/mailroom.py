@@ -10,17 +10,26 @@ import time
 from collections import namedtuple
 
 # Giving named tuples a shot
-donor = namedtuple('donor', 'first,last')
+Donor = namedtuple('Donor', 'first,last')
 
 
 # Global data structure
 donor_data = \
-    {donor('Al','Donor1'): [10.00, 20.00, 30.00, 40.00, 50.00],
-     donor('Bert', 'Donor2'): [10.00],
-     donor('Connie', 'Donor3'): [10.00, 10.00, 10.01],
-     donor('Dennis', 'Donor4'): [10.00, 20.00, 20.00],
-     donor('Egbert', 'Donor5'): [10.39, 20.21, 10.59, 4000.40],
+    {Donor('Al','Donor1'): [10.00, 20.00, 30.00, 40.00, 50.00],
+     Donor('Bert', 'Donor2'): [10.00],
+     Donor('Connie', 'Donor3'): [10.00, 10.00, 10.01],
+     Donor('Dennis', 'Donor4'): [10.00, 20.00, 20.00],
+     Donor('Egbert', 'Donor5'): [10.39, 20.21, 10.59, 4000.40],
      }
+
+
+def get_donor_fullname(donor):
+    """
+    Given a donor namedtuple, assembles and returns the donor's full name.
+    :param donor: namedtuple type: Donor
+    :return: string with donor's full name
+    """
+    return donor.first + ' ' + donor.last
 
 
 def menu(menu_data):
@@ -55,8 +64,8 @@ Dear {first_name} {last_name},
             Warmest Regards,
                 Local Charity
 """
-    amount = donor_data[donor]['donations'][-1]
-    return format_string.format(last_donation=float(amount), **donor_data[donor])
+    amount = donor_data[donor][-1]
+    return format_string.format(last_donation=float(amount), first_name=donor.first, last_name=donor.last)
 
 #    return "{first_name} {last_name} {donations[2]}".format(**(donor_data[donor]))  # This requires static index!!
 
@@ -68,10 +77,10 @@ def send_letters_all():
         :return: None
         """
     for donor in donor_data:
-        print(f'Generating letter for {donor}')
+        print(f'Generating letter for {get_donor_fullname(donor)}')
         now = time.localtime()
         f_name = f"{now.tm_year}{now.tm_mon:02}{now.tm_mday:02}_"
-        f_name += donor.replace(" ", "_") + ".txt"
+        f_name += get_donor_fullname(donor).replace(" ", "_") + ".txt"
         file_out = open(f_name, 'w')
         file_out.write(generate_letter(donor))
         file_out.close()
@@ -112,16 +121,17 @@ def print_report():
     """
     # Adjust first column width to accommodate the length of the longest name
     name_max = 26
-    for name in donor_data.keys():
-        if len(name) > name_max:
-            name_max = len(name) + 1
+    for donor in donor_data.keys():
+        if len(get_donor_fullname(donor)) > name_max:
+            name_max = len(get_donor_fullname(donor)) + 1
 
     rpt_title = "Donor Name" + ' ' * (name_max - 10) + "| Total Given | Num Gifts | Average Gift"
     print(rpt_title)
     print("-" * len(rpt_title))
-    for name in donor_data.keys():
-        dons = donor_data[name]['donations']
-        print(f"{name:{name_max}} $ {sum(dons):>10.2f}   {len(dons):>9}  ${sum(dons)/len(dons):>12.2f}")
+    for donor in donor_data.keys():
+        dons = donor_data[donor]
+        print(f"{get_donor_fullname(donor):{name_max}} ", end='')
+        print(f"$ {sum(dons):>10.2f}   {len(dons):>9}  ${sum(dons)/len(dons):>12.2f}")
 
 
 def nul():
