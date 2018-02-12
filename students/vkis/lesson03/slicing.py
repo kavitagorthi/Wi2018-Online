@@ -66,5 +66,5 @@ assert rm_0_last4_even(a_tuple) == (54,)
 assert rev(a_string) == "gnirts a si siht"
 assert rev(a_tuple) == (32,5,12,13,54,2)
 
-assert wild_slice(a_string) == "is a stringthis"
+assert wild_slice(a_string) == "is a stringthis "
 assert wild_slice(a_tuple) == (13,12,5,32,2,54)
