@@ -120,7 +120,7 @@ def print_header():
 
     print('------------------------------------------')
     print('       Donation Management System')
-    print('                 v0.1.3\n')
+    print('                 v0.1.2\n')
     print('       1: Send A Thank You')
     print('       2: Create A Report')
     print('       3: Send Letters To Everyone')
