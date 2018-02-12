@@ -170,7 +170,7 @@ def write_select_dir():
 
     # Get the target directory from the user.
     target_dir = filedialog.askdirectory()
-    if not target_dir:
+    if not target_dir:  # If the user hits cancel.
         return
     for name in donors:
         text = get_email(name, get_last_donation(name))
