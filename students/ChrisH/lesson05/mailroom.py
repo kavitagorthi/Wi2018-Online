@@ -9,7 +9,7 @@ import time
 
 from collections import namedtuple
 
-# Giving named tuples a shot
+# Giving namedtuples a shot
 Donor = namedtuple('Donor', 'first,last')
 
 
@@ -29,7 +29,7 @@ def get_donor_fullname(donor):
     :param donor: namedtuple type: Donor
     :return: string with donor's full name
     """
-    return donor.first + ' ' + donor.last
+    return (donor.first + ' ' + donor.last).strip()   # Strip, in case first name is blank
 
 
 def menu(menu_data):
@@ -93,25 +93,40 @@ def send_thank_you():
     and adds it to donor's data. Prints a 'Thank You' email populated with the donor's data.
     :return: None
     """
-    while True:
-        name = input("Enter a Full Name ('list' to show list of donors): ")
-        if name == 'list':
-            print(("{}\n" * len(donor_data)).format(*(donor_data.keys())))
-            continue
-        if name not in donor_data:          # Defines first name as text up to the first space given
-            name_sp = name.split(" ")
-            donor_data[name] = {'first_name': name_sp[0], 'last_name': ' '.join(name_sp[1:]), 'donations': []}
-        break
 
     while True:
-        amount = input("Enter a donation amount for {} : ".format(name))
-        if float(amount) <= 0:
-            print('Amount donated must be a positive number.')
+        name = input("Enter a Full Name ('list' to show list of donors, 'q' to quit): ")
+        if name == 'q':
+            return
+        elif name == 'list':
+            print(("{}\n" * len(donor_data)).format(*([get_donor_fullname(d) for d in donor_data])))
+            continue
         else:
+            name_sp = name.split()
+            if len(name_sp) == 0:
+                print("Name cannot be empty.")
+                continue
+            elif len(name_sp) > 1:
+                donor = Donor(name_sp[0], ' '.join(name_sp[1:]))  # Defines first name up to the first space given
+            else:
+                donor = Donor(first='', last=name)
             break
 
-    donor_data[name]['donations'].append(float(amount))
-    print(generate_letter(name))
+    if donor not in donor_data:
+        donor_data[donor] = []
+
+    while True:
+        try:
+            amount = input("Enter a donation amount for {} : ".format(get_donor_fullname(donor)))
+            if float(amount) <= 0:
+                print('Amount donated must be a positive number.')
+            else:
+                break
+        except ValueError:
+            print('Please enter a numerical value.')
+
+    donor_data[donor].append(float(amount))
+    print(generate_letter(donor))
 
 
 def print_report():
