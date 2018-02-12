@@ -88,7 +88,12 @@ def send_thank_you():
             donor_data[name] = {'first_name': name_sp[0], 'last_name': ' '.join(name_sp[1:]), 'donations': []}
         break
 
-    amount = input("Enter a donation amount for {} : ".format(name))
+    while True:
+        amount = input("Enter a donation amount for {} : ".format(name))
+        if float(amount) <= 0:
+            print('Amount donated must be a positive number.')
+        else:
+            break
 
     donor_data[name]['donations'].append(float(amount))
     print(generate_letter(name))
