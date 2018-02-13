@@ -91,8 +91,6 @@ def format_charity_structure():
     print('{:20}{:>15}{:>10}{:>10}'.format('Donor Name', '| Total Gifts', '| Num Gifts', '| Ave Gift'))
     print('-' * 55)
     for key in DONOR_HISTORY_DICT:
-        # sum_values = "{:.2f}".format(sum(key[1]))
-        # ave_values = "{:.2f}".format(sum(key[1]) / len(key[1]))
         donor_list = DONOR_HISTORY_DICT.get(key)
         sum_values = "{:.2f}".format(sum(donor_list))
         ave_values = "{:.2f}".format(sum(donor_list) / len(donor_list))
@@ -102,11 +100,19 @@ def format_charity_structure():
 def create_individual_letters():
     try:
         for key in DONOR_HISTORY_DICT:
-            objFileName = key+".txt"
+            donor_list = DONOR_HISTORY_DICT.get(key)
+            sum_values = "{:.2f}".format(sum(donor_list))
+            report_text = f"Dear {key}," + "\n" + "\n" + "Thank you for your charitable gift of $" + sum_values + "."
+            report_text = report_text  + "\n" + "\n" + "\tIt will be put to very good use."
+            report_text = report_text  + "\n" + "\n" + "\t\tSincerely,"
+            report_text = report_text + "\n" + "\t\t\t--The Team"
+
+            key.replace(" ", "_")
+            objFileName = key.replace(" ", "_") + ".txt"
             objMyFile = open(objFileName, "w")
-            objMyFile.write(key)
+            objMyFile.write(report_text)
             objMyFile.close()
-            print("\n" + objFileName + " file saved.")
+            print(objFileName + " file saved.")
     except:
         print("\n" + "File error!")
 
