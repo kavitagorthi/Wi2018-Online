@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 import random
+import re
 
 # prepare to read the (first 500 lines of) Japanese Fairy Tail file
 # establish file path and header size
-# file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/japanese_fairy_tails.txt' 
+file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/japanese_fairy_tails.txt' 
 # file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/heart_of_darkness.txt'
-file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/harry_potter.txt'
+
 # read the file
 with open(file_path, 'r') as f:
-	fairy_tails = f.read()
+	read_file = f.read()
 
 
 # create a word list from the file
@@ -18,7 +19,7 @@ def create_word_list(file_name):
 		word_list.append(word)
 	return word_list
 
-fairy_tail_words = create_word_list(file_name = fairy_tails)
+read_file_words = create_word_list(file_name = read_file)
 
 # create a trigram dictionary from a word list
 def create_trigram_dictionaries(word_list):
@@ -30,7 +31,7 @@ def create_trigram_dictionaries(word_list):
 		trigram_dict.setdefault(trigram_key, []).append(word_list[idx].lower())
 	return trigram_dict
 
-fairy_tail_trigram_dict = create_trigram_dictionaries(word_list = fairy_tail_words)
+read_file_trigram_dict = create_trigram_dictionaries(word_list = read_file_words)
 
 # generate text from the trigram dictionary
 def generate_text(trigram_dictionary):
@@ -44,7 +45,7 @@ def generate_text(trigram_dictionary):
 		generated_story = generated_story + ' ' + next_part_of_story
 	return generated_story
 
-print(generate_text(fairy_tail_trigram_dict))
+print(generate_text(read_file_trigram_dict))
 
 
 
