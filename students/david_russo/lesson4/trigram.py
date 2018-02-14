@@ -4,7 +4,8 @@ import random
 # prepare to read the (first 500 lines of) Japanese Fairy Tail file
 # establish file path and header size
 # file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/japanese_fairy_tails.txt' 
-file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/heart_of_darkness.txt'
+# file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/heart_of_darkness.txt'
+file_path = '/Users/davidrusso/Documents/Classes/Python Certificate/Introduction to Python/Wi2018-Online/students/david_russo/lesson4/harry_potter.txt'
 # read the file
 with open(file_path, 'r') as f:
 	fairy_tails = f.read()
@@ -43,7 +44,10 @@ def generate_text(trigram_dictionary):
 		generated_story = generated_story + ' ' + next_part_of_story
 	return generated_story
 
-generate_text(fairy_tail_trigram_dict)
+print(generate_text(fairy_tail_trigram_dict))
+
+
+
 
 
 		
