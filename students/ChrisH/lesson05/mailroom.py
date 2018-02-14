@@ -134,26 +134,16 @@ def print_report():
     Prints a formatted report on the donors with name, amount given, number of gifts, and average gift.
     :return: None
     """
-    # # Adjust first column width to accommodate the length of the longest name
-    # name_max = 26
-    # for donor in donor_data.keys():
-    #    if len(get_donor_fullname(donor)) > name_max:
-    #        name_max = len(get_donor_fullname(donor)) + 1
+    # Find longest name in donor list, or use name_min value
+    name_min = 25
+    name_max = max(*[len(get_donor_fullname(donor)) for donor in donor_data], name_min)
 
-    # # Ok, well here's a list comprehension. But it makes the code less clear. Obfuscates.
-    # name_max = max(*[len(get_donor_fullname(donor)) for donor in donor_data.keys()], 25) + 1
-
-    # Perhaps this is more readable?
-    name_trailing_space = 1
-    longest_name = max([len(get_donor_fullname(donor)) for donor in donor_data])
-    name_max = max(25, longest_name) + name_trailing_space
-
-    rpt_title = "Donor Name" + ' ' * (name_max - 10) + "| Total Given | Num Gifts | Average Gift"
+    rpt_title = "Donor Name" + ' ' * (name_max - 9) + "| Total Given | Num Gifts | Average Gift"
     print(rpt_title)
     print("-" * len(rpt_title))
     for donor in donor_data.keys():
         dons = donor_data[donor]
-        print(f"{get_donor_fullname(donor):{name_max}} ", end='')
+        print(f"{get_donor_fullname(donor):{name_max}}  ", end='')
         print(f"$ {sum(dons):>10.2f}   {len(dons):>9}  ${sum(dons)/len(dons):>12.2f}")
 
 
