@@ -42,7 +42,7 @@ def send_a_thank_you():
     # add the donor and the donation amount to the donors list
     donors.setdefault(donor, []).append(donation_amount)
     # Print the thank you note
-    print("Dear {:s}, \n Thank you for your generous donations totalling ${:.2f}. \n".format(donor, sum(donors[donor])),
+    print("Dear {:s}, \n Thank you for your generous donations totaling ${:.2f}. \n".format(donor, sum(donors[donor])),
           "Best, \n The Donation Foundation.")
 
 # define a function to create a donation report
@@ -65,7 +65,7 @@ def send_letters_to_everyone():
     for donor, donations in donors.items():
         thank_you_dict.setdefault(
             donor,
-            "Dear {:s}, \n\n Thank you for your generous donations totalling ${:.2f}. \n\n Best, \n The Donation Foundation. \n\n".format(donor, sum(donations)))
+            "Dear {:s}, \n\n Thank you for your generous donations totaling ${:.2f}. \n\n Best, \n The Donation Foundation. \n\n".format(donor, sum(donations)))
         name_length = len(donor)
         file = open("thank_you_{name:{width}}.txt".format(name = donor, width = name_length), "w")
         file.write(thank_you_dict[donor])
