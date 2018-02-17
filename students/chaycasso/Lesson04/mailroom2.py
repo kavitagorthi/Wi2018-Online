@@ -14,7 +14,7 @@ answer = ""
 
 def thank_you(donor_table):
     full_name = ""
-    while full_name.lower() != "quit":
+    while True:
         full_name = input("Please enter a full name. >")
         if full_name.lower() == "quit": return(donor_table)
         if full_name.lower() == "list":
@@ -30,13 +30,8 @@ def thank_you(donor_table):
             if donation_value_str.lower() == "quit": return(donor_table)
             donor_table.append([full_name, float(donation_value_str)])
             print()
-            print("Dear {}:".format(full_name))
-            print()
-            print("Thank you for your generous donation to Save the Kids. We hope to hear from you soon.")
-            print("-------------")
-            print("Save the Kids")
-            print("save@kids.org")
-            print()
+            print("\nDear {}:\n\n\tThank you for your generous donation of ${} to Save the Kids.\n\n-------------\n"
+                  "Save the Kids\nsave@kids.org\n".format(full_name, donation_value_str))
             return(donor_table)
 
 
