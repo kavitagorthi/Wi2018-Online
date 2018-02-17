@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-# Week 4
+# Week 5
 # Mailroom Assignment - Part 2
 #
 # Changelog:
 # - Added in the use of dictionaries
 # - Switched to using switch-case
-#  - Added in try-except bloc
+# - Added in try-except block
+# - Changed print_donor_list() to a list comprehension
+
 import sys
-import os
 
 donors = {
     'Jimmy Nguyen': [100, 1350, 55],
@@ -23,8 +24,11 @@ def print_donor_list():
     """Function simply for looping through the donor list.
     Made into function since it may be called multiple times.
     """
-    for donor in donors.keys():
-        print(donor)
+    # for donor in donors.keys():
+    #     print(donor)
+
+    donor = [name for name in donors.keys()]
+    return donor
 
 
 def get_donor(name):
@@ -35,6 +39,9 @@ def get_donor(name):
             return k
         else:
             return None
+
+    # donor = [k for k in donors.keys() if name == k.strip().lower()]
+    # return donor
 
 
 def thank_you():
@@ -47,6 +54,7 @@ def thank_you():
         if full_name == 'list':
             print('Below is the current donor list:')
             print_donor_list()
+            print()
         elif full_name == 'menu':
             return
         else:
@@ -54,11 +62,15 @@ def thank_you():
 
     # Enter a donation amount
     while True:
-        donation = int(input("Please enter a donation amount. 'menu' to return to original menu: "))
-        if donation == 'menu':
-            return
-        else:
-            break
+        try:
+            donation = int(input("Please enter a donation amount. 'menu' to return to original menu: "))
+            if donation == 'menu':
+                return
+            else:
+                break
+        except ValueError:
+            print('Please enter a valid amount.')
+            # continue
 
     # Enter a new donor
     donor = get_donor(full_name)
@@ -71,11 +83,11 @@ def thank_you():
     # Write a thank you for the donor
     print(letter(donor))
     # print('{}, Thank you for your donation in the amount of ${:.2f}'.format(full_name, donation))
-    send_letter_file()
+    # send_letter_file()
 
 
 def create_report():
-    """Function for creating a report."""
+    """Function for creating a report of donors with donation amounts."""
     donations = []
 
     print("{:26s} | {:13s} | {:9s} | {:13s}".format("Donor name", "Total Donation", "Number of Gifts", "Average Gifts"))
@@ -128,7 +140,11 @@ def print_header():
     print('       4: Quit\n')
     print('------------------------------------------\n')
 
-    selection = int(input('Please select a menu item: '))
+    try:
+        selection = int(input('Please select a menu item: '))
+    except ValueError:
+        print('Your selection is invalid. Please make a selection from the menu.')
+        selection = int(input('Please select a menu item: '))
 
     return selection
 
@@ -148,7 +164,7 @@ def main():
         try:
             switcher[print_header()]()
         except KeyError:
-            print('Your selectrion did not match any item in the menu. Please make another selection.')
+            print('Your selection did not match any item in the menu. Please make another selection.')
             continue
 
 
