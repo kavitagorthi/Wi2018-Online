@@ -60,6 +60,24 @@ def test_sort_donors_by_total(donors):
     assert mailroom.sort_donors_by_total() == ["B", "A"]
 
 
+def test_print_donor_names(capsys, donors):
+    """print_donor_names()."""
+    mailroom.print_donor_names()
+    out, _ = capsys.readouterr()
+    assert out == "\nA, B\n"
+
+
+def test_get_email():
+    """get_email(name, amount)."""
+    result = ("""\nDear A,\n
+                  \nI would like to thank you for your donation of $100.\n
+                  \nWe appreciate your support.\n
+                  \nSincerely,\n
+                  \nThe Organization\n
+                  """)
+    assert mailroom.get_email("A", 100) == result
+
+
 def test_input_donation_zero(monkeypatch):
     """input_donation(name) with the user entering zero."""
     # GIVEN ?????
@@ -69,13 +87,15 @@ def test_input_donation_zero(monkeypatch):
     assert mailroom.input_donation("A") is False
 
 
-# def test_input_donation_str(monkeypatch):
-#     """input_donation(name) with user entering string instead of a number."""
+# def test_input_donation_str(monkeypatch, capsys, donors):
+#     """input_donation(name) with user entering a string instead of a number."""
 #     # GIVEN ?????
 #     # WHEN the user enters a string when prompted to enter an amount
 #     # THEN the function should print a statement and re-prompt
 #     monkeypatch.setattr('builtins.input', lambda x: "any_string")
-#     assert ?????????????
+#     mailroom.input_donation("A")
+#     out, _ = capsys.readouterr()
+#     assert out == "Input must be a number"
 
 
 def test_input_donation_number(monkeypatch, donors):
