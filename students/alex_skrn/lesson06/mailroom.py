@@ -160,13 +160,16 @@ def write_cwd():
     print("\nAll letters saved in {}\n".format(cwd))
 
 
-def write_select_dir():
-    """Write all emails to a dir selected by the user."""
+def ask_user_dir():
+    """Get a directory from the user."""
     root = tk.Tk()
     root.withdraw()
+    return filedialog.askdirectory()
 
-    # Get the target directory from the user.
-    target_dir = filedialog.askdirectory()
+
+def write_select_dir():
+    """Write all emails to a dir selected by the user."""
+    target_dir = ask_user_dir()
     if not target_dir:  # If the user hits cancel.
         return
     for name in donors:
