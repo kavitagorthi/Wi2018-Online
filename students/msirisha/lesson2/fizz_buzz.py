@@ -16,12 +16,11 @@ def fiz_buzz(num=100):
     :return: No return value
     """
     for i in range(1, num+1):
-        if (i % 3 == 0):
-            if (i % 5 == 0):
+        if (i % 3 == 0) and (i % 5 == 0):
                 print("FizzBuzz")
-            else:
+        elif i % 3 == 0:
                 print("Fizz")
-        elif (i % 5 == 0):
+        elif i % 5 == 0:
             print("Buzz")
         else:
             print(i)
