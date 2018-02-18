@@ -4,6 +4,8 @@
 # Chay Casso
 # 2/11/2018
 
+import collections
+
 # Initial donor table with the donation values.
 donor_table_dict = {"William Gates, III": [401321.52, 201342.71], "Mark Zuckerberg": [123.45, 5123.21, 8213.11],
                     "Jeff Bezos": [877.33], "Paul Allen": [152.42, 30.54, 825.21], "Steve Ballmer": [5198.96, 654.98]}
@@ -30,28 +32,21 @@ def thank_you(thank_you_dict):
                   "Save the Kids\nsave@kids.org\n".format(full_name, donation_value_str))
             return(thank_you_dict)
 
+def sum(input_table):
+    result = 0
+    for i in input_table:
+        result = result + i
+    return result
 
 def create_report(create_report_dict):
-
     print("{:<20} | {:<10} | {:<10} | {:<10}".format("Donor Name", "Total Given", "Num Gifts", "Average Gift"))
     print("----------------------------------------------------------------------------")
-    current_name = create_report_dict[0][0]
-    donor_total = 0
-    num_donor = 0
-    for row in create_report_dict:
-        if current_name != row[0]:
-            print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(current_name, donor_total, num_donor,
-                                                             donor_total / num_donor))
-            current_name = row[0]
-            donor_total = row[1]
-            num_donor = 1
-        else:
-            donor_total += row[1]
-            num_donor += 1
-    else:
-        print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(current_name, donor_total, num_donor,
-                                                                  donor_total / num_donor))
-        print()
+
+    ordered_create_report_dict = collections.OrderedDict(sorted(create_report_dict.items()))
+
+    for key, table in ordered_create_report_dict:    
+        print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(key, sum(table), len(table),
+                                                             sum(table) / len(table)))
 
 
 def send_letters(donor_table_dict):
