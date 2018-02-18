@@ -23,14 +23,18 @@ def thank_you(thank_you_dict):
         else:
             donation_value_str = input("Please enter a donation amount. >")
             if donation_value_str.lower() == "quit": return(thank_you_dict)
-            if full_name in thank_you_dict:
-                thank_you_dict[full_name].append(donation_value_str)
-            else:
-                thank_you_dict[full_name] = donation_value_str
-            print()
-            print("\nDear {}:\n\n\tThank you for your generous donation of ${} to Save the Kids.\n\n-------------\n"
-                  "Save the Kids\nsave@kids.org\n".format(full_name, donation_value_str))
-            return(thank_you_dict)
+            try:
+                donation_value_flt = float(donation_value_str)
+                if full_name in thank_you_dict:
+                    thank_you_dict[full_name].append(donation_value_flt)
+                else:
+                    thank_you_dict[full_name] = donation_value_flt
+                print()
+                print("\nDear {}:\n\n\tThank you for your generous donation of ${} to Save the Kids.\n\n-------------\n"
+                      "Save the Kids\nsave@kids.org\n".format(full_name, donation_value_flt))
+                return(thank_you_dict)
+            except:
+                print("Not entered. Please enter a numeric value.")
 
 def sum(input_table):
     result = 0
@@ -42,12 +46,11 @@ def create_report(create_report_dict):
     print("{:<20} | {:<10} | {:<10} | {:<10}".format("Donor Name", "Total Given", "Num Gifts", "Average Gift"))
     print("----------------------------------------------------------------------------")
 
-    ordered_create_report_dict = collections.OrderedDict(sorted(create_report_dict.items()))
+    order_dict = collections.OrderedDict(sorted(create_report_dict.items()))
 
-    for key, table in ordered_create_report_dict:    
-        print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}".format(key, sum(table), len(table),
-                                                             sum(table) / len(table)))
-
+    for key in order_dict:
+        print("{:<20}   ${:>10.2f}   {:>10d}   ${:>10.2f}\n".format(key, sum(order_dict[key]), len(order_dict[key]),
+                                                             sum(order_dict[key]) / len(order_dict[key])))
 
 def send_letters(donor_table_dict):
     pass
