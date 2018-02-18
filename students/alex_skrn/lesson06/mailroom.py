@@ -101,6 +101,7 @@ def input_donation(name):
             donation_amount = float(input(prompt_amount))
         except ValueError:
             print("Input must be a number")
+            continue
         else:
             if donation_amount == 0.0:
                 return False
@@ -123,8 +124,6 @@ def existing_donor_interaction():
 
     if input_donation(old_donor_name):
         print_email(old_donor_name, get_last_donation(old_donor_name))
-    else:
-        return
 
 
 def new_donor_interaction():
@@ -136,8 +135,6 @@ def new_donor_interaction():
 
     if input_donation(new_donor_name):
         print_email(new_donor_name, get_last_donation(new_donor_name))
-    else:
-        return
 
 
 #  WRITE ALL LETTERS TO FILES
