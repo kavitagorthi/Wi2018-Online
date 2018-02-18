@@ -66,11 +66,6 @@ def get_email(name, amount):
     return email_text.format(name, amount)
 
 
-def print_email(name, amount):
-    """Print a thank-you email on screen."""
-    print(get_email(name, amount))
-
-
 def create_report():
     """Create a report."""
     title_line_form = "{:<26}{:^3}{:>13}{:^3}{:>13}{:^3}{:>13}"
@@ -123,7 +118,7 @@ def existing_donor_interaction():
             return
 
     if input_donation(old_donor_name):
-        print_email(old_donor_name, get_last_donation(old_donor_name))
+        print(get_email(old_donor_name, get_last_donation(old_donor_name)))
 
 
 def new_donor_interaction():
@@ -134,7 +129,7 @@ def new_donor_interaction():
         return
 
     if input_donation(new_donor_name):
-        print_email(new_donor_name, get_last_donation(new_donor_name))
+        print(get_email(new_donor_name, get_last_donation(new_donor_name)))
 
 
 #  WRITE ALL LETTERS TO FILES
