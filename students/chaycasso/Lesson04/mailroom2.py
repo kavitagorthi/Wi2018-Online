@@ -13,7 +13,6 @@ answer = ""
 
 
 def thank_you(thank_you_dict):
-    full_name = ""
     while True:
         full_name = input("Please enter a full name. >")
         if full_name.lower() == "quit": return(thank_you_dict)
@@ -35,7 +34,7 @@ def thank_you(thank_you_dict):
                       "Save the Kids\nsave@kids.org\n".format(full_name, donation_value_flt))
                 return(thank_you_dict)
             except:
-                print("Not entered. Please enter a numeric value.")
+                print("Not entered. Please enter a numeric value for the donation amount.")
 
 
 def sum(input_table):
@@ -61,7 +60,7 @@ def send_letters(send_letters_dict):
                      "for your total donations of ${} to our organization.\n\n-------------\nSave the Kids\n" \
                      "save@kids.org\n".format(key, send_letters_dict[key][-1], sum(send_letters_dict[key]))
             writefile.write(letter)
-    print("Letters have been created.")
+    print("Letters have been created.\n")
 
 
 # Main menu
