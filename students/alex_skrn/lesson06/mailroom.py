@@ -48,13 +48,11 @@ def sort_donors_by_total():
 
 
 def print_donor_names():
-    """Print existing donor names on screen."""
-    print()
-    donors_L = list(donors.keys())
-    for name in donors_L[:-1]:
-        print(name, end=', ')
-    print(donors_L[-1])
-    print()
+    """Print existing donor names on screen in alphabetical order."""
+    donors_L = sorted(donors.keys())
+    num = len(donors_L)
+    donors_S = (("\n" + ", ".join(["{}"] * num)).format(*donors_L))
+    print(donors_S)
 
 
 def get_email(name, amount):
