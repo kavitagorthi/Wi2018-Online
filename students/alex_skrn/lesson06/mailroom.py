@@ -106,14 +106,26 @@ def input_donation(name):
     return False
 
 
+# def existing_donor_interaction():
+#     """Ask for old donor name, donation amount, print a thank-you email."""
+#     prompt_name = "Type full name of the old donor or 0 to abort > "
+#     old_donor_name = input(prompt_name)
+#     if old_donor_name == "0":
+#         return
+#     while old_donor_name not in donors:
+#         old_donor_name = input(prompt_name)
+#         if old_donor_name == "0":
+#             return
+#
+#     if input_donation(old_donor_name):
+#         print(get_email(old_donor_name, get_last_donation(old_donor_name)))
+
+
 def existing_donor_interaction():
     """Ask for old donor name, donation amount, print a thank-you email."""
-    prompt_name = "Type full name of the old donor or 0 to abort > "
-    old_donor_name = input(prompt_name)
-    if old_donor_name == "0":
-        return
+    old_donor_name = ""
     while old_donor_name not in donors:
-        old_donor_name = input(prompt_name)
+        old_donor_name = input("Type the donor's full name or 0 to abort > ")
         if old_donor_name == "0":
             return
 
@@ -123,7 +135,7 @@ def existing_donor_interaction():
 
 def new_donor_interaction():
     """Ask for new donor name, donation amount, print a thank-you email."""
-    prompt_name = "Type full name of the new donor or 0 to abort > "
+    prompt_name = "Type the donor's full name or 0 to abort > "
     new_donor_name = input(prompt_name)
     if new_donor_name == "0":
         return
@@ -180,6 +192,67 @@ def write_select_dir():
 
 
 # MANAGING MENUS
+#  Write to files
+def write_file_dispatch():
+    """Return a dispatch dict for the send-to-everyone sub-menu."""
+    return {"1": write_cwd,
+            "2": write_select_dir,
+            "3": quit,
+            }
+
+
+def write_file_prompt():
+    """Return a prompt str for the send-to-everyone sub-menu."""
+    return ("\nSend to everyone sub-menu\n"
+            "\n1 - Write to current working directory\n"
+            "2 - Choose a directory to write\n"
+            "3 - Quit\n"
+            ">> "
+            )
+
+
+# Print on screen
+def send_thanks_dispatch():
+    """Return a dispatch dict for the send-thank-you sub-menu."""
+    return {"1": print_donor_names,
+            "2": new_donor_interaction,
+            "3": existing_donor_interaction,
+            "4": quit,
+            }
+
+
+def send_thanks_prompt():
+    """Return a prompt str for the send-thank-you sub-menu."""
+    return ("\nSend-Thank-You Sub-Menu\n"
+            "\n1 - See the list of donors\n"
+            "2 - Add a new donor and a donation amount\n"
+            "3 - Choose an existing donor\n"
+            "4 - Quit\n"
+            ">> "
+            )
+
+
+# Main menu
+def main_dispatch():
+    """Return a dispatch dict for the main menu."""
+    return {"1": send_thank_you_interaction,
+            "2": create_report,
+            "3": send_all_menu,
+            "4": quit,
+            }
+
+
+def main_prompt():
+    """Return a prompt str for the main menu."""
+    return ("\nMain Menu\n"
+            "\n1 - Send a Thank You\n"
+            "2 - Create a Report\n"
+            "3 - Send letters to everyone\n"
+            "4 - Quit\n"
+            ">> "
+            )
+
+
 def quit():
     """Provide an exit option for menus."""
     return "exit menu"
@@ -187,12 +260,12 @@ def quit():
 
 def send_all_menu():
     """Initiate the send-all-letters sub-sub-menu."""
-    menu_selection(write_file_prompt, write_file_dispatch)
+    menu_selection(write_file_prompt(), write_file_dispatch())
 
 
 def send_thank_you_interaction():
     """Initiate the send-thank-you sub-menu."""
-    menu_selection(send_thanks_prompt, send_thanks_dispatch)
+    menu_selection(send_thanks_prompt(), send_thanks_dispatch())
 
 
 def menu_selection(prompt, dispatch_dict):
@@ -207,41 +280,4 @@ def menu_selection(prompt, dispatch_dict):
 
 
 if __name__ == "__main__":
-    #  Write to files
-    write_file_prompt = ("\nSend to everyone sub-menu\n"
-                         "\n1 - Write to current working directory\n"
-                         "2 - Choose a directory to write\n"
-                         "3 - Quit\n"
-                         ">> "
-                         )
-    write_file_dispatch = {"1": write_cwd,
-                           "2": write_select_dir,
-                           "3": quit,
-                           }
-    # Print on screen
-    send_thanks_dispatch = {"1": print_donor_names,
-                            "2": new_donor_interaction,
-                            "3": existing_donor_interaction,
-                            "4": quit,
-                            }
-    send_thanks_prompt = ("\nSend-Thank-You Sub-Menu\n"
-                          "\n1 - See the list of donors\n"
-                          "2 - Add a new donor and a donation amount\n"
-                          "3 - Choose an existing donor\n"
-                          "4 - Quit\n"
-                          ">> "
-                          )
-    # Main menu
-    main_dispatch = {"1": send_thank_you_interaction,
-                     "2": create_report,
-                     "3": send_all_menu,
-                     "4": quit,
-                     }
-    main_prompt = ("\nMain Menu\n"
-                   "\n1 - Send a Thank You\n"
-                   "2 - Create a Report\n"
-                   "3 - Send letters to everyone\n"
-                   "4 - Quit\n"
-                   ">> "
-                   )
-    menu_selection(main_prompt, main_dispatch)
+    menu_selection(main_prompt(), main_dispatch())
