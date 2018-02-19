@@ -5,7 +5,7 @@
 # -----------------------------------------------------------
 
 import io
-from os import listdir
+import os
 import sys
 import unittest
 
@@ -58,12 +58,28 @@ TESTME TESTME              $    4046.59           4  $     1011.65
             self.assertIn(str(mr.donor_data[donor][-1]), format_string)  # Test donor's last donation is in letter
 
     def test_send_letters_all(self):
+        capturedprint = io.StringIO()  # Redirect stdout to a stringIO object
+        sys.stdout = capturedprint
         mr.send_letters_all()
-        for filename in listdir('.'):
+        sys.stdout = sys.__stdout__
+        for filename in os.listdir('.'):
             if filename.endswith('.txt'):
                 donorname = ((filename[9:-4]).replace("_", " ")).split()
-
                 self.assertIn(mr.Donor(donorname[0], ' '.join(donorname[1:])), mr.donor_data.keys())
+
+    def test_get_donor(self):
+        self.assertIsNone(mr.get_donor(''))
+        self.assertIsNotNone(mr.get_donor('Al Donor1'))
+        self.assertIsNotNone(mr.get_donor('NEW DONOR'))
+
+    def tearDown(self):
+        # Removes files created by test_send_letters_all
+        for filename in os.listdir('.'):
+            if filename.endswith('.txt'):
+                donorname = ((filename[9:-4]).replace("_", " ")).split()
+                if mr.Donor(donorname[0], ' '.join(donorname[1:])) in mr.donor_data.keys():
+                    os.remove(filename)
+
 
 if __name__ == "__main__":
     unittest.main()
