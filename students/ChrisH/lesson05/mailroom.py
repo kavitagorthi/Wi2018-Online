@@ -81,9 +81,8 @@ def send_letters_all():
         now = time.localtime()
         f_name = f"{now.tm_year}{now.tm_mon:02}{now.tm_mday:02}_"
         f_name += get_donor_fullname(donor).replace(" ", "_") + ".txt"
-        file_out = open(f_name, 'w')
-        file_out.write(generate_letter(donor))
-        file_out.close()
+        with open(f_name, 'w') as file_out:
+            file_out.write(generate_letter(donor))
     return None
 
 
