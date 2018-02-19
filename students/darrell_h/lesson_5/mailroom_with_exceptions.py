@@ -24,6 +24,7 @@ def seperator(str):
     # return line that equals string length ignoring newline.
     return "-" * (len(str) - str.count('\n'))
 
+
 def list_donors():
     print("\nExisting donors\n-" + "\n-".join(d.keys()))
 
@@ -39,22 +40,24 @@ def add_donation(donor_name, exsting_donor):
             d[donor_name] = [int(donation)]
             break
 
+
 def send_to_screen():
     for k, v in d.items():
         print(f"thanks {k}")
+
 
 def send_to_file():
     target_folder = '~/Downloads/'
     now = datetime.datetime.now()
     file_append = now.strftime("%Y-%m-%d")
-    for k,v in d.items():
-        f = open(os.path.expanduser(target_folder + k + file_append + '.txt'), "w+")  # w+ will create file and write
+    for k, v in d.items():
+        # w+ will create file and write
+        f = open(os.path.expanduser(target_folder + k + file_append + '.txt'), "w+")
         f.write(f"Dear {k}, thanks\n\n"
                 f"Your donation of ${'{:,}'.format(sum(v))} is appreciated\n\n"
                  "It will be put to good use.\n\n"
                  "THANKS")
         f.close()
-
 
 
 #####################
@@ -75,6 +78,7 @@ def send_letters():
                      'f - send to file\n'\
                      'q - return to main menu\n'
     menu_selection(options_prompt, options_dict)
+
 
 def send_thank_you():
     # donor_names = get_names()  # create a list of names only
@@ -105,17 +109,25 @@ def create_report():
 
 
 def quit():
-    print('goodbye')
+    print('\n===============\n'
+          '=== Goodbye ==='
+          '\n===============')
     return 'exit'  # return this to break out of while loop.  More elegant
 
 
 def menu_selection(prompt, dispatch_dict):
     while True:
         response = input(prompt)
-        if dispatch_dict.get(response)() == 'exit':
-            #  otherwise i want to return the response to the calling function
-            #  how...???
-            break
+        try:
+            if dispatch_dict.get(response)() == 'exit':
+                #  otherwise i want to return the response to the calling function
+                #  how...???
+                break
+        except TypeError:
+            print('\n=========================\n'
+                  '=== Invalid Selection ==='
+                  '\n=========================')
+            continue
 
 
 ####################
