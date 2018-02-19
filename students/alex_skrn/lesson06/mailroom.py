@@ -67,24 +67,25 @@ def get_email(name, amount):
 
 
 def create_report():
-    """Create a report."""
-    title_line_form = "{:<26}{:^3}{:>13}{:^3}{:>13}{:^3}{:>13}"
+    """Create and print a report."""
+    report = ""
+    title_line_form = "\n{:<26}{:^3}{:>13}{:^3}{:>13}{:^3}{:>13}\n"
     title_line_text = ('Donor Name', '|', 'Total Given', '|',
                        'Num Gifts', '|', 'Average Gift'
                        )
-    print()
-    print(title_line_form.format(*title_line_text))
-    print('- ' * 38)
-    form_line = "{:<26}{:>3}{:>13}{:>3}{:>13}{:>3}{:>13}"
+    report += title_line_form.format(*title_line_text)
+    report += str('- ' * 38)
+    form_line = "\n{:<26}{:>3}{:>13}{:>3}{:>13}{:>3}{:>13}"
     for name in sort_donors_by_total():
         total = get_total_given(name)
         num_gifts = len(get_donations(name))
         mean = round((total / num_gifts), 2)
-        print(form_line.format(str(name), '$', str(total), ' ',
-                               str(num_gifts), '$', str(mean)
-                               )
-              )
-    print()
+        report += (form_line.format(str(name), '$', str(total), ' ',
+                                    str(num_gifts), '$', str(mean)
+                                    )
+                   )
+    report += "\n"
+    print(report)
 
 
 # PRINT ON SREEN A THANK YOU LETTER TO SOMEONE WHO JUST MADE A DONATION
@@ -103,22 +104,6 @@ def input_donation(name):
             else:
                 add_donation(name, donation_amount)
                 return True
-    return False
-
-
-# def existing_donor_interaction():
-#     """Ask for old donor name, donation amount, print a thank-you email."""
-#     prompt_name = "Type full name of the old donor or 0 to abort > "
-#     old_donor_name = input(prompt_name)
-#     if old_donor_name == "0":
-#         return
-#     while old_donor_name not in donors:
-#         old_donor_name = input(prompt_name)
-#         if old_donor_name == "0":
-#             return
-#
-#     if input_donation(old_donor_name):
-#         print(get_email(old_donor_name, get_last_donation(old_donor_name)))
 
 
 def existing_donor_interaction():
