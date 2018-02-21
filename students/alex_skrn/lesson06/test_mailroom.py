@@ -11,15 +11,15 @@ def donors():
     yield mailroom.donors
 
 
-@pytest.fixture()
-def main_dispatch():
-    """Provide a dispatch dict for the tests."""
-    main_dispatch = {"1": mailroom.send_thank_you_interaction,
-                     "2": mailroom.create_report,
-                     "3": mailroom.send_all_menu,
-                     "4": mailroom.quit,
-                     }
-    return main_dispatch
+# @pytest.fixture()
+# def main_dispatch():
+#     """Provide a dispatch dict for the tests."""
+#     main_dispatch = {"1": mailroom.send_thank_you_interaction,
+#                      "2": mailroom.create_report,
+#                      "3": mailroom.send_all_menu,
+#                      "4": mailroom.quit,
+#                      }
+#     return main_dispatch
 
 
 def test_add_new_donor_donation(donors):
@@ -94,7 +94,7 @@ def test_input_donation_zero(monkeypatch):
     """input_donation(name) with the user entering zero."""
     # WHEN the user enters zero when prompted to enter an amount
     # THEN the function should return False
-    monkeypatch.setattr('builtins.input', lambda x: "0")
+    monkeypatch.setattr('builtins.input', lambda _: "0")
     assert mailroom.input_donation("A") is False
 
 
@@ -102,7 +102,7 @@ def test_input_donation_zero(monkeypatch):
 #     """input_donation(name) with user entering a str instead of a number."""
 #     # WHEN the user enters a string when prompted to enter an amount
 #     # THEN the function should print a statement and re-prompt
-#     monkeypatch.setattr('builtins.input', lambda x: "any_string")
+#     monkeypatch.setattr('builtins.input', lambda _: "any_string")
 #     mailroom.input_donation("A")
 #     out, _ = capsys.readouterr()
 #     assert out == "Input must be a number"
@@ -112,32 +112,32 @@ def test_input_donation_number(monkeypatch, donors):
     """input_donation(name) with the user entering a number."""
     # WHEN the user enters a number (not 0) when prompted to enter an amount
     # THEN the function should return True and the amount must be added
-    monkeypatch.setattr('builtins.input', lambda x: "300")
+    monkeypatch.setattr('builtins.input', lambda _: "300")
     assert mailroom.input_donation("A") is True
     assert mailroom.donors["A"][-1] == 300
 
 
-def test_existing_donor_interaction_user_input_zero(monkeypatch):
-    """_existing_donor_interaction() user enters zero on prompt."""
+def test_old_donor_interaction_user_input_zero(monkeypatch):
+    """_old_donor_interaction() user enters zero on prompt."""
     # WHEN the user enters zero when prompted to enter a name
     # THEN the function should return
-    monkeypatch.setattr('builtins.input', lambda x: "0")
-    assert mailroom.existing_donor_interaction() is None
+    monkeypatch.setattr('builtins.input', lambda _: "0")
+    assert mailroom.old_donor_interaction() is None
 
 
-# def test_existing_donor_interaction_user_input_non_exist(monkeypatch):
-#     """_existing_donor_interaction() user enters a non-existing name."""
+# def test_old_donor_interaction_user_input_non_exist(monkeypatch):
+#     """_old_donor_interaction() user enters a non-existing name."""
 #     # WHEN the user enters a name not in the dict
 #     # THEN the function should re-prompt
-#     monkeypatch.setattr('builtins.input', lambda x: "any_string")
+#     monkeypatch.setattr('builtins.input', lambda _: "any_string")
 #     assert ?????????
 
 #
-# def test_existing_donor_interaction_user_input_valid_name(monkeypatch):
-#     """_existing_donor_interaction() user enters a non-existing name."""
+# def test_old_donor_interaction_user_input_valid_name(monkeypatch):
+#     """_old_donor_interaction() user enters a non-existing name."""
 #     # WHEN the user enters a valid name in the dict
 #     # THEN the function should print email and return
-#     monkeypatch.setattr('builtins.input', lambda x: "A")
+#     monkeypatch.setattr('builtins.input', lambda _: "A")
 #     assert ?????????
 
 
@@ -145,28 +145,31 @@ def test_new_donor_interaction_user_input_zero(monkeypatch):
     """new_donor_interaction() user enters 0 on promp."""
     # WHEN the user enters zero when prompted to enter a name
     # THEN the function should return
-    monkeypatch.setattr('builtins.input', lambda x: "0")
+    monkeypatch.setattr('builtins.input', lambda _: "0")
     assert mailroom.new_donor_interaction() is None
 
 
 def test_new_donor_interaction_user_input_name(monkeypatch, capsys):
-    """new_donor_interaction() user enters a name on promp."""
+    """new_donor_interaction(); User enters a name on prompt."""
     # WHEN the user enters a name when prompted to enter a name
     # THEN the function should print the thank-you email
-    monkeypatch.setattr('builtins.input', lambda x: "Any_name")
+    monkeypatch.setattr('builtins.input', lambda _: "Any_name")
+    # Fake all functions inside new_donor_interaction()
     email_text = ("""\nDear Alex,\n
                   \nI would like to thank you for your donation of $15.5.\n
                   \nWe appreciate your support.\n
                   \nSincerely,\n
                   \nThe Organization\n
                   """)
-    # Fake all functions inside new_donor_interaction()
-    mailroom.input_donation = Mock()
-    mailroom.input_donation.return_value = True
     mailroom.get_email = Mock()
     mailroom.get_email.return_value = email_text
+
+    mailroom.input_donation = Mock()
+    mailroom.input_donation.return_value = True
+
     mailroom.get_last_donation = Mock()
     mailroom.get_last_donation.return_value = True
+
     mailroom.new_donor_interaction()
     out, _ = capsys.readouterr()
     assert out.strip() == email_text.strip()
@@ -182,13 +185,12 @@ def test_write_file(tmpdir):
     assert file.read() == "some text"
 
 
-def test_write_cwd(tmpdir, capsys, donors):
-    """write_cwd()."""
+def test_write_cwd(monkeypatch, tmpdir, capsys, donors):
+    """write_cwd() User writes all emails to cwd."""
     # Check that the print statement in the function is okey
     # Check that the function indeed created 2 files
     # Check that the files created are not empty at least
-    mailroom.os.getcwd = Mock()
-    mailroom.os.getcwd.return_value = tmpdir
+    monkeypatch.chdir(tmpdir)
     mailroom.write_cwd()
     out, _ = capsys.readouterr()  # out has an extra \n, hence .strip() below
     result = ("\nAll letters saved in {}\n".format(str(tmpdir))).strip()
@@ -223,15 +225,15 @@ def test_write_select_dir_user_cancel():
     assert mailroom.write_select_dir() is None
 
 
-def test_menu_selection_user_choice_quit(monkeypatch):
-    """menu_selection(). User chooses 4 to quit."""
-    monkeypatch.setattr('builtins.input', lambda x: "4")
-    assert mailroom.menu_selection("Select >>", main_dispatch()) is None
+# def test_menu_selection_user_choice_quit(monkeypatch):
+#     """menu_selection(). User chooses 4 to quit."""
+#     monkeypatch.setattr('builtins.input', lambda _: "4")
+#     assert mailroom.menu_selection("Select >>", main_dispatch()) is None
 
 
 # def test_menu_selection_user_choice_invalid(monkeypatch, capsys):
 #     """menu_selection(). User enters an invalid choice."""
-#     monkeypatch.setattr('builtins.input', lambda x: "invalid_input")
+#     monkeypatch.setattr('builtins.input', lambda _: "invalid_input")
 #     mailroom.menu_selection("Select >>", main_dispatch())
 #     assert 0
 #     out, _ = capsys.readouterr()
