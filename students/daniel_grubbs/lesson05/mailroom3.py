@@ -40,9 +40,6 @@ def get_donor(name):
         else:
             return None
 
-    # donor = [k for k in donors.keys() if name == k.strip().lower()]
-    # return donor
-
 
 def thank_you():
     """Function for Thank you. Prompts for a donors name."""
@@ -53,7 +50,9 @@ def thank_you():
 
         if full_name == 'list':
             print('Below is the current donor list:')
-            print_donor_list()
+            donor = print_donor_list()
+            for i in donor:
+                print(i)
             print()
         elif full_name == 'menu':
             return
