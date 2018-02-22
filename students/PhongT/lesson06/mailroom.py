@@ -39,6 +39,7 @@ def get_donor_data():
 
 donors_data = get_donor_data()
 
+
 def print_thank_you():
     """ Add or Update a donor record, then print a Thank You letter """
     while True:
