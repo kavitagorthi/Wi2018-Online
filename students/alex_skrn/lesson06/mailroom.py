@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Mailroom - Part 2 - Dicts, Files."""
+"""Mailroom - Part 4 - Unit testing."""
 import os
 import datetime
 import tkinter as tk
@@ -101,18 +101,21 @@ def input_donation(name):
         else:
             if donation_amount == 0.0:
                 return False
+            elif donation_amount < 0:
+                print("Input must not be negative")
+                continue
             else:
                 add_donation(name, donation_amount)
                 return True
 
 
 def old_donor_interaction():
-    """Call any_donor() with the old donor functionality."""
+    """Call any_donor() for the old donor functionality."""
     any_donor()
 
 
 def new_donor_interaction():
-    """Call any_donor() with the new donor functionality."""
+    """Call any_donor() for the new donor functionality."""
     any_donor(old=False)
 
 
@@ -134,29 +137,6 @@ def any_donor(old=True):
         print(get_email(donor_name, get_last_donation(donor_name)))
 
 
-# def old_donor_interaction():
-#     """Ask for old donor name, donation amount, print a thank-you email."""
-#     old_donor_name = ""
-#     while old_donor_name not in donors:
-#         old_donor_name = input("Type the donor's full name or 0 to abort > ")
-#         if old_donor_name == "0":
-#             return
-#
-#     if input_donation(old_donor_name):
-#         print(get_email(old_donor_name, get_last_donation(old_donor_name)))
-#
-#
-# def new_donor_interaction():
-#     """Ask for new donor name, donation amount, print a thank-you email."""
-#     prompt_name = "Type the donor's full name or 0 to abort > "
-#     new_donor_name = input(prompt_name)
-#     if new_donor_name == "0":
-#         return
-#
-#     if input_donation(new_donor_name):
-#         print(get_email(new_donor_name, get_last_donation(new_donor_name)))
-
-
 #  WRITE ALL LETTERS TO FILES
 def get_full_path(destination, name):
     """Construct a full path including date and name."""
@@ -167,10 +147,7 @@ def get_full_path(destination, name):
 
 
 def write_file(destination, text):
-    """Write text to destination/name.txt."""
-    # date = str(datetime.date.today())
-    # filename = "{}-{}.txt".format(date, name)
-    # path = os.path.join(destination, filename)
+    """Write text to destination path."""
     with open(destination, "w") as toF:
         toF.write(text)
 
