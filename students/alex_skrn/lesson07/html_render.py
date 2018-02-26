@@ -17,19 +17,28 @@ class Element(object):
     def append(self, new_content):
         self.content.append(new_content)
 
+
     def render(self, file_out, cur_ind=""):
-        file_out.write("<{}>\n".format(self.tag))
+        file_out.write("{}<{}>\n".format(cur_ind, self.tag))
         for elem in self.content:
             try:
-                elem.render(file_out)
+                elem.render(file_out, Element.indent + cur_ind)
             except AttributeError:
-                file_out.write(str(elem))
-                file_out.write(" ")
-        file_out.write("\n</{}>".format(self.tag))
+                file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
+        file_out.write("{}</{}>\n".format(cur_ind, self.tag))
 
 
 class Html(Element):
     tag = "html"
+    def render(self, file_out, cur_ind=""):
+        file_out.write("{}<!DOCTYPE html>\n".format(cur_ind))
+        file_out.write("{}<{}>\n".format(cur_ind, self.tag))
+        for elem in self.content:
+            try:
+                elem.render(file_out, Element.indent + cur_ind)
+            except AttributeError:
+                file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
+        file_out.write("{}</{}>".format(cur_ind, self.tag))
 
 
 class Body(Element):
