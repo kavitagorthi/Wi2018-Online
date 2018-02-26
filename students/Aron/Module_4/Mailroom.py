@@ -3,7 +3,7 @@
 import sys
 
 #Initial Donors List
-donors = [['Aron', [100, 200, 300]], ['Joan', [200]], ['Jean', [200, 300, 1000, 50]], ['Scott', [150]]]
+donors = {'Aron': [10000,300, 100], 'Joan':[100, 50, 65], 'Jean':[30,150], 'Scott':[200]}
 
 #Thank You Functionality
 ##If the user types ‘list’, show them a list of the donor names and re-prompt
@@ -22,17 +22,19 @@ def seperator(str):
 #Summary of donor giving
 summary=[]
 def donor_sum():
+    #summary=[]
+    #donor_summary={}
     for donor in donors:
-        summary.append([donor[0],
-        len(donor[1]),
-        sum(donor[1]) / len(donor[1])])
+        summary.append(sum(donors[donor]))
+    #    donor_summary.append([donor](summary))
     return summary
+    #return donor_summary
 
 #list of donor names
 names=[]
 def donor_names():
-    for i in donors:
-        names.append(i[0])
+    for donor in donors:
+        names.append(donor)
 
 def list_check(x):
     while True:
@@ -67,18 +69,31 @@ def create_report():
         print("{:10}{:10}{:10}".format(item[0], item[1], item[2],))
     init()
 
+donor_summary=dict(zip(names, summary))
+
+def create_email():
+    #for i, name in enumerate(names):
+    for k, v in donor_summary.items():
+        email_text=open(k+"final.txt", 'w')
+        email_text.write('Dear '+k+',\n\nYour gift of $'+str(v)+' is greatly appreciated.\n\nSincerely,\nAron')
+        email_text.close()
+    init()
+
 def init():
     while True:
         heading = "Main Menu"
         print(heading)
-        choice = input("1 - See list of donors\n" "2 - Create a Report\n" "3 - Quit\n")
+        choice = input("1 - See list of donors\n" "2 - Create a Report\n" "3 - Create email to file\n" "4 - Quit\n")
         if choice == '1':
             send_thank_you()
             break
         elif choice == '2':
             create_report()
             break
-        elif choice == '3':
+        elif choice =='3':
+            create_email()
+            break
+        elif choice == '4':
             print ('Exit')
             sys.exit()
 

@@ -14,15 +14,14 @@ donors = {'Aron': [10000,300, 100], 'Joan':[100, 50, 65], 'Jean':[30,150], 'Scot
 
 #
 summary=[]
-#donor_summary={}
 def donor_sum():
     #summary=[]
     #donor_summary={}
     for donor in donors:
-        summary.append(sum(donors))
-        #donor_summary.append([donor](summary))
-    #return summary
-    return donor_summary
+        summary.append(sum(donors[donor]))
+    #    donor_summary.append([donor](summary))
+    return summary
+    #return donor_summary
 
 #list of donor names
 names=[]
@@ -30,20 +29,15 @@ def donor_names():
     for donor in donors:
         names.append(donor)
 
-donor_summary=list(zip(names, summary))
+donor_summary=dict(zip(names, summary))
 
-email=open('emails.txt', 'w')
-for donor in donor_summary:
-    email.write("test line %s %i"%donor)
-emails.close()
+def create_email():
+    #for i, name in enumerate(names):
+    for k, v in donor_summary.items():
+        email_text=open(k+"final.txt", 'w')
+        email_text.write('Dear'+k+',\nYour gift of $'+str(v)+' is greatly appreciated.\nSincerely,\nAron')
+        email_text.close()
 
-for i, donor in enumerate(names):
-    f=open("file"+str(i+1)+".txt", 'w')
-    f.write(name+'\n')
-    f.close()
-
-for i, name in enumerate(names):
-    email_text=open(name+".txt", 'w')
 
 
 ###
