@@ -9,16 +9,19 @@
 class Element(object):
     """
     Base Class for elements in an HTML document.
+    Init takes for content, either strings or other Element objects
+    as well as a list of keyword arguments for HTML Element attributes.
     """
 
     tag = 'html'
 
-    def __init__(self, content=None):
+    def __init__(self, content=None, **kwargs):
         if content is None:
             self.content = []
         else:
             self.content = [content]
         self.indent = '    '
+        self.attribs = kwargs
 
     def append(self, new_content):
         """
@@ -38,7 +41,13 @@ class Element(object):
         if type(self) is Html:
             file_out.write(cur_ind + '<!DOCTYPE html>\n')
 
-        file_out.write(cur_ind + '<' + self.tag + '>\n')
+        file_out.write(cur_ind + '<' + self.tag )
+
+        if self.attribs:                             # adds Element attributes to tag, if present
+            for k, v in self.attribs.items():
+                file_out.write(' ' + k + '="' + v + '"')
+
+        file_out.write('>\n')
 
         for item in self.content:
             try:
