@@ -3,58 +3,15 @@
 # Lession 06 - Mailroom v4
 # =================================================================
 
-# Existing Data (format: 15 char names, 15 char numbers per line)
-rawtext =  """Tony Stark             $453.02
-              Captain America      $1,250.00
-              Daisy Johnson            $1.99
-              Melinda May            $500.01
-              Phil Coulson         $9,999.99
-              Daisy Johnson            $1.99
-              Daisy Johnson           $10.99
-              Melinda May             $55.01
-              Tony Stark             $453.02
-              Captain America      $3,250.00"""
-
-# ======== Text to Lists ========
-# split by returns
-textlines = rawtext.split("\n")
-rawlength = len(textlines)
-
 
 # initialize list variables
-names = []
-money = []
-gifts = []
-dict_data = {}
+names = ['Tony Stark', 'Captain America', 'Daisy Johnson', 
+         'Melinda May', 'Phil Coulson']
+money = [906.04, 4500.00, 14.97, 555.02, 9999.99]
+gifts = [2, 2, 3, 2, 1]
 
-
-for lines in range(rawlength):
-    # clean the start and ends of lines
-    textlines[lines] = textlines[lines].strip() 
-
-    # pull out a line to a list for editing
-    # cut last 15 chars that are for numbers
-    rawname = textlines[lines]
-    names.append(rawname[:-15].strip())
+dict_data = {names[i]: [money[i], gifts[i]] for i in range(len(names))}
     
-    rawmoney = textlines[lines]
-    money.append((rawmoney[15:].strip()).strip("$").replace(",",""))
-    money[lines] = float(money[lines])
-    
-    # log total gifts
-    gifts.append(1)
-
-    
-# ======== Data Sorting ========
-def data_sort():
-    length = len(names)
-    # initialize dict with names and an empty list-values, value = [money, gifts]
-    dict_data.update({names[i]: [0, 0] for i in range(length)})
-    # concatenate data
-    for i in range(length):
-        dict_data.update({names[i]: \
-        [dict_data[names[i]][0] + money[i], dict_data[names[i]][1] + gifts[i]]})
-                
 
 # ======== Send a Thank You ========
 
@@ -138,9 +95,7 @@ main_dict = {"1": email_thx, "2": report,"3": all_emails, "4": exiting}
 
 
 if __name__ == "__main__":
-    print("\n[OUT]: Mailroom A1 v1")
-    # process raw data
-    data_sort()
+    print("\n[OUT]: Mailroom A1 v4")
     while True:
         options = input(main_prompt)
         try:
