@@ -9,13 +9,14 @@
 
 class Element(object):
 
-    def __init__(self, content=None, indent='    '):
+    tag = 'html'
+
+    def __init__(self, content=None):
         if content is None:
             self.content = []
         else:
             self.content = [content]
-        self.tag = 'html'
-        self.indent = indent
+        self.indent = '    '
 
     def append(self, new_content):
         """
@@ -32,18 +33,27 @@ class Element(object):
                         this is the amount that the element should already be indented
         :return: None
         """
-        html_out = cur_ind + '<' + self.tag + '>\n'
+        if type(self) is Html:
+            file_out.write(cur_ind + '<!DOCTYPE html>\n')
+
+        file_out.write(cur_ind + '<' + self.tag + '>\n')
 
         for item in self.content:
-            html_out += cur_ind + self.indent + item + '\n'
+            try:
+                item.render(file_out, cur_ind + self.indent)
+            except AttributeError:
+                file_out.write(cur_ind + self.indent+ str(item) + '\n')
 
-        html_out += cur_ind + '</' + self.tag + '>\n'
 
-        file_out.write(html_out)
+        file_out.write(cur_ind + '</' + self.tag + '>\n')
 
 
 class Html(Element):
+    tag = 'html'
 
-    def __init__(self):
-        self.tag = 'html'
+class Body(Element):
+    tag = 'body'
+
+class P(Element):
+    tag = 'p'
 
