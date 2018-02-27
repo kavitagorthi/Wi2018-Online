@@ -227,3 +227,170 @@ def test_multiple_indent():
 ########
 
 # Add your tests here!
+
+def test_head():
+    """Test for a new tag <head>."""
+    e = Head("this is some text")
+    e.append("and this is some more text")
+
+    file_contents = render_result(e).strip()
+
+    assert("this is some text") in file_contents
+    assert("and this is some more text") in file_contents
+    print(file_contents)
+    assert file_contents.endswith("</head>")
+
+
+def test_one_line_tag():
+    """Test whether OneLineTag() can render two pieces of text on one line."""
+    e = OneLineTag("this is some text")
+    e.append("and this is some more text")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+    assert("and this is some more text") in file_contents
+
+    # make sure it's in the right order
+    assert file_contents.index("this is") < file_contents.index("and this")
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<title>")
+    assert file_contents.endswith("</title>")
+
+
+def test_title():
+    """Test for a new tag <title>."""
+    e = Title("this is some text")
+    e.append("and this is some more text")
+
+    file_contents = render_result(e).strip()
+
+    assert("this is some text") in file_contents
+    assert("and this is some more text") in file_contents
+    print(file_contents)
+    assert file_contents.endswith("</title>")
+
+
+########
+# Step 4
+########
+
+# Test new functionality, i.e. keyward attributes, in all render methods
+def test_render_element_attr():
+    """Test whether the Element can take attributes."""
+    e = Element("this is some text", id="TheList", style="line-height:200%")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('id="TheList"') in file_contents
+    assert('style="line-height:200%"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<html>")
+    assert file_contents.endswith("</html>")
+
+
+def test_render_element_attr_dict():
+    """Test whether the Element can take a dict with attributes."""
+    attrs = {"class": "intro"}
+    e = Element("this is some text", **attrs)
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('<html class="intro"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<html>")
+    assert file_contents.endswith("</html>")
+
+
+def test_render_html_attr():
+    """Test whether the Html can take attributes."""
+    e = Element("this is some text", lang="English")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attribute got in there.
+    assert('lang="English"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<html>")
+    assert file_contents.endswith("</html>")
+
+
+def test_render_html_attr_dict():
+    """Test whether the Html can take a dict with attributes."""
+    attrs = {"class": "intro"}
+    e = Element("this is some text", **attrs)
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('<html class="intro"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<html>")
+    assert file_contents.endswith("</html>")
+
+
+def test_render_one_line_tag_attr():
+    """Test whether the OneLineTag can take attributes."""
+    e = Element("this is some text", id="TheList", style="line-height:200%")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('id="TheList"') in file_contents
+    assert('style="line-height:200%"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<title>")
+    assert file_contents.endswith("</title>")
+
+
+def test_render_one_line_tag_attr_dict():
+    """Test whether the OneLineTag can take a dict with attributes."""
+    attrs = {"class": "intro"}
+    e = Element("this is some text", **attrs)
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('<html class="intro"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<title>")
+    assert file_contents.endswith("</title>")
