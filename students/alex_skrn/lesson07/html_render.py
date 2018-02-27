@@ -8,7 +8,7 @@ A class-based system for rendering html.
 class Element(object):
     tag = "html"
     indent = "    "
-    def __init__(self, content=None):
+    def __init__(self, content=None, **kwargs):
         if content is not None:
             self.content = [content]
         else:
@@ -47,3 +47,23 @@ class Body(Element):
 
 class P(Element):
     tag = "p"
+
+
+class Head(Element):
+    tag = "head"
+
+
+class OneLineTag(Element):
+    tag = "title"
+    def render(self, file_out, cur_ind=""):
+        file_out.write("{}<{}>".format(cur_ind, self.tag))
+        for elem in self.content:
+            try:
+                elem.render(file_out, Element.indent + cur_ind)
+            except AttributeError:
+                file_out.write("{}".format(str(elem)))
+        file_out.write("</{}>\n".format(self.tag))
+
+
+class Title(OneLineTag):
+    tag = "title"
