@@ -96,3 +96,29 @@ class OneLineTag(Element):
 
 class Title(OneLineTag):
     tag = 'title'
+
+
+class SelfClosingTag(Element):
+
+    def __init__(self, content=None, **kwargs):
+        super(SelfClosingTag, self).__init__(content, **kwargs)
+        self.content = None
+
+    def render(self, file_out, cur_ind=''):
+        file_out.write(cur_ind + '<' + self.tag)
+
+        if self.attribs:  # adds Element attributes to tag, if present
+            for k, v in self.attribs.items():
+                file_out.write(' ' + k + '="' + v + '"')
+
+        file_out.write(' />\n')
+
+    def append(self, new_content):
+        raise TypeError
+
+class Hr(SelfClosingTag):
+    tag = 'hr'
+
+
+class Br(SelfClosingTag):
+    tag = 'br'
