@@ -41,21 +41,30 @@ class Element(object):
         if type(self) is Html:
             file_out.write(cur_ind + '<!DOCTYPE html>\n')
 
-        file_out.write(cur_ind + '<' + self.tag )
+        self.g_render(file_out, cur_ind,
+                      cur_ind + '<' + self.tag,
+                      '>\n',
+                      cur_ind + '</' + self.tag + '>')
 
-        if self.attribs:                             # adds Element attributes to tag, if present
-            for k, v in self.attribs.items():
-                file_out.write(' ' + k + '="' + v + '"')
+    def g_render(self, file_out, cur_ind, tag_start, tag_end, tag_close):
 
-        file_out.write('>\n')
+        file_out.write(tag_start)
 
-        for item in self.content:
-            try:
-                item.render(file_out, cur_ind + self.indent)
-            except AttributeError:
-                file_out.write(cur_ind + self.indent + str(item) + '\n')
+        for k, v in self.attribs.items():
+            file_out.write(f' {k}="{v}"')
 
-        file_out.write(cur_ind + '</' + self.tag + '>\n')
+        file_out.write(tag_end)
+
+        if self.content:
+            for item in self.content:
+                try:
+                    item.render(file_out, cur_ind + self.indent)
+                except AttributeError:
+                    file_out.write(cur_ind + self.indent + str(item))
+                    if not issubclass(type(self), OneLineTag):          # Test for OneLineTag class type
+                        file_out.write('\n')
+
+        file_out.write(tag_close + '\n')
 
 
 class Html(Element):
@@ -79,20 +88,12 @@ class OneLineTag(Element):
     Subclass of Element, overrides Element.render to print html text on one line.
     """
     def render(self, file_out, cur_ind=''):
-        """
-        Renders the tag and strings in the content of the object ON ONE LINE.
-        :param file_out: any open, writeable file-like object
-        :param cur_ind: a string with the current indentation level
-        :return: None, writes output to a given file
-        """
-        file_out.write(cur_ind + '<' + self.tag + '>')
-        for item in self.content:
-            try:
-                item.render(file_out, '')
-            except AttributeError:
-                file_out.write(str(item))
-        file_out.write('</' + self.tag + '>\n')
-
+        self.indent = ''                        # Reset indent for this type to prevent unnecessary spaces
+        self.g_render(file_out,
+                      '',
+                      cur_ind + '<' + self.tag,
+                      '>',
+                      '</' + self.tag + '>')
 
 class Title(OneLineTag):
     tag = 'title'
@@ -105,16 +106,14 @@ class SelfClosingTag(Element):
         self.content = None
 
     def render(self, file_out, cur_ind=''):
-        file_out.write(cur_ind + '<' + self.tag)
-
-        if self.attribs:  # adds Element attributes to tag, if present
-            for k, v in self.attribs.items():
-                file_out.write(' ' + k + '="' + v + '"')
-
-        file_out.write(' />\n')
+        self.g_render(file_out, cur_ind,
+                      cur_ind + '<' + self.tag,
+                      '',
+                      ' />')
 
     def append(self, new_content):
         raise TypeError
+
 
 class Hr(SelfClosingTag):
     tag = 'hr'
