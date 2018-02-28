@@ -282,7 +282,15 @@ def test_title():
 # Step 4
 ########
 
-# Test new functionality, i.e. keyward attributes, in all render methods
+# Test new functionality, i.e. keyword attributes, in all render methods
+def test_kwargs_to_str():
+    """Test that helper function used in the render method."""
+    e = Element()
+    args = {"id": 125, "style": "red %"}
+    assert e.kwargs_to_str(**args) == 'id="125" style="red %"'
+    assert e.kwargs_to_str(id="TheList") == 'id="TheList"'
+
+
 def test_render_element_attr():
     """Test whether the Element can take attributes."""
     e = Element("this is some text", id="TheList", style="line-height:200%")
@@ -298,7 +306,7 @@ def test_render_element_attr():
     assert('style="line-height:200%"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<html>")
+    assert file_contents.startswith("<html ")
     assert file_contents.endswith("</html>")
 
 
@@ -317,7 +325,7 @@ def test_render_element_attr_dict():
     assert('<html class="intro"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<html>")
+    assert file_contents.startswith("<html ")
     assert file_contents.endswith("</html>")
 
 
@@ -335,7 +343,7 @@ def test_render_html_attr():
     assert('lang="English"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<html>")
+    assert file_contents.startswith("<html ")
     assert file_contents.endswith("</html>")
 
 
@@ -354,13 +362,13 @@ def test_render_html_attr_dict():
     assert('<html class="intro"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<html>")
+    assert file_contents.startswith("<html ")
     assert file_contents.endswith("</html>")
 
 
 def test_render_one_line_tag_attr():
     """Test whether the OneLineTag can take attributes."""
-    e = Element("this is some text", id="TheList", style="line-height:200%")
+    e = OneLineTag("this is some text", id="TheList", style="line-height:200%")
 
     # This uses the render_results utility above
     file_contents = render_result(e).strip()
@@ -373,14 +381,14 @@ def test_render_one_line_tag_attr():
     assert('style="line-height:200%"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<title>")
+    assert file_contents.startswith("<title ")
     assert file_contents.endswith("</title>")
 
 
 def test_render_one_line_tag_attr_dict():
     """Test whether the OneLineTag can take a dict with attributes."""
     attrs = {"class": "intro"}
-    e = Element("this is some text", **attrs)
+    e = OneLineTag("this is some text", **attrs)
 
     # This uses the render_results utility above
     file_contents = render_result(e).strip()
@@ -389,8 +397,85 @@ def test_render_one_line_tag_attr_dict():
     assert("this is some text") in file_contents
 
     # making sure the attributes got in there.
-    assert('<html class="intro"') in file_contents
+    assert('<title class="intro"') in file_contents
 
     # making sure the opening and closing tags are right.
-    assert file_contents.startswith("<title>")
+    assert file_contents.startswith("<title ")
     assert file_contents.endswith("</title>")
+
+
+def test_render_title_attr_dict():
+    """Test whether the OneLineTag can take a dict with attributes."""
+    # Also tests the render method
+    attrs = {"class": "intro"}
+    e = Title("this is some text", **attrs)
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("this is some text") in file_contents
+
+    # making sure the attributes got in there.
+    assert('<title class="intro"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<title ")
+    assert file_contents.endswith("</title>")
+
+
+
+
+########
+# Step 5
+########
+
+def test_self_closing_tag():
+    """Test whether SelfClosingTag - on one line, attrs, no content."""
+    # Test that it raises an exception if any content is passed to it
+    with pytest.raises(TypeError):
+        e = SelfClosingTag("this is some text", style="text-align:")
+    with pytest.raises(TypeError):
+        e = SelfClosingTag()
+        e.append("and this is some more text")
+
+    e = SelfClosingTag(style="height:30px")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the attributes got in there.
+    assert('style="height:30px"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<hr ")
+    assert file_contents.endswith("/>")
+
+def test_br_tag():
+    """Test whether SelfClosingTag - on one line, attrs, no content."""
+    # Test that it raises an exception if any content is passed to it
+    with pytest.raises(TypeError):
+        e = Br("this is some text")
+    with pytest.raises(TypeError):
+        e = Br()
+        e.append("and this is some more text")
+
+    e = Br(style="height:30px")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the attributes got in there.
+    assert('style="height:30px"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<br ")
+    assert file_contents.endswith("/>")
