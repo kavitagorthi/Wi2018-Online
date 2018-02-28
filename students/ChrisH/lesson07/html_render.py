@@ -38,9 +38,6 @@ class Element(object):
                         this is the amount that the element should already be indented
         :return: None
         """
-        if type(self) is Html:
-            file_out.write(cur_ind + '<!DOCTYPE html>\n')
-
         self.g_render(file_out, cur_ind,
                       cur_ind + '<' + self.tag,
                       '>\n',
@@ -70,6 +67,10 @@ class Element(object):
 class Html(Element):
     tag = 'html'
 
+    def render(self, file_out, cur_ind=''):
+        file_out.write(self.indent + '<!DOCTYPE html>\n')
+        super().render(file_out, cur_ind)
+
 
 class Body(Element):
     tag = 'body'
@@ -95,6 +96,7 @@ class OneLineTag(Element):
                       '>',
                       '</' + self.tag + '>')
 
+
 class Title(OneLineTag):
     tag = 'title'
 
@@ -102,7 +104,7 @@ class Title(OneLineTag):
 class SelfClosingTag(Element):
 
     def __init__(self, content=None, **kwargs):
-        super(SelfClosingTag, self).__init__(content, **kwargs)
+        super().__init__(content, **kwargs)
         self.content = None
 
     def render(self, file_out, cur_ind=''):
@@ -140,5 +142,9 @@ class Li(Element):
 
 class H(OneLineTag):
     def __init__(self, level, header_text):
-        super(OneLineTag, self).__init__(content=header_text)
+        super().__init__(content=header_text)
         self.tag = 'h' + str(level)
+
+
+class Meta(SelfClosingTag):
+    tag = 'meta'
