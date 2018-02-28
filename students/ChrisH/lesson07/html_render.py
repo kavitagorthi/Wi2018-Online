@@ -125,8 +125,20 @@ class Br(SelfClosingTag):
 
 class A(OneLineTag):
     tag = 'a'
+
     def __init__(self, link, content):
-        super(A, self).__init__(content=content, href=link)
+        super(A, self).__init__(content, href=link)
 
 
+class Ul(Element):
+    tag = 'ul'
 
+
+class Li(Element):
+    tag = 'li'
+
+
+class H(OneLineTag):
+    def __init__(self, level, header_text):
+        super(OneLineTag, self).__init__(content=header_text)
+        self.tag = 'h' + str(level)

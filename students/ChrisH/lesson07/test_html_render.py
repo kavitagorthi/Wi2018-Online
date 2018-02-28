@@ -56,6 +56,29 @@ class htmlrenderTest(unittest.TestCase):
         br.render(f, '')
         self.assertEqual(f.getvalue(), '<br style="text-align: center;" />\n')
 
+    def test_A(self):
+        a = hr.A('http://www.google.com', 'Google')
+        f = StringIO()
+        a.render(f, '')
+        self.assertEqual(f.getvalue(), '<a href="http://www.google.com">Google</a>\n')
+
+    def test_Ul_empty(self):
+        ul = hr.Ul(id="TheList", style="line-height:200%")
+        f = StringIO()
+        ul.render(f, '')
+        self.assertEqual(f.getvalue(), '<ul id="TheList" style="line-height:200%">\n</ul>\n')
+
+    def test_Li_single(self):
+        li = hr.Li("Single item", style="color: green")
+        f = StringIO()
+        li.render(f, '')
+        self.assertEqual(f.getvalue(), '<li style="color: green">\n    Single item\n</li>\n')
+
+    def test_Header(self):
+        h = hr.H(6, "This is a header.")
+        f = StringIO()
+        h.render(f, '')
+        self.assertEqual(f.getvalue(), '<h6>This is a header.</h6>\n')
 
 if __name__ == "__main__":
     unittest.main()
