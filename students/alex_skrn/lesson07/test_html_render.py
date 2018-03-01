@@ -424,12 +424,9 @@ def test_render_title_attr_dict():
     assert file_contents.endswith("</title>")
 
 
-
-
 ########
 # Step 5
 ########
-
 def test_self_closing_tag():
     """Test whether SelfClosingTag - on one line, attrs, no content."""
     # Test that it raises an exception if any content is passed to it
@@ -455,6 +452,7 @@ def test_self_closing_tag():
     assert file_contents.startswith("<hr ")
     assert file_contents.endswith("/>")
 
+
 def test_br_tag():
     """Test whether SelfClosingTag - on one line, attrs, no content."""
     # Test that it raises an exception if any content is passed to it
@@ -479,3 +477,25 @@ def test_br_tag():
     # making sure the opening and closing tags are right.
     assert file_contents.startswith("<br ")
     assert file_contents.endswith("/>")
+
+########
+# Step 6
+########
+def test_a_link():
+    """Test A class for links."""
+    e = A("https://www.google.com", "link to google")
+    file_contents = render_result(e).strip()
+    assert file_contents == '<a href="https://www.google.com">link to google</a>'
+
+def test_a_link_2():
+    """Test A class for links in a wider context."""
+    parag = P("This is the")
+    parag.append(A("https://www.google.com", "link to google"))
+    file_contents = render_result(parag).strip()
+
+    # making sure the tag with its attributes got in there.
+    assert('<a href="https://www.google.com">link to google</a>') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<p>")
+    assert file_contents.endswith("</p>")

@@ -13,6 +13,7 @@ class Element(object):
             self.content = [content]
         else:
             self.content = []
+
         self.attrs = self.kwargs_to_str(**kwargs)
 
     def append(self, new_content):
@@ -114,3 +115,22 @@ class Hr(SelfClosingTag):
 
 class Br(SelfClosingTag):
     tag = "br"
+
+
+class A(Element):
+    tag = "a"
+    def __init__(self, link, content):
+        Element.__init__(self, content, href=link)
+
+    # render method from OneLineTag
+    def render(self, file_out, cur_ind=""):
+        if not self.attrs:
+            file_out.write("{}<{}>".format(cur_ind, self.tag))
+        else:
+            file_out.write("{}<{} {}>".format(cur_ind, self.tag, self.attrs))
+        for elem in self.content:
+            try:
+                elem.render(file_out, Element.indent + cur_ind)
+            except AttributeError:
+                file_out.write("{}".format(str(elem)))
+        file_out.write("</{}>\n".format(self.tag))
