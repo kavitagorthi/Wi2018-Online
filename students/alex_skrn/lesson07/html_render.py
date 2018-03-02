@@ -117,20 +117,29 @@ class Br(SelfClosingTag):
     tag = "br"
 
 
-class A(Element):
+class A(OneLineTag):
+    # The assignment asks for it to be a subclass of Element
+    # but I thought it'd be easier to subclass from OneLineTag
+    # because A is also a one-line-element.
+    # Otherwise I'd need to override the Element's render method
+    # which prints tags and content on multiple lines
     tag = "a"
-    def __init__(self, link, content):
-        Element.__init__(self, content, href=link)
 
-    # render method from OneLineTag
-    def render(self, file_out, cur_ind=""):
-        if not self.attrs:
-            file_out.write("{}<{}>".format(cur_ind, self.tag))
-        else:
-            file_out.write("{}<{} {}>".format(cur_ind, self.tag, self.attrs))
-        for elem in self.content:
-            try:
-                elem.render(file_out, Element.indent + cur_ind)
-            except AttributeError:
-                file_out.write("{}".format(str(elem)))
-        file_out.write("</{}>\n".format(self.tag))
+    def __init__(self, link, content):
+        OneLineTag.__init__(self, content, href=link)
+
+
+class Ul(Element):
+    tag = "ul"
+
+
+class Li(Element):
+    tag = "li"
+
+
+class H(OneLineTag):
+    tag = "h"
+
+    def __init__(self, level_num, content, **kwargs):
+        self.tag = self.tag + str(level_num)
+        OneLineTag.__init__(self, content, **kwargs)

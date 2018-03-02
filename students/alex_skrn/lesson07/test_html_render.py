@@ -499,3 +499,89 @@ def test_a_link_2():
     # making sure the opening and closing tags are right.
     assert file_contents.startswith("<p>")
     assert file_contents.endswith("</p>")
+
+
+########
+# Step 7
+########
+def test_ul():
+    """Test unordered list class."""
+    e = Ul(id="TheList", style="line-height:200%")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    file_contents = render_result(e).strip()
+
+    assert file_contents.startswith("<ul ")
+    assert file_contents.endswith("</ul>")
+
+    # making sure the attributes got in there.
+    assert('id="TheList"') in file_contents
+    assert('style="line-height:200%"') in file_contents
+
+
+def test_li():
+    """Test list item class."""
+    e = Li("One list item", style="color: blue")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    file_contents = render_result(e).strip()
+
+    # making sure the content got in there.
+    assert("One list item") in file_contents
+
+    assert file_contents.startswith("<li ")
+    assert file_contents.endswith("</li>")
+
+    # making sure the attributes got in there.
+    assert('style="color: blue"') in file_contents
+
+
+def test_header():
+    """Test header class."""
+    e = H(2, "The header text")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the content got in there.
+    assert("The header text") in file_contents
+
+    assert file_contents.startswith("<h2>")
+    assert file_contents.endswith("</h2>")
+
+
+def test_header_attr():
+    """Can header take attributes?."""
+    e = H(2, "The header text", style="color: blue")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the content got in there.
+    assert("The header text") in file_contents
+
+    assert file_contents.startswith("<h2 ")
+    assert file_contents.endswith("</h2>")
+
+    # making sure the attributes got in there.
+    assert('style="color: blue"') in file_contents
+
+########
+# Step 8
+########
