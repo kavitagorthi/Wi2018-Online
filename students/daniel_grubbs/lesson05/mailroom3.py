@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Week 5
-# Mailroom Assignment - Part 2
+# Mailroom Assignment - Part 3
 #
 # Changelog:
 # - Added in the use of dictionaries
