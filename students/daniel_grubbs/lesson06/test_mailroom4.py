@@ -16,64 +16,20 @@ def test_print_donor_list():
 
 def test_get_donor():
     """Testing that the name is pulled correctly."""
-    mailroom4.donors = { 'Jimmy Nguyen': [100, 1350, 55],
-                         'Steve Smith': [213, 550, 435],
-                         'Julia Norton': [1500, 1500, 1500],
-                         'Ed Johnson': [150],
-                         'Elizabeth McBath': [10000, 1200]
-                         }
-
-    for k in donors.keys():
-        if donor == k.strip().lower():
-            return k
-        else:
-            return None
-
+    mailroom4.donors = {'Jimmy Nguyen': [100, 1350, 55],
+                        'Steve Smith': [213, 550, 435],
+                        'Julia Norton': [1500, 1500, 1500],
+                        'Ed Johnson': [150],
+                        'Elizabeth McBath': [10000, 1200]
+                        }
 
 
 def test_thank_you():
     """Test Thank you function for sending an email."""
-    result = mailroom4.thank_you()
 
     # Test getting user full name
 
-    while True:
-        full_name = input(
-            "Please enter a donor's name or type 'list' for list of donors ('menu' to return to menu): ").strip()
-
-        if full_name == 'list':
-            print('Below is the current donor list:')
-            donor = print_donor_list()
-            for i in donor:
-                print(i)
-            print()
-        elif full_name == 'menu':
-            return
-        else:
-            break
-
-    # Enter a donation amount
-    while True:
-        try:
-            donation = int(input("Please enter a donation amount. 'menu' to return to original menu: "))
-            if donation == 'menu':
-                return
-            else:
-                break
-        except ValueError:
-            print('Please enter a valid amount.')
-            # continue
-
-    # Enter a new donor
-    donor = get_donor(full_name)
-    if donor is None:
-        donor = full_name
-        donors[donor] = []
-
-    donors[donor].append(donation)
-
-    # Write a thank you for the donor
-    print(letter(donor))
+    pass
 
 
 def test_create_report():
