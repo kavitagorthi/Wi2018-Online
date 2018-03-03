@@ -452,9 +452,34 @@ def test_self_closing_tag():
     assert file_contents.startswith("<hr ")
     assert file_contents.endswith("/>")
 
+def test_hr_tag():
+    """Test hr tag - on one line, attrs, no content."""
+    # Test that it raises an exception if any content is passed to it
+    with pytest.raises(TypeError):
+        e = Hr("this is some text")
+    with pytest.raises(TypeError):
+        e = Hr()
+        e.append("and this is some more text")
+
+    e = Hr(style="height:30px")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    lines = file_contents.split("\n")
+    # make sure everything is on one line
+    assert len(lines) == 1
+
+    # making sure the attributes got in there.
+    assert('style="height:30px"') in file_contents
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<hr ")
+    assert file_contents.endswith(" />")
+
 
 def test_br_tag():
-    """Test whether SelfClosingTag - on one line, attrs, no content."""
+    """Test br tag - on one line, attrs, no content."""
     # Test that it raises an exception if any content is passed to it
     with pytest.raises(TypeError):
         e = Br("this is some text")
@@ -476,7 +501,7 @@ def test_br_tag():
 
     # making sure the opening and closing tags are right.
     assert file_contents.startswith("<br ")
-    assert file_contents.endswith("/>")
+    assert file_contents.endswith(" />")
 
 ########
 # Step 6
@@ -582,6 +607,34 @@ def test_header_attr():
     # making sure the attributes got in there.
     assert('style="color: blue"') in file_contents
 
+
 ########
 # Step 8
 ########
+def test_html_doctype():
+    """Test if Doctype html is at the head of the page."""
+    e = Html("this is some text")
+    e.append("and this is some more text")
+
+    file_contents = render_result(e).strip()
+
+    assert file_contents.startswith("<!DOCTYPE html>\n")
+
+
+def test_meta():
+        """Test meta charset tag - on one line, attrs, no content."""
+        e = Meta(charset="UTF-8")
+
+        # This uses the render_results utility above
+        file_contents = render_result(e).strip()
+
+        lines = file_contents.split("\n")
+        # make sure everything is on one line
+        assert len(lines) == 1
+
+        # making sure the attributes got in there.
+        assert('charset="UTF-8"') in file_contents
+
+        # making sure the opening and closing tags are right.
+        assert file_contents.startswith("<meta ")
+        assert file_contents.endswith("/>")

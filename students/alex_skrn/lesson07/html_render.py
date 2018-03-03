@@ -4,11 +4,16 @@
 A class-based system for rendering html.
 """
 
+
 # This is the framework for the base class
 class Element(object):
+    """Base element class."""
+
     tag = "html"
     indent = "    "
+
     def __init__(self, content=None, **kwargs):
+        """content: str or objects subclassed from Element; kwargs: attrs."""
         if content is not None:
             self.content = [content]
         else:
@@ -17,6 +22,7 @@ class Element(object):
         self.attrs = self.kwargs_to_str(**kwargs)
 
     def append(self, new_content):
+        """Add str or other objects to content."""
         self.content.append(new_content)
 
     def kwargs_to_str(self, **kwargs):
@@ -28,68 +34,101 @@ class Element(object):
         return " ".join(['{}="{}"'] * len(kwargs)).format(*tuple(a_list))
 
     def render(self, file_out, cur_ind=""):
+        """Write tags and content to file-like object with a write method."""
+        # opening tag with or w/out attributes -- followed by "\n"
         if not self.attrs:
             file_out.write("{}<{}>\n".format(cur_ind, self.tag))
         else:
             file_out.write("{}<{} {}>\n".format(cur_ind, self.tag, self.attrs))
+
+        # the content goes here -- followed by "\n"
         for elem in self.content:
             try:
                 elem.render(file_out, Element.indent + cur_ind)
             except AttributeError:
                 file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
+
+        # closing tag -- followed by "\n" -- compare with Html.render
         file_out.write("{}</{}>\n".format(cur_ind, self.tag))
 
 
 class Html(Element):
+    """Subclass Html from Element."""
+
     tag = "html"
 
     def render(self, file_out, cur_ind=""):
+        """Write tags and content to file-like object with a write method."""
+        # write this at the head of the page, before the html element
         file_out.write("{}<!DOCTYPE html>\n".format(cur_ind))
+
+        # opening tag with or w/out attributes -- followed by "\n"
         if not self.attrs:
             file_out.write("{}<{}>\n".format(cur_ind, self.tag))
         else:
             file_out.write("{}<{} {}>\n".format(cur_ind, self.tag, self.attrs))
+
+        # the content goes here -- followed by "\n"
         for elem in self.content:
             try:
                 elem.render(file_out, Element.indent + cur_ind)
             except AttributeError:
                 file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
+
+        # closing tag -- NOT followed by "\n" unlike in Element.render
         file_out.write("{}</{}>".format(cur_ind, self.tag))
 
 
 class Body(Element):
+    """Subclass Body from Element."""
+
     tag = "body"
 
 
 class P(Element):
+    """Subclass P for paragraph from Element."""
     tag = "p"
 
 
 class Head(Element):
+    """Subclass Head from Element."""
+
     tag = "head"
 
 
 class OneLineTag(Element):
+    """Base class for one-line tags subclassed from Element."""
+
     tag = "title"
 
     def render(self, file_out, cur_ind=""):
+        """Write tags and content to file-like object with a write method."""
+        # opening tag with or w/out attributes -- no "\n" at the end
         if not self.attrs:
             file_out.write("{}<{}>".format(cur_ind, self.tag))
         else:
             file_out.write("{}<{} {}>".format(cur_ind, self.tag, self.attrs))
+
+        # the content goes here -- no "\n" at the end
         for elem in self.content:
             try:
                 elem.render(file_out, Element.indent + cur_ind)
             except AttributeError:
                 file_out.write("{}".format(str(elem)))
+
+        # closing tag -- followed by "\n"
         file_out.write("</{}>\n".format(self.tag))
 
 
 class Title(OneLineTag):
+    """Subclass Title from OneLineTag."""
+
     tag = "title"
 
 
 class SelfClosingTag(Element):
+    """Base class fro self-closing tags subclassed from Element."""
+
     tag = "hr"
     try:
         def __init__(self, **kwargs):
@@ -99,10 +138,13 @@ class SelfClosingTag(Element):
         raise
 
     def append(self):
+        """Raise TypeError on attempt to add content."""
         print("SelfClosingTag accepts no content")
         raise TypeError
 
     def render(self, file_out, cur_ind=""):
+        """Render a self-closing tag w/ or w/o attributes."""
+        # opening < and closing /> on one line, with optional attrs
         if not self.attrs:
             file_out.write("{}<{} />\n".format(cur_ind, self.tag))
         else:
@@ -110,36 +152,55 @@ class SelfClosingTag(Element):
 
 
 class Hr(SelfClosingTag):
+    """Subclass Hr for horizontal ruler from SelfClosingTag."""
+
     tag = "hr"
 
 
 class Br(SelfClosingTag):
+    """Subclass Br for line break from SelfClosingTag."""
+
     tag = "br"
 
 
 class A(OneLineTag):
+    """A subclass for anchor (link)."""
     # The assignment asks for it to be a subclass of Element
-    # but I thought it'd be easier to subclass from OneLineTag
+    # but in my implementation it was easier to subclass from OneLineTag
     # because A is also a one-line-element.
-    # Otherwise I'd need to override the Element's render method
+    # Otherwise I'd need to override Element.render
     # which prints tags and content on multiple lines
     tag = "a"
 
     def __init__(self, link, content):
+        """link for an internet address; content for a string to display."""
         OneLineTag.__init__(self, content, href=link)
 
 
 class Ul(Element):
+    """Subclass Ul for unordered list from Element."""
+
     tag = "ul"
 
 
 class Li(Element):
+    """Subclass Li for list item from Element."""
+
     tag = "li"
 
 
 class H(OneLineTag):
+    """Subclass H for header from OneLineTag."""
+
     tag = "h"
 
     def __init__(self, level_num, content, **kwargs):
+        """Accept int for the header level, str for content, and attributes."""
         self.tag = self.tag + str(level_num)
         OneLineTag.__init__(self, content, **kwargs)
+
+
+class Meta(SelfClosingTag):
+    """Subclass Meta from SelfClosingTag."""
+
+    tag = "meta"
