@@ -33,23 +33,33 @@ class Element(object):
             a_list.append(v)
         return " ".join(['{}="{}"'] * len(kwargs)).format(*tuple(a_list))
 
-    def render(self, file_out, cur_ind=""):
-        """Write tags and content to file-like object with a write method."""
-        # opening tag with or w/out attributes -- followed by "\n"
+    def render_opening_attr(self, file_out, cur_ind, no_attrs, do_attrs):
+        """Render opening tag with or w/o attributes."""
         if not self.attrs:
-            file_out.write("{}<{}>\n".format(cur_ind, self.tag))
+            file_out.write(no_attrs.format(cur_ind, self.tag))
         else:
-            file_out.write("{}<{} {}>\n".format(cur_ind, self.tag, self.attrs))
+            file_out.write(do_attrs.format(cur_ind, self.tag, self.attrs))
 
-        # the content goes here -- followed by "\n"
+    def render(self, file_out, cur_ind="", closing_newline=True):
+        """Write tags and content to a file-like object with a write method."""
+        # opening tag with or w/out attributes -- followed by newline char "\n"
+        no_attrs = "{}<{}>\n"
+        do_attrs = "{}<{} {}>\n"
+        self.render_opening_attr(file_out, cur_ind, no_attrs, do_attrs)
+
+        # the content goes here -- followed by newline char "\n"
         for elem in self.content:
             try:
                 elem.render(file_out, Element.indent + cur_ind)
             except AttributeError:
                 file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
 
-        # closing tag -- followed by "\n" -- compare with Html.render
-        file_out.write("{}</{}>\n".format(cur_ind, self.tag))
+        # closing tag ...
+        file_out.write("{}</{}>".format(cur_ind, self.tag))
+
+        # ... followed by newline char "\n" -- except in case of the html tag
+        if closing_newline:
+            file_out.write("\n")
 
 
 class Html(Element):
@@ -58,25 +68,11 @@ class Html(Element):
     tag = "html"
 
     def render(self, file_out, cur_ind=""):
-        """Write tags and content to file-like object with a write method."""
+        """Write tags and content to a file-like object with a write method."""
         # write this at the head of the page, before the html element
         file_out.write("{}<!DOCTYPE html>\n".format(cur_ind))
 
-        # opening tag with or w/out attributes -- followed by "\n"
-        if not self.attrs:
-            file_out.write("{}<{}>\n".format(cur_ind, self.tag))
-        else:
-            file_out.write("{}<{} {}>\n".format(cur_ind, self.tag, self.attrs))
-
-        # the content goes here -- followed by "\n"
-        for elem in self.content:
-            try:
-                elem.render(file_out, Element.indent + cur_ind)
-            except AttributeError:
-                file_out.write("{}{}\n".format(Element.indent + cur_ind, str(elem)))
-
-        # closing tag -- NOT followed by "\n" unlike in Element.render
-        file_out.write("{}</{}>".format(cur_ind, self.tag))
+        Element.render(self, file_out, cur_ind, closing_newline=False)
 
 
 class Body(Element):
@@ -87,6 +83,7 @@ class Body(Element):
 
 class P(Element):
     """Subclass P for paragraph from Element."""
+
     tag = "p"
 
 
@@ -104,10 +101,9 @@ class OneLineTag(Element):
     def render(self, file_out, cur_ind=""):
         """Write tags and content to file-like object with a write method."""
         # opening tag with or w/out attributes -- no "\n" at the end
-        if not self.attrs:
-            file_out.write("{}<{}>".format(cur_ind, self.tag))
-        else:
-            file_out.write("{}<{} {}>".format(cur_ind, self.tag, self.attrs))
+        no_attrs = "{}<{}>"
+        do_attrs = "{}<{} {}>"
+        Element.render_opening_attr(self, file_out, cur_ind, no_attrs, do_attrs)
 
         # the content goes here -- no "\n" at the end
         for elem in self.content:
@@ -145,10 +141,9 @@ class SelfClosingTag(Element):
     def render(self, file_out, cur_ind=""):
         """Render a self-closing tag w/ or w/o attributes."""
         # opening < and closing /> on one line, with optional attrs
-        if not self.attrs:
-            file_out.write("{}<{} />\n".format(cur_ind, self.tag))
-        else:
-            file_out.write("{}<{} {} />\n".format(cur_ind, self.tag, self.attrs))
+        no_attrs = "{}<{} />\n"
+        do_attrs = "{}<{} {} />\n"
+        Element.render_opening_attr(self, file_out, cur_ind, no_attrs, do_attrs)
 
 
 class Hr(SelfClosingTag):
@@ -165,15 +160,16 @@ class Br(SelfClosingTag):
 
 class A(OneLineTag):
     """A subclass for anchor (link)."""
-    # The assignment asks for it to be a subclass of Element
-    # but in my implementation it was easier to subclass from OneLineTag
-    # because A is also a one-line-element.
-    # Otherwise I'd need to override Element.render
-    # which prints tags and content on multiple lines
+
+    # The assignment asks for it to be a subclass of Element ...
+    # ... but in my implementation it was easier to subclass from OneLineTag
+    # ... because A is also a one-line-tag.
+    # Otherwise I'd need to override Element.render ...
+    # ... which writes tags and content on multiple lines.
     tag = "a"
 
     def __init__(self, link, content):
-        """link for an internet address; content for a string to display."""
+        """Link for an internet address; content for a string to display."""
         OneLineTag.__init__(self, content, href=link)
 
 
