@@ -5,12 +5,8 @@ import random
 # construct list of donors with a frozen set, to later be used as keys in the dictionary
 donor_names = frozenset(("Daniel Ocean", "Rusty Ryan", "Linus Caldwell", "Ruben Tishkoff", "Basher Tarr"))
 
-# create an empty dictionary to be populated later
-donors = {}
-
-# populate dictionary with a random number of random values per key using the setdefault method 
-for donor in donor_names:
-    donors.setdefault(donor, random.sample(range(1, 50000), random.randint(1, 5)))
+# create donors with dict comprehension 
+donors = {donor: random.sample(range(1, 50000), random.randint(1, 5)) for donor in donor_names}
 
 # define a function to prompt the user for their desired action
 def prompt_user():
@@ -20,9 +16,15 @@ def prompt_user():
     print("2 - Create a Report")
     print("3 - Send letters to everyone")
     print("4 - Quit")
-    response = int(input(" > "))
-    while response not in (1, 2, 3, 4):
-        response = int(input("Please choose one of 1, 2, 3, or 4: > "))
+    # I previously had a 'while response not in (1, 2, 3, 4)' conditional which felt like a better choice than 
+    # this try except block. Should I put the try except into a while statement so that it continues to prompt
+    # the user for the correct type of response? Or is it good practice to error out if the user continues to 
+    # provide bad input? 
+    try:
+        response = int(input(" > "))
+    except ValueError:
+        print("You must enter a number from one of 1, 2, 3, or 4. ")
+        response = int(input(" > "))
     return response
 
 
@@ -33,12 +35,16 @@ def send_a_thank_you():
     # prompt the user for a donor
     donor = input("To whom would you like to send a thank you? > ")
     # list the possible candidates within the donors list    
-    if donor == "list":
+    if donor.lower() == "list":
         # print the donors in the dict
         print(', '.join(list(unique_donors)))
         donor = input("To whom would you like to send a thank you? > ")
     # prompt the user for a donation amount
-    donation_amount = int(input("How much would you like to donate? > "))
+    try:
+        donation_amount = int(input("How much would you like to donate? > "))
+    except ValueError:
+        print("The donation amount must be numeric.")
+        donation_amount = int(input("How much would you like to donate? > "))
     # add the donor and the donation amount to the donors list
     donors.setdefault(donor, []).append(donation_amount)
     # Print the thank you note
