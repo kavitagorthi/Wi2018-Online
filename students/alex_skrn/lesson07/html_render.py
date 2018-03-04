@@ -19,6 +19,7 @@ class Element(object):
         else:
             self.content = []
 
+        # this will be used by the render method to render the opening tag
         self.attrs = self.kwargs_to_str(**kwargs)
 
     def append(self, new_content):
@@ -26,7 +27,7 @@ class Element(object):
         self.content.append(new_content)
 
     def kwargs_to_str(self, **kwargs):
-        """Convert kwargs to string."""
+        """Convert kwargs to a string to be used in the render method."""
         a_list = []
         for k, v in zip(kwargs.keys(), kwargs.values()):
             a_list.append(k)
@@ -34,7 +35,8 @@ class Element(object):
         return " ".join(['{}="{}"'] * len(kwargs)).format(*tuple(a_list))
 
     def render_opening_attr(self, file_out, cur_ind, no_attrs, do_attrs):
-        """Render opening tag with or w/o attributes."""
+        """Render the opening tag with or w/o attributes."""
+        # no_attrs, do_attrs: formatting templates
         if not self.attrs:
             file_out.write(no_attrs.format(cur_ind, self.tag))
         else:
@@ -99,13 +101,14 @@ class OneLineTag(Element):
     tag = "title"
 
     def render(self, file_out, cur_ind=""):
-        """Write tags and content to file-like object with a write method."""
+        """Write tags and content to a file-like object with a write method."""
         # opening tag with or w/out attributes -- no "\n" at the end
         no_attrs = "{}<{}>"
         do_attrs = "{}<{} {}>"
         Element.render_opening_attr(self, file_out, cur_ind, no_attrs, do_attrs)
 
-        # the content goes here -- no "\n" at the end
+        # the content goes here -- there is NO "\n" at the end
+        # also there is no indentation among arguments passed to format()
         for elem in self.content:
             try:
                 elem.render(file_out, Element.indent + cur_ind)
@@ -123,7 +126,7 @@ class Title(OneLineTag):
 
 
 class SelfClosingTag(Element):
-    """Base class fro self-closing tags subclassed from Element."""
+    """Base class for self-closing tags subclassed from Element; no content."""
 
     tag = "hr"
     try:
@@ -162,14 +165,14 @@ class A(OneLineTag):
     """A subclass for anchor (link)."""
 
     # The assignment asks for it to be a subclass of Element ...
-    # ... but in my implementation it was easier to subclass from OneLineTag
+    # ... but in my case it seemed to be easier to subclass from OneLineTag
     # ... because A is also a one-line-tag.
     # Otherwise I'd need to override Element.render ...
     # ... which writes tags and content on multiple lines.
     tag = "a"
 
     def __init__(self, link, content):
-        """Link for an internet address; content for a string to display."""
+        """Accept link for an internet address; content for a str to show."""
         OneLineTag.__init__(self, content, href=link)
 
 

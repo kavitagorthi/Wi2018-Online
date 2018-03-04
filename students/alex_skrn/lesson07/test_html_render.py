@@ -291,6 +291,30 @@ def test_kwargs_to_str():
     assert e.kwargs_to_str(id="TheList") == 'id="TheList"'
 
 
+def test_render_opening_tag_no_attr():
+    """Test render_opening_attr() w/out attributes."""
+    e = Element()
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith("<html>")
+    assert file_contents.endswith("</html>")
+
+
+def test_render_opening_tag_do_attr():
+    """Test render_opening_attr() with attributes."""
+    e = Element(id="TheList")
+
+    # This uses the render_results utility above
+    file_contents = render_result(e).strip()
+
+    # making sure the opening and closing tags are right.
+    assert file_contents.startswith('<html id="TheList">')
+    assert file_contents.endswith("</html>")
+
+
 def test_render_element_attr():
     """Test whether the Element can take attributes."""
     e = Element("this is some text", id="TheList", style="line-height:200%")
