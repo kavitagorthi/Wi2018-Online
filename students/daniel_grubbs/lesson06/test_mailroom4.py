@@ -2,9 +2,10 @@
 
 # Week 6
 # Mailroom Assignment testing - Part 4
-import mailroom4
-import pytest
+import os
 import sys
+import pytest
+import mailroom4
 
 
 def test_print_donor_list():
@@ -16,25 +17,21 @@ def test_print_donor_list():
 
 def test_get_donor():
     """Testing that the name is pulled correctly."""
-    mailroom4.donors = {'Jimmy Nguyen': [100, 1350, 55],
-                        'Steve Smith': [213, 550, 435],
-                        'Julia Norton': [1500, 1500, 1500],
-                        'Ed Johnson': [150],
-                        'Elizabeth McBath': [10000, 1200]
-                        }
+    name_one = "Jimmy Nguyen"
+    name_two = "Elizabeth McBath"
 
-
-def test_thank_you():
-    """Test Thank you function for sending an email."""
-
-    # Test getting user full name
-
-    pass
+    assert name_one in mailroom4.donors.keys()
+    assert name_two in mailroom4.donors.keys()
 
 
 def test_create_report():
     """Test for creating a report of donors with donation amounts."""
-    pass
+
+    report_keys = mailroom4.donors.keys()
+    report_values = list(mailroom4.donors.values())
+
+    assert "Jimmy Nguyen" in report_keys
+    assert report_values[0][1] == 1350
 
 
 def test_letter():
@@ -48,14 +45,8 @@ def test_letter():
 
 def test_send_letter_file():
     """Test for writing a letter to a donor."""
-    pass
+    # pytest.set_trace()  # invoke PDB debugger and tracing
+    mailroom4.send_letter_file()
 
-
-def test_print_header():
-    """Prints the menu items to choose from and returns the selection."""
-    pass
-
-
-def test_main():
-    """Main mneu of the program."""
-    pass
+    assert os.path.isfile("Jimmy Nguyen.txt")
+    assert os.path.isfile("Elizabeth McBath.txt")

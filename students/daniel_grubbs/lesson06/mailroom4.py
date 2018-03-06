@@ -33,7 +33,7 @@ def print_donor_list():
 
 def get_donor(name):
     """Get donor from the donors dictionary."""
-    donor = name.lower()
+    donor = name
     for k in donors.keys():
         if donor == k.strip().lower():
             return k
@@ -101,6 +101,11 @@ def create_report():
     for amount in donations:
         print("{:26s} | {:14.2f} | {:15d} | {:13.2f}".format(*amount))
     print()
+
+    report_values = donors.values()
+
+    # print("\n\n")
+    # print(report_values)
 
 
 def letter(donor):
