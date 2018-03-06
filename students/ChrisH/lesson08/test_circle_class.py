@@ -17,6 +17,9 @@ class CircleClassTest(unittest.TestCase):
         self.assertEqual(c.radius, 1)
         c = Circle(4)
         self.assertEqual(c.radius, 4)
+        with self.assertRaises(TypeError):
+            c = Circle(-100)
+        self.assertEqual(Circle(4), c)
 
     def test_diameter(self):
         c = Circle()
@@ -29,6 +32,8 @@ class CircleClassTest(unittest.TestCase):
         c.diameter = 2
         self.assertEqual(c.diameter, 2)
         self.assertEqual(c.radius, 1)
+        with self.assertRaises(ValueError):
+            c.diameter = -100
 
     def test_get_area(self):
         c = Circle(2)
@@ -40,6 +45,9 @@ class CircleClassTest(unittest.TestCase):
         c = Circle.from_diameter(8)
         self.assertEqual(c.diameter, 8)
         self.assertEqual(c.radius, 4)
+        self.assertEqual(Circle(1.0), Circle.from_diameter())
+        with self.assertRaises(ValueError):
+            Circle.from_diameter(-100)
 
     def test_str_method(self):
         c = Circle()
@@ -70,3 +78,67 @@ class CircleClassTest(unittest.TestCase):
             d = c * 'monkey'
         self.assertEqual(9, (3 * c).radius)     # Test __rmul__
         self.assertAlmostEqual(9.00, (3.0 * c).radius, places=2)
+
+    def test_lt_oper(self):
+        c = Circle(0)
+        d = Circle(2)
+        self.assertEqual(True, c < d)
+        self.assertEqual(True, d > c)
+        self.assertEqual(False, c == d)
+        c = eval(repr(d))
+        self.assertEqual(False, c < d)
+        self.assertEqual(False, d > c)
+        self.assertEqual(True, c == d)
+
+        with self.assertRaises(TypeError):
+            print(c == 'monkey')
+        with self.assertRaises(TypeError):
+            print(c < 'monkey')
+
+
+    def test_sort_circles(self):
+        cl = [Circle(6), Circle(7), Circle(8), Circle(4), Circle(0),
+              Circle(2), Circle(3), Circle(5), Circle(9), Circle(1)]
+        cl.sort()
+        self.assertEqual(cl,
+                         [Circle(0), Circle(1), Circle(2), Circle(3), Circle(4),
+                          Circle(5), Circle(6), Circle(7), Circle(8), Circle(9)]
+                         )
+
+    def test_reflected_numerics(self):
+        a = Circle(4)
+        self.assertTrue(a * 3 == 3 * a)
+
+    def test_augmented_assignment(self):
+        a = Circle(4)
+        b = Circle(2)
+        a += b
+        self.assertEqual(Circle(6), a)
+
+        a *= 2
+        self.assertEqual(Circle(12), a)
+
+        a /= 2
+        self.assertEqual(Circle(6), a)
+
+    def test_sub_circles(self):
+        a = Circle(4)
+        b = Circle(2)
+        self.assertEqual(Circle(2), a - b)
+        self.assertEqual(Circle(0), b - a)
+
+    def test_div_circles(self):
+        a = Circle(10)
+        self.assertEqual(Circle(5), a / 2)
+        with self.assertRaises(ZeroDivisionError):
+            print(a / 0)
+        with self.assertRaises(ValueError):
+            print(a / -2)
+
+    def test_floor_div_circles(self):
+        a = Circle(9)
+        self.assertEqual(Circle(4), a // 2)
+        with self.assertRaises(ZeroDivisionError):
+            print(a // 0)
+        with self.assertRaises(ValueError):
+            print(a // -2)
