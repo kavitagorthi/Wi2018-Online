@@ -3,6 +3,7 @@
 #  Implements a class that represents a single circle.
 # -----------------------------------------------------------
 import math
+import numbers
 
 class Circle(object):
 
@@ -31,3 +32,18 @@ class Circle(object):
 
     def __repr__(self):
         return f"Circle({self.radius})"
+
+    def __add__(self, other):
+        if isinstance(other, Circle):
+            return(Circle(self.radius + other.radius))
+        else:
+            raise TypeError
+
+    def __mul__(self, val):
+        if isinstance(val, numbers.Number):
+            return(Circle(self.radius * val))
+        else:
+            raise TypeError
+
+    def __rmul__(self, val):
+        return self.__mul__(val)
