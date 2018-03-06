@@ -16,7 +16,7 @@ def generate_report():
     print('-' * 75)
     """
     Combined print statement with dictionary comprehension expression
-    
+
         for key, value in patrons.items():
                 print(f"{key:<30} ${sum(value):^,.2f}  {len(value):^20}  ${sum(value)/len(value):,.2f}")
     """
@@ -30,8 +30,8 @@ def send_email(choice, amount):
     print('-- Email Sent --\n')
 
 
-# Called when user wants to see the list of donars
-def display_donars():
+# Called when user wants to see the list of donors
+def display_donors():
     print('Showing list of patrons in the database:')
     """
     Combined print statement with dictionary comprehension expression 
@@ -42,34 +42,34 @@ def display_donars():
     print('\n'.join({k for k in patrons.keys()}))
 
 
-# Used to help add_donar menu validation for dictionary function call
+# Used to help add_donor menu validation for dictionary function call
 def silent_quit():
     pass
 
 
 # Called from menu_dictionary
-def add_donar():
-    # donar menu used to help validate choices
-    donar_menu = {'1': display_donars, 'quit': silent_quit}
+def add_donor():
+    # donor menu used to help validate choices
+    donor_menu = {'1': display_donors, 'quit': silent_quit}
 
     while True:
         choice = input("""
-        Type 1 - To display a list of donars.
+        Type 1 - To display a list of donor's.
         Type quit - to exit to main menu.
         Enter value here >>  """)
         try:
-            donar_menu[choice]()
+            donor_menu[choice]()
         except KeyError:
             print("Not a valid choice, please try again")
         else:
             if choice == 'quit':
                 break
             else:
-                first, last = input("\nPlease enter the new Donar's First and Last name:  ").split()
+                first, last = input("\nPlease enter the new Donor's First and Last name:  ").split()
                 name = f'{first} {last}'.title()
                 if name in patrons.keys():
-                    print("Donar's name already exists")
-                    add_donar()
+                    print("Donor's name already exists")
+                    add_donor()
                 else:
                     patrons[name] = []
                 try:
@@ -129,20 +129,20 @@ def quit_menu():
 
 
 def main():
-    user_prompt = ("""\nWelcome to the MailRoom Donar Program!
+    user_prompt = ("""\nWelcome to the MailRoom Donor Program!
                    What would you like to do?
-                   Type 1 - To display donars'
+                   Type 1 - To display donors'
                    Type 2 - To generate a report'
-                   Type 3 - To add new donar'
-                   Type 4 - To send letters to donars'
+                   Type 3 - To add new donor'
+                   Type 4 - To send letters to donors'
                    Type q - To end the program'
                    Enter value here >> """)
     """
     Use dictionary to create quasi switch/case structure
     """
-    menu_dict = {"1": display_donars,
+    menu_dict = {"1": display_donors,
                  "2": generate_report,
-                 "3": add_donar,
+                 "3": add_donor,
                  "4": draft_letters,
                  "q": quit_menu}
     # Pass the user_prompt and menu_dict to the user_selection function
