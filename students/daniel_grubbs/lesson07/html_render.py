@@ -8,12 +8,13 @@ class Element(object):
     tag = "html"
     indent = '    '
 
-    def __init__(self, content=None):
+    def __init__(self, content=None, **kwargs):
         """initializer signature where content is expected to be a string – and defaults to Nothing"""
         if content == None:
             self.content = []
         else:
             self.content = [content]
+        self.attributes = kwargs
 
 
     def append(self, content):
@@ -71,3 +72,9 @@ class Title(OneLineTag):
     """Subclass of OneLineTag class for the title."""
     tag = "title"
 
+
+class SelfClosingTag(Element):
+    """Sublcass for rendering a self closing tag such as <hr />."""
+    def render(self, file_out, cur_ind=""):
+        """Render self closing tags."""
+        pass
