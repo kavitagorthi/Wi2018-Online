@@ -31,9 +31,11 @@ class Circle:
         return self.PI * self.radius ** 2
 
     def __repr__(self):
+        """Show a representation."""
         return "Circle({})".format(self.radius)
 
     def __str__(self):
+        """Display a string representation when printing."""
         return "Circle with radius: {}".format(self.radius)
 
     @classmethod
@@ -44,22 +46,23 @@ class Circle:
 
     def __add__(self, other):
         """Add two circles together."""
-        return Circle(self.radius + other.radius)
+        # the first return statement did not work with testing
+        # so need to refactor this and the other dunders
+        # return Circle(self.radius + other.radius) - remove Circle
+        return (self.radius + other.radius)
 
     def __mul__(self, other):
         """Add two circles together."""
-        return Circle(self.radius * other.radius)
+        return (self.radius * other.radius)
 
     def __gt__(self, other):
         """Comparing greater than on two circles."""
-        return Circle(self.radius > other.radius)
+        return (self.radius > other.radius)
 
     def __lt__(self, other):
         """Comparing less than on two circles."""
-        return Circle(self.radius < other.radius)
+        return (self.radius < other.radius)
 
     def __eq__(self, other):
         """Comparing equality on two circles."""
-        return Circle(self.radius == other.radius)
-
-
+        return self.radius == other.radius
